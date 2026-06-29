@@ -1,4 +1,4 @@
-import { describe, test, expect, vi, afterEach } from 'vitest'
+import { test, expect, vi, afterEach } from 'vitest'
 import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import { SpeettoPage } from './SpeettoPage.jsx'
 
@@ -32,6 +32,20 @@ test('지역 선택 시 해당 지역만 표시', async () => {
   fireEvent.click(screen.getByRole('button', { name: /경기/ }))
   expect(screen.queryByText('A')).not.toBeInTheDocument()
   expect(screen.getByText('B')).toBeInTheDocument()
+})
+
+test('라운드 변경 시 지역 필터 초기화', async () => {
+  mockFetchOk()
+  render(<SpeettoPage />)
+  await waitFor(() => expect(screen.getByText('A')).toBeInTheDocument())
+  // 경기 선택 → A(서울) 숨김
+  fireEvent.click(screen.getByRole('button', { name: /경기/ }))
+  expect(screen.queryByText('A')).not.toBeInTheDocument()
+  expect(screen.getByText('B')).toBeInTheDocument()
+  // 라운드 변경 → 지역 필터 null 리셋
+  fireEvent.change(screen.getByRole('combobox'), { target: { value: '스피또1000#107' } })
+  // A(서울, 107회)가 다시 보이면 지역 필터가 초기화된 것
+  expect(screen.getByText('A')).toBeInTheDocument()
 })
 
 test('fetch 실패 시 에러 메시지', async () => {
