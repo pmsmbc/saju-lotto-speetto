@@ -1,0 +1,31 @@
+:root {
+  --accent: #2b6cb0;
+  --bg: #f7f8fa;
+  --line: #e2e8f0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); font-family: system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif; color: #1a202c; }
+.app { max-width: 720px; margin: 0 auto; padding: 16px; }
+.app-title { font-size: 20px; margin: 8px 0 12px; }
+.app-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.nav-tab { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 8px 14px; font-size: 14px; cursor: pointer; }
+.nav-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.status { padding: 32px 0; text-align: center; color: #718096; }
+.status.error { color: #c53030; }
+.updated-at { color: #718096; font-size: 13px; margin: 0 0 12px; }
+.round-selector { width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 8px; font-size: 15px; margin-bottom: 16px; background: #fff; }
+.speetto-page h2 { font-size: 16px; margin: 20px 0 10px; }
+.region-stats { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.region-bar { display: flex; align-items: center; gap: 8px; width: 100%; border: none; background: none; padding: 4px; cursor: pointer; text-align: left; }
+.region-bar.active .region-name { font-weight: 700; color: var(--accent); }
+.region-name { width: 48px; font-size: 14px; flex: none; }
+.region-track { flex: 1; background: var(--line); border-radius: 4px; height: 14px; overflow: hidden; }
+.region-fill { display: block; height: 100%; background: var(--accent); }
+.region-count { width: 28px; text-align: right; font-size: 13px; flex: none; }
+.store-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.store-item { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: #fff; }
+.store-head { display: flex; justify-content: space-between; font-size: 12px; color: #718096; }
+.store-rank { color: var(--accent); font-weight: 700; }
+.store-name { font-weight: 600; margin: 2px 0; }
+.store-addr { font-size: 13px; color: #4a5568; }
+.empty { padding: 16px 0; text-align: center; color: #a0aec0; }
