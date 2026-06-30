@@ -1,7 +1,7 @@
 import { writeFile, mkdir } from 'node:fs/promises'
 import { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { GAME_CODES, extractEpisodes, normalizeStores } from './normalize.js'
+import { GAME_CODES, extractEpisodes, normalizeStores, isCompleteScrape } from './normalize.js'
 
 const BASE = 'https://www.dhlottery.co.kr'
 const UA =
@@ -68,8 +68,8 @@ async function main() {
     }
   }
 
-  if (allStores.length === 0) {
-    console.error('수집된 당첨 판매점이 0건 — 기존 JSON 보존을 위해 비정상 종료')
+  if (!isCompleteScrape(allStores, GAME_CODES.map((g) => g.name))) {
+    console.error('스크래프 결과가 불완전하거나 손상됨 — 기존 JSON 보존을 위해 비정상 종료')
     process.exit(1)
   }
 

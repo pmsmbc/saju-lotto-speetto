@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import { extractEpisodes, normalizeStores, resolveRegion, GAME_CODES } from './normalize.js'
+import { extractEpisodes, normalizeStores, resolveRegion, GAME_CODES, isCompleteScrape } from './normalize.js'
 
 test('GAME_CODES는 세 게임을 가진다', () => {
   expect(GAME_CODES.map((g) => g.name)).toEqual(['스피또2000', '스피또1000', '스피또500'])
@@ -52,5 +52,53 @@ describe('normalizeStores', () => {
   })
   test('list 없으면 빈 배열', () => {
     expect(normalizeStores({ data: { list: null } }, '스피또1000', 1)).toEqual([])
+  })
+})
+
+describe('isCompleteScrape', () => {
+  const EXPECTED = ['스피또2000', '스피또1000', '스피또500']
+  const validRow = (game) => ({
+    game,
+    round: 1,
+    rank: 1,
+    store: '테스트 복권방',
+    address: '서울 강남구',
+    region: '서울',
+  })
+
+  test('(a) 모든 게임 존재 + 유효한 행 → true', () => {
+    const stores = EXPECTED.map(validRow)
+    expect(isCompleteScrape(stores, EXPECTED)).toBe(true)
+  })
+
+  test('(b) 빈 배열 → false', () => {
+    expect(isCompleteScrape([], EXPECTED)).toBe(false)
+  })
+
+  test('(c) 게임 누락 → false', () => {
+    const stores = ['스피또2000', '스피또1000'].map(validRow)
+    expect(isCompleteScrape(stores, EXPECTED)).toBe(false)
+  })
+
+  test('(d) store가 빈 문자열 또는 undefined인 행 → false', () => {
+    const stores = [
+      ...EXPECTED.map(validRow),
+      { game: '스피또2000', round: 1, rank: 2, store: '', address: '서울', region: '서울' },
+    ]
+    expect(isCompleteScrape(stores, EXPECTED)).toBe(false)
+
+    const storesUndef = [
+      ...EXPECTED.map(validRow),
+      { game: '스피또1000', round: 1, rank: 2, store: undefined, address: '서울', region: '서울' },
+    ]
+    expect(isCompleteScrape(storesUndef, EXPECTED)).toBe(false)
+  })
+
+  test('(e) rank가 NaN인 행 → false', () => {
+    const stores = [
+      ...EXPECTED.map(validRow),
+      { game: '스피또500', round: 1, rank: NaN, store: '복권방', address: '서울', region: '서울' },
+    ]
+    expect(isCompleteScrape(stores, EXPECTED)).toBe(false)
   })
 })

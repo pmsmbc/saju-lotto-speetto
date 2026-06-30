@@ -59,3 +59,14 @@ export function normalizeStores(apiJson, gameName, round) {
     region: resolveRegion(item),
   }))
 }
+
+export function isCompleteScrape(stores, expectedGameNames) {
+  if (!Array.isArray(stores) || stores.length === 0) return false
+  const games = new Set(stores.map((s) => s.game))
+  for (const name of expectedGameNames) {
+    if (!games.has(name)) return false
+  }
+  return stores.every(
+    (s) => typeof s.store === 'string' && s.store.length > 0 && Number.isFinite(s.rank),
+  )
+}
