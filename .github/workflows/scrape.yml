@@ -17,8 +17,6 @@ jobs:
         with:
           node-version: 20
       - run: node scripts/scrape-speetto.js
-        env:
-          MAX_ROUNDS: '30'
       - name: Commit updated data
         run: |
           git config user.name "github-actions[bot]"
@@ -27,6 +25,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "변경 없음"
           else
-            git commit -m "data: update speetto winning stores"
+            git commit -m "data: update speetto 1등 잔여 현황"
             git push
           fi
