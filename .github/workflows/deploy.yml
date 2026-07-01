@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   workflow_run:
-    workflows: ["Scrape Speetto"]
+    workflows: ["Scrape Speetto", "Scrape Lotto"]
     types: [completed]
   workflow_dispatch:
 

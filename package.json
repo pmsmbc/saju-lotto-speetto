@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "scrape": "node scripts/scrape-speetto.js"
+    "scrape": "node scripts/scrape-speetto.js",
+    "scrape:lotto": "node scripts/scrape-lotto.js"
   },
   "dependencies": {
     "react": "^18.3.1",
