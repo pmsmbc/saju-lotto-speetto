@@ -7,7 +7,7 @@ afterEach(() => vi.restoreAllMocks())
 test('기본으로 스피또 페이지를 보여준다', async () => {
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
     ok: true,
-    json: async () => ({ updatedAt: '2026-06-29T03:00:00Z', stores: [] }),
+    json: async () => ({ updatedAt: '2026-07-01T00:00:00Z', rounds: [] }),
   }))
   render(<App />)
   await waitFor(() => expect(screen.getByText(/마지막 업데이트/)).toBeInTheDocument())
@@ -15,7 +15,7 @@ test('기본으로 스피또 페이지를 보여준다', async () => {
 
 test('준비중 메뉴 클릭 시 안내 표시', () => {
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
-    ok: true, json: async () => ({ updatedAt: null, stores: [] }),
+    ok: true, json: async () => ({ updatedAt: null, rounds: [] }),
   }))
   render(<App />)
   fireEvent.click(screen.getByRole('button', { name: '오늘의 띠별 번호' }))

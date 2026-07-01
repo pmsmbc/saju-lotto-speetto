@@ -1,57 +1,47 @@
-import { test, expect, vi, afterEach } from 'vitest'
-import { render, screen, waitFor, fireEvent } from '@testing-library/react'
+import { describe, test, expect, vi, afterEach } from 'vitest'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { SpeettoPage } from './SpeettoPage.jsx'
 
 const data = {
-  updatedAt: '2026-06-29T03:00:00Z',
-  stores: [
-    { game: '스피또1000', round: 107, rank: 1, store: 'A', address: '서울 강남', region: '서울' },
-    { game: '스피또1000', round: 106, rank: 1, store: 'B', address: '경기 수원', region: '경기' },
+  updatedAt: '2026-07-01T00:00:00Z',
+  rounds: [
+    { game: '스피또2000', gameCode: 'SP2000', round: 68, status: '판매중', rank1Remaining: 7, rank1Total: 8 },
+    { game: '스피또2000', gameCode: 'SP2000', round: 67, status: '판매중', rank1Remaining: 0, rank1Total: 6 },
+    { game: '스피또1000', gameCode: 'SP1000', round: 107, status: '판매중', rank1Remaining: 9, rank1Total: 12 },
+    { game: '스피또500', gameCode: 'SP500', round: 47, status: '판매종료', rank1Remaining: 3, rank1Total: 5 },
   ],
-}
-
-function mockFetchOk() {
-  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => data }))
 }
 
 afterEach(() => vi.restoreAllMocks())
 
-test('로딩 후 지역 집계와 판매점을 표시', async () => {
-  mockFetchOk()
+test('기본 게임(2000) 탭에서 판매중&1등잔여>0 회차 표시, 잔여0 회차 제외', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => data }))
   render(<SpeettoPage />)
-  await waitFor(() => expect(screen.getByText('A')).toBeInTheDocument())
-  expect(screen.getByText('B')).toBeInTheDocument()
-  // 마지막 업데이트 표시(날짜 문자열 일부)
-  expect(screen.getByText(/마지막 업데이트/)).toBeInTheDocument()
+  await waitFor(() => expect(screen.getByText(/마지막 업데이트/)).toBeInTheDocument())
+  expect(screen.getByText('68회')).toBeInTheDocument()
+  expect(screen.getByText('1등 잔여 7매/8매')).toBeInTheDocument()
+  expect(screen.queryByText('67회')).toBeNull()
 })
 
-test('지역 선택 시 해당 지역만 표시', async () => {
-  mockFetchOk()
+test('게임 탭 전환 시 해당 게임 회차 표시', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => data }))
   render(<SpeettoPage />)
-  await waitFor(() => expect(screen.getByText('A')).toBeInTheDocument())
-  fireEvent.click(screen.getByRole('button', { name: /경기/ }))
-  expect(screen.queryByText('A')).not.toBeInTheDocument()
-  expect(screen.getByText('B')).toBeInTheDocument()
+  await waitFor(() => expect(screen.getByText(/마지막 업데이트/)).toBeInTheDocument())
+  fireEvent.click(screen.getByRole('button', { name: '스피또1000' }))
+  expect(screen.getByText('107회')).toBeInTheDocument()
+  expect(screen.getByText('1등 잔여 9매/12매')).toBeInTheDocument()
 })
 
-test('라운드 변경 시 지역 필터 초기화', async () => {
-  mockFetchOk()
+test('조건 맞는 회차 없으면 안내 (스피또500 판매종료만)', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => data }))
   render(<SpeettoPage />)
-  await waitFor(() => expect(screen.getByText('A')).toBeInTheDocument())
-  // 경기 선택 → A(서울) 숨김
-  fireEvent.click(screen.getByRole('button', { name: /경기/ }))
-  expect(screen.queryByText('A')).not.toBeInTheDocument()
-  expect(screen.getByText('B')).toBeInTheDocument()
-  // 라운드 변경 → 지역 필터 null 리셋
-  fireEvent.change(screen.getByRole('combobox'), { target: { value: '스피또1000#107' } })
-  // A(서울, 107회)가 다시 보이면 지역 필터가 초기화된 것
-  expect(screen.getByText('A')).toBeInTheDocument()
+  await waitFor(() => expect(screen.getByText(/마지막 업데이트/)).toBeInTheDocument())
+  fireEvent.click(screen.getByRole('button', { name: '스피또500' }))
+  expect(screen.getByText('현재 1등이 남은 판매중 회차가 없습니다')).toBeInTheDocument()
 })
 
-test('fetch 실패 시 에러 메시지', async () => {
+test('로드 실패 시 에러', async () => {
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false }))
   render(<SpeettoPage />)
-  await waitFor(() =>
-    expect(screen.getByText('데이터를 불러올 수 없습니다')).toBeInTheDocument(),
-  )
+  await waitFor(() => expect(screen.getByText('데이터를 불러올 수 없습니다')).toBeInTheDocument())
 })
