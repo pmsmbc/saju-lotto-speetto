@@ -51,3 +51,12 @@ body { margin: 0; background: var(--bg); font-family: system-ui, -apple-system, 
 .plus { font-weight: 700; color: #718096; }
 .hotcold { display: flex; gap: 24px; margin-top: 20px; flex-wrap: wrap; }
 .hint { color: #c05621; font-size: 13px; }
+
+/* --- Speetto 1등 잔여 --- */
+.game-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.game-tab { border: 1px solid #cbd5e0; background: #fff; color: #4a5568; border-radius: 999px; padding: 6px 14px; font-size: 14px; cursor: pointer; }
+.game-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.speetto-rounds { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.speetto-round { display: flex; align-items: center; justify-content: space-between; gap: 12px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; }
+.speetto-round .round-no { font-weight: 700; font-size: 15px; color: #1a202c; }
+.speetto-round .rank1-remain { font-size: 14px; color: #c05621; font-weight: 600; }
