@@ -4,7 +4,7 @@ import LottoPage from './pages/LottoPage.jsx'
 import './App.css'
 
 const TABS = [
-  { id: 'speetto', label: '스피또 당첨 지역' },
+  { id: 'speetto', label: '스피또 1등 잔여' },
   { id: 'lotto', label: '로또 번호 추천' },
   { id: 'zodiac', label: '오늘의 띠별 번호' },
   { id: 'saju', label: '사주 번호 추천' },
