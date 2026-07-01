@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import SpeettoPage from './pages/SpeettoPage.jsx'
+import LottoPage from './pages/LottoPage.jsx'
 import './App.css'
 
 const TABS = [
@@ -29,7 +30,9 @@ export default function App() {
         </nav>
       </header>
       <main className="app-main">
-        {tab === 'speetto' ? <SpeettoPage /> : <p className="status">준비중입니다</p>}
+        {tab === 'speetto' && <SpeettoPage />}
+        {tab === 'lotto' && <LottoPage />}
+        {tab !== 'speetto' && tab !== 'lotto' && <p className="status">준비중입니다</p>}
       </main>
     </div>
   )

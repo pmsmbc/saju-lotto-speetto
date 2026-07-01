@@ -29,3 +29,25 @@ body { margin: 0; background: var(--bg); font-family: system-ui, -apple-system, 
 .store-name { font-weight: 600; margin: 2px 0; }
 .store-addr { font-size: 13px; color: #4a5568; }
 .empty { padding: 16px 0; text-align: center; color: #a0aec0; }
+
+/* --- Lotto --- */
+.lotto-page h2 { font-size: 16px; margin: 8px 0 10px; }
+.lotto-page h3 { font-size: 14px; margin: 8px 0 6px; color: #4a5568; }
+.lotto-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.lotto-actions button { border: 1px solid var(--accent); background: var(--accent); color: #fff; border-radius: 8px; padding: 10px 14px; font-size: 14px; cursor: pointer; }
+.lotto-actions button:disabled { background: #cbd5e0; border-color: #cbd5e0; cursor: not-allowed; }
+.lotto-sets { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.number-set { display: flex; align-items: center; gap: 8px; }
+.set-label { width: 18px; font-weight: 700; color: #718096; }
+.set-balls { display: flex; flex-wrap: wrap; gap: 6px; }
+.lotto-ball { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; font-size: 13px; font-weight: 700; color: #1a202c; }
+.ball-yellow { background: #fbc400; }
+.ball-blue { background: #69c8f2; }
+.ball-red { background: #ff7272; color: #fff; }
+.ball-gray { background: #aaaaaa; color: #fff; }
+.ball-green { background: #b0d840; }
+.latest-draw { margin-bottom: 12px; }
+.latest-balls { display: flex; align-items: center; gap: 8px; }
+.plus { font-weight: 700; color: #718096; }
+.hotcold { display: flex; gap: 24px; margin-top: 20px; flex-wrap: wrap; }
+.hint { color: #c05621; font-size: 13px; }
