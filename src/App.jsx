@@ -15,7 +15,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1 className="app-title">사주·로또·스피또</h1>
+        <h1 className="app-title">사주로또 사또</h1>
         <nav className="app-nav">
           {TABS.map((t) => (
             <button
