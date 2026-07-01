@@ -1,0 +1,30 @@
+name: Scrape Lotto
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'   # 매주 일요일 09:00 KST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/scrape-lotto.js
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/lotto-stats.json
+          if git diff --staged --quiet; then
+            echo "변경 없음"
+          else
+            git commit -m "data: update lotto stats"
+            git push
+          fi
