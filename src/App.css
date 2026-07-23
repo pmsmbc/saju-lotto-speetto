@@ -13,10 +13,6 @@ body { margin: 0; background: var(--bg); font-family: system-ui, -apple-system, 
 .status { padding: 32px 0; text-align: center; color: #718096; }
 .status.error { color: #c53030; }
 .updated-at { color: #718096; font-size: 13px; margin: 0 0 12px; }
-.mode-tabs { display: flex; gap: 8px; margin: 0 0 12px; }
-.mode-tab { flex: 1; border: 1px solid var(--line); background: #fff; color: #4a5568; border-radius: 8px; padding: 8px 0; font-size: 14px; cursor: pointer; }
-.mode-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
-.round-selector { width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 8px; font-size: 15px; margin-bottom: 16px; background: #fff; }
 .speetto-page h2 { font-size: 16px; margin: 20px 0 10px; }
 .region-stats { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .region-bar { display: flex; align-items: center; gap: 8px; width: 100%; border: none; background: none; padding: 4px; cursor: pointer; text-align: left; }
@@ -58,7 +54,10 @@ body { margin: 0; background: var(--bg); font-family: system-ui, -apple-system, 
 .game-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
 .game-tab { border: 1px solid #cbd5e0; background: #fff; color: #4a5568; border-radius: 999px; padding: 6px 14px; font-size: 14px; cursor: pointer; }
 .game-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-.speetto-rounds { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
-.speetto-round { display: flex; align-items: center; justify-content: space-between; gap: 12px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; }
-.speetto-round .round-no { font-weight: 700; font-size: 15px; color: #1a202c; }
-.speetto-round .rank1-remain { font-size: 14px; color: #c05621; font-weight: 600; }
+.speetto-rounds { display: flex; flex-direction: column; gap: 16px; margin-top: 8px; }
+.round-region { border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; }
+.round-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.round-head .round-no { font-weight: 700; font-size: 15px; color: #1a202c; }
+.round-head .rank1-remain { font-size: 14px; color: #c05621; font-weight: 600; }
+.round-region .store-list { margin-top: 8px; }
+.round-region .empty { padding: 8px 0; }
