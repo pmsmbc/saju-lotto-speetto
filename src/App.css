@@ -58,6 +58,8 @@ body { margin: 0; background: var(--bg); font-family: system-ui, -apple-system, 
 .round-region { border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; }
 .round-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
 .round-head .round-no { font-weight: 700; font-size: 15px; color: #1a202c; }
+.round-head .round-meta { display: flex; align-items: center; gap: 10px; }
+.round-head .stock-rate { font-size: 13px; color: #2b6cb0; font-weight: 600; }
 .round-head .rank1-remain { font-size: 14px; color: #c05621; font-weight: 600; }
 .round-region .store-list { margin-top: 8px; }
 .round-region .empty { padding: 8px 0; }

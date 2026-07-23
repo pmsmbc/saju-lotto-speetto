@@ -1,9 +1,9 @@
 import { describe, test, expect } from 'vitest'
 import { parseRnkRate, parseRecord, buildStatus, isCompleteSpeettoStatus } from './speetto-normalize.js'
 
-const raw2000 = { ntslStatus: '판매중', stGmTypeCd: 'SP2000', stGmTypeNm: '스피또2000', stEpsd: 68, stRnk1Rt: '7매/8매' }
-const raw1000 = { ntslStatus: '판매중', stGmTypeCd: 'SP1000', stGmTypeNm: '스피또1000', stEpsd: 107, stRnk1Rt: '9매/12매' }
-const raw500 = { ntslStatus: '판매종료', stGmTypeCd: 'SP500', stGmTypeNm: '스피또500', stEpsd: 47, stRnk1Rt: '0매/5매' }
+const raw2000 = { ntslStatus: '판매중', stGmTypeCd: 'SP2000', stGmTypeNm: '스피또2000', stEpsd: 68, stRnk1Rt: '7매/8매', stSpmtRt: 97 }
+const raw1000 = { ntslStatus: '판매중', stGmTypeCd: 'SP1000', stGmTypeNm: '스피또1000', stEpsd: 107, stRnk1Rt: '9매/12매', stSpmtRt: 97 }
+const raw500 = { ntslStatus: '판매종료', stGmTypeCd: 'SP500', stGmTypeNm: '스피또500', stEpsd: 47, stRnk1Rt: '0매/5매', stSpmtRt: 70 }
 
 describe('parseRnkRate', () => {
   test('"7매/8매" → {remaining:7,total:8}', () => {
@@ -20,7 +20,7 @@ describe('parseRecord', () => {
   test('원시 레코드를 정규화', () => {
     expect(parseRecord(raw2000)).toEqual({
       game: '스피또2000', gameCode: 'SP2000', round: 68,
-      status: '판매중', rank1Remaining: 7, rank1Total: 8,
+      status: '판매중', rank1Remaining: 7, rank1Total: 8, stockRate: 97,
     })
   })
 })

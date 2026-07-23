@@ -15,6 +15,7 @@ export function parseRecord(raw) {
     status: raw.ntslStatus,
     rank1Remaining: remaining,
     rank1Total: total,
+    stockRate: Number(raw.stSpmtRt), // 판매점 입고율(%)
   }
 }
 

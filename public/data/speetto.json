@@ -1,21 +1,32 @@
 {
-  "updatedAt": "2026-07-01T07:39:19.714Z",
+  "updatedAt": "2026-07-22T08:26:22.923Z",
   "rounds": [
+    {
+      "game": "스피또1000",
+      "gameCode": "SP1000",
+      "round": 108,
+      "status": "판매중",
+      "rank1Remaining": 11,
+      "rank1Total": 11,
+      "stockRate": 18
+    },
     {
       "game": "스피또1000",
       "gameCode": "SP1000",
       "round": 107,
       "status": "판매중",
-      "rank1Remaining": 9,
-      "rank1Total": 12
+      "rank1Remaining": 6,
+      "rank1Total": 12,
+      "stockRate": 97
     },
     {
       "game": "스피또1000",
       "gameCode": "SP1000",
       "round": 106,
       "status": "판매중",
-      "rank1Remaining": 2,
-      "rank1Total": 12
+      "rank1Remaining": 1,
+      "rank1Total": 12,
+      "stockRate": 100
     },
     {
       "game": "스피또1000",
@@ -23,7 +34,8 @@
       "round": 105,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 11
+      "rank1Total": 11,
+      "stockRate": 99
     },
     {
       "game": "스피또1000",
@@ -31,7 +43,8 @@
       "round": 104,
       "status": "판매종료",
       "rank1Remaining": 1,
-      "rank1Total": 11
+      "rank1Total": 11,
+      "stockRate": 100
     },
     {
       "game": "스피또1000",
@@ -39,7 +52,8 @@
       "round": 103,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 11
+      "rank1Total": 11,
+      "stockRate": 100
     },
     {
       "game": "스피또1000",
@@ -47,7 +61,8 @@
       "round": 102,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 11
+      "rank1Total": 11,
+      "stockRate": 100
     },
     {
       "game": "스피또1000",
@@ -55,7 +70,8 @@
       "round": 101,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 10
+      "rank1Total": 10,
+      "stockRate": 100
     },
     {
       "game": "스피또1000",
@@ -63,7 +79,8 @@
       "round": 100,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 10
+      "rank1Total": 10,
+      "stockRate": 100
     },
     {
       "game": "스피또1000",
@@ -71,7 +88,8 @@
       "round": 99,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 10
+      "rank1Total": 10,
+      "stockRate": 100
     },
     {
       "game": "스피또1000",
@@ -79,7 +97,8 @@
       "round": 98,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 10
+      "rank1Total": 10,
+      "stockRate": 100
     },
     {
       "game": "스피또1000",
@@ -87,7 +106,8 @@
       "round": 97,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 10
+      "rank1Total": 10,
+      "stockRate": 100
     },
     {
       "game": "스피또1000",
@@ -95,7 +115,8 @@
       "round": 96,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 10
+      "rank1Total": 10,
+      "stockRate": 100
     },
     {
       "game": "스피또1000",
@@ -103,7 +124,8 @@
       "round": 95,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 10
+      "rank1Total": 10,
+      "stockRate": 100
     },
     {
       "game": "스피또1000",
@@ -111,7 +133,8 @@
       "round": 94,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 9
+      "rank1Total": 9,
+      "stockRate": 100
     },
     {
       "game": "스피또1000",
@@ -119,7 +142,8 @@
       "round": 93,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 9
+      "rank1Total": 9,
+      "stockRate": 100
     },
     {
       "game": "스피또1000",
@@ -127,7 +151,8 @@
       "round": 92,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 9
+      "rank1Total": 9,
+      "stockRate": 100
     },
     {
       "game": "스피또1000",
@@ -135,15 +160,26 @@
       "round": 91,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 9
+      "rank1Total": 9,
+      "stockRate": 100
+    },
+    {
+      "game": "스피또2000",
+      "gameCode": "SP2000",
+      "round": 69,
+      "status": "판매중",
+      "rank1Remaining": 10,
+      "rank1Total": 10,
+      "stockRate": 7
     },
     {
       "game": "스피또2000",
       "gameCode": "SP2000",
       "round": 68,
       "status": "판매중",
-      "rank1Remaining": 7,
-      "rank1Total": 8
+      "rank1Remaining": 5,
+      "rank1Total": 8,
+      "stockRate": 97
     },
     {
       "game": "스피또2000",
@@ -151,7 +187,8 @@
       "round": 67,
       "status": "판매중",
       "rank1Remaining": 0,
-      "rank1Total": 6
+      "rank1Total": 6,
+      "stockRate": 81
     },
     {
       "game": "스피또2000",
@@ -159,7 +196,8 @@
       "round": 66,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 6
+      "rank1Total": 6,
+      "stockRate": 74
     },
     {
       "game": "스피또2000",
@@ -167,7 +205,8 @@
       "round": 65,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 6
+      "rank1Total": 6,
+      "stockRate": 100
     },
     {
       "game": "스피또2000",
@@ -175,7 +214,8 @@
       "round": 64,
       "status": "판매종료",
       "rank1Remaining": 4,
-      "rank1Total": 8
+      "rank1Total": 8,
+      "stockRate": 80
     },
     {
       "game": "스피또2000",
@@ -183,7 +223,8 @@
       "round": 63,
       "status": "판매종료",
       "rank1Remaining": 2,
-      "rank1Total": 8
+      "rank1Total": 8,
+      "stockRate": 92
     },
     {
       "game": "스피또2000",
@@ -191,7 +232,8 @@
       "round": 62,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 6
+      "rank1Total": 6,
+      "stockRate": 98
     },
     {
       "game": "스피또2000",
@@ -199,7 +241,8 @@
       "round": 61,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 6
+      "rank1Total": 6,
+      "stockRate": 100
     },
     {
       "game": "스피또2000",
@@ -207,7 +250,8 @@
       "round": 60,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 6
+      "rank1Total": 6,
+      "stockRate": 100
     },
     {
       "game": "스피또2000",
@@ -215,7 +259,8 @@
       "round": 59,
       "status": "판매종료",
       "rank1Remaining": 0,
-      "rank1Total": 6
+      "rank1Total": 6,
+      "stockRate": 91
     },
     {
       "game": "스피또500",
@@ -223,7 +268,8 @@
       "round": 48,
       "status": "판매중",
       "rank1Remaining": 5,
-      "rank1Total": 5
+      "rank1Total": 5,
+      "stockRate": 42
     },
     {
       "game": "스피또500",
@@ -231,7 +277,8 @@
       "round": 47,
       "status": "판매종료",
       "rank1Remaining": 2,
-      "rank1Total": 2
+      "rank1Total": 2,
+      "stockRate": 70
     }
   ],
   "stores": [
@@ -263,6 +310,30 @@
       "game": "스피또2000",
       "round": 68,
       "rank": 2,
+      "store": "로또복권",
+      "address": "경기 안산시 단원구 선부광장1로 121 101호",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 68,
+      "rank": 2,
+      "store": "마두5번출구가판로또",
+      "address": "경기 고양시 일산동구 중앙로 1200 ",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 68,
+      "rank": 2,
+      "store": "복권명당",
+      "address": "경기 안양시 만안구 예술공원로 67 1층",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 68,
+      "rank": 2,
       "store": "복권판매점",
       "address": "경기 성남시 중원구 성남대로1130번길 3 제1층 제101호",
       "region": "경기"
@@ -279,9 +350,41 @@
       "game": "스피또2000",
       "round": 68,
       "rank": 2,
+      "store": "진례로또명당",
+      "address": "경남 김해시 테크노밸리1로 196-43 Cu편의점 옆",
+      "region": "경남"
+    },
+    {
+      "game": "스피또2000",
+      "round": 68,
+      "rank": 1,
+      "store": "메트로센터점",
+      "address": "대구 중구 달구벌대로 지하 2100 메트로센터C412호",
+      "region": "대구"
+    },
+    {
+      "game": "스피또2000",
+      "round": 68,
+      "rank": 1,
+      "store": "메트로센터점",
+      "address": "대구 중구 달구벌대로 지하 2100 메트로센터C412호",
+      "region": "대구"
+    },
+    {
+      "game": "스피또2000",
+      "round": 68,
+      "rank": 2,
       "store": "스파편의점",
       "address": "부산 사상구 가야대로 288 창조상가106호",
       "region": "부산"
+    },
+    {
+      "game": "스피또2000",
+      "round": 68,
+      "rank": 2,
+      "store": "드림동행복권",
+      "address": "서울 금천구 가산디지털2로 135 1동 141호",
+      "region": "서울"
     },
     {
       "game": "스피또2000",
@@ -322,6 +425,14 @@
       "store": "천하명당",
       "address": "전남 여수시 망마로 107 ",
       "region": "전남"
+    },
+    {
+      "game": "스피또2000",
+      "round": 68,
+      "rank": 2,
+      "store": "1등대박복권판매점",
+      "address": "전북 부안군 오리정로 46 ",
+      "region": "전북"
     },
     {
       "game": "스피또2000",
@@ -1697,6 +1808,14 @@
       "rank": 2,
       "store": "복권명당(시지)",
       "address": "대구광역시 수성구 천을로180",
+      "region": "대구"
+    },
+    {
+      "game": "스피또2000",
+      "round": 60,
+      "rank": 2,
+      "store": "행복한복권",
+      "address": "대구 수성구 지범로31길 7 우측상가(지산동)",
       "region": "대구"
     },
     {
@@ -5423,9 +5542,49 @@
       "game": "스피또1000",
       "round": 107,
       "rank": 1,
+      "store": "동탄호수복권",
+      "address": "경기 화성시 동탄순환대로 127-5 1층 101호",
+      "region": "경기"
+    },
+    {
+      "game": "스피또1000",
+      "round": 107,
+      "rank": 1,
+      "store": "로또명당(유가테크노점)",
+      "address": "대구 달성군 테크노상업로 108 1동 1층 114호(테크노에이스)",
+      "region": "대구"
+    },
+    {
+      "game": "스피또1000",
+      "round": 107,
+      "rank": 1,
       "store": "영등포역 지하상가 1등 복권방",
       "address": "서울 영등포구 경인로 지하 843 영등포역 지하도상가 13호",
       "region": "서울"
+    },
+    {
+      "game": "스피또1000",
+      "round": 107,
+      "rank": 1,
+      "store": "조치원복권방",
+      "address": "세종   조치원로 9-1 ",
+      "region": "세종"
+    },
+    {
+      "game": "스피또1000",
+      "round": 107,
+      "rank": 1,
+      "store": "로또100",
+      "address": "인천 서해구 청라커낼로 264 1층 101-A호(청라동, 청라두손중앙프라자)",
+      "region": "인천"
+    },
+    {
+      "game": "스피또1000",
+      "round": 107,
+      "rank": 1,
+      "store": "골드로또",
+      "address": "충북 제천시 명륜로3길 2 1층",
+      "region": "충북"
     },
     {
       "game": "스피또1000",
@@ -5458,6 +5617,14 @@
       "store": "씨유거제사등새아침점",
       "address": "경남 거제시 거제대로 5501 주2동 103호,104호",
       "region": "경남"
+    },
+    {
+      "game": "스피또1000",
+      "round": 106,
+      "rank": 1,
+      "store": "문경로또",
+      "address": "경북 문경시 문희로 19-1 ",
+      "region": "경북"
     },
     {
       "game": "스피또1000",

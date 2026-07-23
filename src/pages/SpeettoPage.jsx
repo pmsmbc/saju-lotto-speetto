@@ -15,7 +15,7 @@ function formatDate(iso) {
 }
 
 // 한 회차의 1등 당첨 지역 + 판매점 (지역 클릭 시 판매점 목록 필터)
-function RoundRegion({ round, rank1Remaining, rank1Total, rank1Stores }) {
+function RoundRegion({ round, rank1Remaining, rank1Total, stockRate, rank1Stores }) {
   const [region, setRegion] = useState(null)
   const stats = useMemo(() => aggregateByArea(rank1Stores), [rank1Stores])
   const visible = useMemo(
@@ -27,8 +27,13 @@ function RoundRegion({ round, rank1Remaining, rank1Total, rank1Stores }) {
     <div className="round-region">
       <div className="round-head">
         <span className="round-no">{round}회</span>
-        <span className="rank1-remain">
-          1등 남음 {rank1Remaining}매/{rank1Total}매
+        <span className="round-meta">
+          {Number.isFinite(stockRate) && (
+            <span className="stock-rate">입고율 {stockRate}%</span>
+          )}
+          <span className="rank1-remain">
+            1등 남음 {rank1Remaining}매/{rank1Total}매
+          </span>
         </span>
       </div>
       {rank1Stores.length === 0 ? (
@@ -102,6 +107,7 @@ export function SpeettoPage() {
               round={r.round}
               rank1Remaining={r.rank1Remaining}
               rank1Total={r.rank1Total}
+              stockRate={r.stockRate}
               rank1Stores={rank1ByRound.get(r.round) ?? []}
             />
           ))}

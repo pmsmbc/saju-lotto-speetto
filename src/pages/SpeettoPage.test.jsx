@@ -6,13 +6,13 @@ const data = {
   updatedAt: '2026-07-01T00:00:00Z',
   rounds: [
     // 2000: 68회만 노출(판매중&1등남음). 67회는 잔여0, 66회는 판매종료 → 제외
-    { game: '스피또2000', gameCode: 'SP2000', round: 68, status: '판매중', rank1Remaining: 7, rank1Total: 8 },
-    { game: '스피또2000', gameCode: 'SP2000', round: 67, status: '판매중', rank1Remaining: 0, rank1Total: 6 },
-    { game: '스피또2000', gameCode: 'SP2000', round: 66, status: '판매종료', rank1Remaining: 2, rank1Total: 5 },
+    { game: '스피또2000', gameCode: 'SP2000', round: 68, status: '판매중', rank1Remaining: 7, rank1Total: 8, stockRate: 97 },
+    { game: '스피또2000', gameCode: 'SP2000', round: 67, status: '판매중', rank1Remaining: 0, rank1Total: 6, stockRate: 81 },
+    { game: '스피또2000', gameCode: 'SP2000', round: 66, status: '판매종료', rank1Remaining: 2, rank1Total: 5, stockRate: 74 },
     // 1000: 107회 노출
-    { game: '스피또1000', gameCode: 'SP1000', round: 107, status: '판매중', rank1Remaining: 9, rank1Total: 12 },
+    { game: '스피또1000', gameCode: 'SP1000', round: 107, status: '판매중', rank1Remaining: 9, rank1Total: 12, stockRate: 100 },
     // 500: 48회 노출되지만 아직 1등 판매점 없음
-    { game: '스피또500', gameCode: 'SP500', round: 48, status: '판매중', rank1Remaining: 5, rank1Total: 5 },
+    { game: '스피또500', gameCode: 'SP500', round: 48, status: '판매중', rank1Remaining: 5, rank1Total: 5, stockRate: 42 },
   ],
   stores: [
     { game: '스피또2000', round: 68, rank: 1, store: '금강복권', address: '경기 김포시 율생로 3', region: '경기' },
@@ -37,6 +37,7 @@ test('선택 게임(2000)의 판매중&1등남음 회차만, 1등 남은 수와 
   await waitFor(() => expect(screen.getByText(/마지막 업데이트/)).toBeInTheDocument())
   expect(screen.getByText('68회')).toBeInTheDocument()
   expect(screen.getByText('1등 남음 7매/8매')).toBeInTheDocument()
+  expect(screen.getByText('입고율 97%')).toBeInTheDocument()
   // 잔여0(67회)·판매종료(66회)는 회차 헤더로 노출되지 않음
   expect(screen.queryByText('67회')).toBeNull()
   expect(screen.queryByText('66회')).toBeNull()
