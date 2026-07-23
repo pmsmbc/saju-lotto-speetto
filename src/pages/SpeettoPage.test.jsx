@@ -15,12 +15,12 @@ const data = {
     { game: '스피또500', gameCode: 'SP500', round: 48, status: '판매중', rank1Remaining: 5, rank1Total: 5 },
   ],
   stores: [
-    { game: '스피또2000', round: 68, rank: 1, store: '금강복권', address: '경기 김포시', region: '경기' },
-    { game: '스피또2000', round: 68, rank: 1, store: '대박복권', address: '경기 성남시', region: '경기' },
-    { game: '스피또2000', round: 68, rank: 1, store: '서울복권', address: '서울 강남구', region: '서울' },
-    { game: '스피또2000', round: 68, rank: 2, store: '행운복권', address: '서울 마포구', region: '서울' },
-    { game: '스피또2000', round: 67, rank: 1, store: '옛날복권', address: '서울 종로구', region: '서울' },
-    { game: '스피또1000', round: 107, rank: 1, store: '영등포복권', address: '서울 영등포구', region: '서울' },
+    { game: '스피또2000', round: 68, rank: 1, store: '금강복권', address: '경기 김포시 율생로 3', region: '경기' },
+    { game: '스피또2000', round: 68, rank: 1, store: '대박복권', address: '경기 김포시 한강로 7', region: '경기' },
+    { game: '스피또2000', round: 68, rank: 1, store: '서울복권', address: '서울 강남구 일원로 5', region: '서울' },
+    { game: '스피또2000', round: 68, rank: 2, store: '행운복권', address: '서울 마포구 월드컵로 1', region: '서울' },
+    { game: '스피또2000', round: 67, rank: 1, store: '옛날복권', address: '서울 종로구 종로 1', region: '서울' },
+    { game: '스피또1000', round: 107, rank: 1, store: '영등포복권', address: '서울 영등포구 경인로 843', region: '서울' },
     // 500 48회: 1등 판매점 없음
   ],
 }
@@ -52,16 +52,16 @@ test('회차의 1등 당첨 지역 집계와 1등 판매점만 표시 (2등 제�
   expect(screen.getByText('서울복권')).toBeInTheDocument()
   // 2등 판매점은 제외
   expect(screen.queryByText('행운복권')).toBeNull()
-  // 지역 집계 막대(경기/서울)
-  expect(screen.getByRole('button', { name: /경기/ })).toBeInTheDocument()
-  expect(screen.getByRole('button', { name: /서울/ })).toBeInTheDocument()
+  // 지역 집계 막대는 시/군/구 단위
+  expect(screen.getByRole('button', { name: /경기 김포시/ })).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: /서울 강남구/ })).toBeInTheDocument()
 })
 
-test('지역 막대 클릭 시 그 회차의 해당 지역 1등 판매점만 표시', async () => {
+test('지역 막대 클릭 시 그 회차의 해당 시/군/구 1등 판매점만 표시', async () => {
   mockFetch()
   render(<SpeettoPage />)
   await waitFor(() => expect(screen.getByText(/마지막 업데이트/)).toBeInTheDocument())
-  fireEvent.click(screen.getByRole('button', { name: /경기/ }))
+  fireEvent.click(screen.getByRole('button', { name: /경기 김포시/ }))
   expect(screen.getByText('금강복권')).toBeInTheDocument()
   expect(screen.getByText('대박복권')).toBeInTheDocument()
   expect(screen.queryByText('서울복권')).toBeNull()

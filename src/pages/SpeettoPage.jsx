@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useSpeettoData } from '../hooks/useSpeettoData.js'
 import { GAME_TABS, sellingWithRank1 } from '../lib/speetto.js'
-import { aggregateByRegion, filterByRegion } from '../lib/aggregate.js'
+import { aggregateByArea, filterByArea } from '../lib/aggregate.js'
 import { RegionStats } from '../components/RegionStats.jsx'
 import { StoreList } from '../components/StoreList.jsx'
 
@@ -17,9 +17,9 @@ function formatDate(iso) {
 // 한 회차의 1등 당첨 지역 + 판매점 (지역 클릭 시 판매점 목록 필터)
 function RoundRegion({ round, rank1Remaining, rank1Total, rank1Stores }) {
   const [region, setRegion] = useState(null)
-  const stats = useMemo(() => aggregateByRegion(rank1Stores), [rank1Stores])
+  const stats = useMemo(() => aggregateByArea(rank1Stores), [rank1Stores])
   const visible = useMemo(
-    () => filterByRegion(rank1Stores, region),
+    () => filterByArea(rank1Stores, region),
     [rank1Stores, region],
   )
 
