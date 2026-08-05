@@ -11,3 +11,11 @@ export function sellingWithRank1(rounds, gameCode) {
     )
     .sort((a, b) => b.round - a.round)
 }
+
+// 최근 판매종료된 회차(최신순, 최대 limit개) - 종료 후에도 1등 당첨 지역을 보여주기 위함
+export function recentFinished(rounds, gameCode, limit = 2) {
+  return (rounds ?? [])
+    .filter((r) => r.gameCode === gameCode && r.status === '판매종료')
+    .sort((a, b) => b.round - a.round)
+    .slice(0, limit)
+}

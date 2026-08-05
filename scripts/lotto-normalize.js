@@ -13,6 +13,7 @@ export function parseDraw(item) {
     numbers,
     bonus: Number(item.bnsWnNo),
     date: formatYmd(item.ltRflYmd),
+    firstPrize: { winners: Number(item.rnk1WnNope), amount: Number(item.rnk1WnAmt) },
   }
 }
 
@@ -33,7 +34,13 @@ export function buildStats(draws) {
   return {
     latestRound: latest ? latest.round : 0,
     latestDraw: latest
-      ? { round: latest.round, numbers: latest.numbers, bonus: latest.bonus, date: latest.date }
+      ? {
+          round: latest.round,
+          numbers: latest.numbers,
+          bonus: latest.bonus,
+          date: latest.date,
+          firstPrize: latest.firstPrize,
+        }
       : null,
     totalDraws: draws.length,
     frequencies: computeFrequencies(draws),

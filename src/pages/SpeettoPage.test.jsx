@@ -20,6 +20,7 @@ const data = {
     { game: '스피또2000', round: 68, rank: 1, store: '서울복권', address: '서울 강남구 일원로 5', region: '서울' },
     { game: '스피또2000', round: 68, rank: 2, store: '행운복권', address: '서울 마포구 월드컵로 1', region: '서울' },
     { game: '스피또2000', round: 67, rank: 1, store: '옛날복권', address: '서울 종로구 종로 1', region: '서울' },
+    { game: '스피또2000', round: 66, rank: 1, store: '종료복권', address: '서울 중구 명동 1', region: '서울' },
     { game: '스피또1000', round: 107, rank: 1, store: '영등포복권', address: '서울 영등포구 경인로 843', region: '서울' },
     // 500 48회: 1등 판매점 없음
   ],
@@ -38,9 +39,21 @@ test('선택 게임(2000)의 판매중&1등남음 회차만, 1등 남은 수와 
   expect(screen.getByText('68회')).toBeInTheDocument()
   expect(screen.getByText('1등 남음 7매/8매')).toBeInTheDocument()
   expect(screen.getByText('입고율 97%')).toBeInTheDocument()
-  // 잔여0(67회)·판매종료(66회)는 회차 헤더로 노출되지 않음
+  // 잔여0(67회)는 판매중&판매종료 어느 목록에도 노출되지 않음
   expect(screen.queryByText('67회')).toBeNull()
-  expect(screen.queryByText('66회')).toBeNull()
+})
+
+test('판매종료 회차(66회)는 최근 종료 회차 섹션에 노출되고, 펼치면 당첨 지역을 보여줌', async () => {
+  mockFetch()
+  render(<SpeettoPage />)
+  await waitFor(() => expect(screen.getByText(/마지막 업데이트/)).toBeInTheDocument())
+  expect(screen.getByText('최근 종료 회차 당첨 지역')).toBeInTheDocument()
+  expect(screen.getByText('66회')).toBeInTheDocument()
+  expect(screen.getByText('판매종료')).toBeInTheDocument()
+  // 기본은 접힘 상태 → 아직 당첨 판매점 텍스트 없음
+  expect(screen.queryByText('종료복권')).toBeNull()
+  fireEvent.click(screen.getByRole('button', { name: /66회/ }))
+  expect(screen.getByText('종료복권')).toBeInTheDocument()
 })
 
 test('회차의 1등 당첨 지역 집계와 1등 판매점만 표시 (2등 제외)', async () => {

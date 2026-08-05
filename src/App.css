@@ -1,63 +1,186 @@
 :root {
-  --accent: #2b6cb0;
-  --bg: #f7f8fa;
-  --line: #e2e8f0;
+  --bg-start: #0f1b33;
+  --bg-mid: #14213d;
+  --bg-end: #1b2b4d;
+  --bg-gradient: linear-gradient(160deg, var(--bg-start) 0%, var(--bg-mid) 55%, var(--bg-end) 100%);
+
+  --surface: rgba(255, 255, 255, 0.06);
+  --surface-solid: #1a2947;
+  --surface-border: rgba(250, 204, 21, 0.35);
+  --surface-shadow: none;
+
+  --text-strong: #ffd45e;
+  --text-body: #cbd5e1;
+  --text-muted: #c9a86a;
+  --active-bg: linear-gradient(135deg, #ffd45e, #d97706);
+  --active-text: #12203e;
+  --cta-bg: linear-gradient(135deg, #ffd45e, #d97706);
+  --cta-text: #12203e;
+  --cta-glow: 0 0 16px rgba(255, 196, 60, 0.35);
+  --line: rgba(250, 204, 21, 0.25);
 }
+
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); font-family: system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif; color: #1a202c; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  font-family: system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif;
+  color: var(--text-body);
+}
+
 .app { max-width: 720px; margin: 0 auto; padding: 16px; }
-.app-title { font-size: 20px; margin: 8px 0 12px; }
+
+/* --- Header --- */
+.app-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.app-brand { display: flex; align-items: center; gap: 8px; }
+.app-logo { width: 32px; height: 32px; border-radius: 50%; filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.25)); }
+.app-title { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; color: var(--text-strong); margin: 0; }
+
 .app-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
-.nav-tab { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 8px 14px; font-size: 14px; cursor: pointer; }
-.nav-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-.status { padding: 32px 0; text-align: center; color: #718096; }
-.status.error { color: #c53030; }
-.updated-at { color: #718096; font-size: 13px; margin: 0 0 12px; }
-.speetto-page h2 { font-size: 16px; margin: 20px 0 10px; }
-.region-stats { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-direction: column; gap: 6px; }
-.region-bar { display: flex; align-items: center; gap: 8px; width: 100%; border: none; background: none; padding: 4px; cursor: pointer; text-align: left; }
-.region-bar.active .region-name { font-weight: 700; color: var(--accent); }
-.region-name { font-size: 14px; flex: 1; white-space: nowrap; padding-right: 6px; }
-.region-count { width: 28px; text-align: right; font-size: 13px; flex: none; }
+.nav-tab {
+  border: none; box-shadow: inset 0 0 0 1px var(--surface-border);
+  background: var(--surface); color: var(--text-muted);
+  border-radius: 999px; padding: 8px 14px; font-size: 14px; font-weight: 600; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.nav-tab.active { background: var(--active-bg); color: var(--active-text); box-shadow: none; }
+.nav-tab-badge { font-size: 10px; font-weight: 700; opacity: 0.75; }
+
+.status { padding: 32px 0; text-align: center; color: var(--text-muted); }
+.status.error { color: #ff8a8a; }
+.updated-at { color: var(--text-muted); font-size: 13px; margin: 0 0 12px; }
+.empty { padding: 16px 0; text-align: center; color: var(--text-muted); opacity: 0.8; }
+.hint { color: #ffb877; font-size: 13px; }
+
+/* --- Shared surface card --- */
+.surface-card,
+.round-region,
+.number-set,
+.mode-segment,
+.hotcold > div {
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-shadow: inset 0 0 0 1px var(--surface-border);
+}
+
+.store-item,
+.region-bar {
+  background: var(--surface-solid);
+  box-shadow: inset 0 0 0 1px var(--surface-border);
+}
+
+/* --- Speetto --- */
+.game-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.game-tab {
+  border: none; box-shadow: inset 0 0 0 1px var(--surface-border);
+  background: var(--surface); color: var(--text-muted);
+  border-radius: 999px; padding: 6px 14px; font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.game-tab.active { background: var(--active-bg); color: var(--active-text); box-shadow: none; }
+
+.speetto-rounds { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.round-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%; border: none; background: none; padding: 0; cursor: pointer; text-align: left; color: inherit; font: inherit;
+}
+.round-head .round-no { font-weight: 800; font-size: 15px; color: var(--text-strong); }
+.round-head .round-meta { display: flex; align-items: center; gap: 8px; }
+.round-head .stock-rate { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+.round-head .rank1-remain {
+  font-size: 12px; font-weight: 800; padding: 3px 8px; border-radius: 999px;
+  background: var(--active-bg); color: var(--active-text);
+}
+.round-head .ended-badge {
+  font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 999px;
+  color: var(--text-muted); box-shadow: inset 0 0 0 1px var(--surface-border);
+}
+.section-title { font-size: 14px; font-weight: 700; color: var(--text-muted); margin: 18px 0 8px; }
+.round-head .chevron {
+  display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--surface-solid); color: var(--text-strong);
+  box-shadow: inset 0 0 0 1px var(--surface-border);
+  transition: transform 0.2s ease;
+}
+.round-head .chevron svg { width: 14px; height: 14px; }
+.round-head .chevron.expanded { transform: rotate(180deg); }
+.round-body { margin-top: 12px; }
+.round-region .empty { padding: 8px 0; }
+
+.region-stats {
+  list-style: none; margin: 0 0 10px; padding: 0;
+  display: flex; flex-direction: row; gap: 6px; overflow-x: auto;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.region-stats::-webkit-scrollbar { display: none; }
+.region-bar {
+  flex: none; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;
+  border: none; border-radius: 999px; padding: 6px 12px; cursor: pointer;
+}
+.region-bar.active { background: var(--active-bg); box-shadow: var(--cta-glow); }
+.region-bar.active .region-name { color: var(--active-text); font-weight: 700; }
+.region-bar.active .region-count { color: var(--active-text); }
+.region-name { font-size: 12px; color: var(--text-strong); }
+.region-count { font-size: 11px; color: var(--text-muted); opacity: 0.85; }
+
 .store-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.store-item { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: #fff; }
-.store-head { display: flex; justify-content: space-between; font-size: 12px; color: #718096; }
-.store-rank { color: var(--accent); font-weight: 700; }
-.store-name { font-weight: 600; margin: 2px 0; }
-.store-addr { font-size: 13px; color: #4a5568; }
-.empty { padding: 16px 0; text-align: center; color: #a0aec0; }
+.store-item { border-radius: 16px; padding: 10px 12px; }
+.store-head { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); }
+.store-rank { color: var(--text-strong); font-weight: 800; }
+.store-name { font-weight: 700; margin: 3px 0; color: var(--text-body); }
+.store-addr { font-size: 13px; color: var(--text-muted); }
+
 /* --- Lotto --- */
-.lotto-page h2 { font-size: 16px; margin: 8px 0 10px; }
-.lotto-page h3 { font-size: 14px; margin: 8px 0 6px; color: #4a5568; }
-.lotto-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
-.lotto-actions button { border: 1px solid var(--accent); background: var(--accent); color: #fff; border-radius: 8px; padding: 10px 14px; font-size: 14px; cursor: pointer; }
-.lotto-actions button:disabled { background: #cbd5e0; border-color: #cbd5e0; cursor: not-allowed; }
+.lotto-page h3 { font-size: 13px; margin: 8px 0 6px; color: var(--text-muted); font-weight: 700; }
+
+.latest-draw { margin-bottom: 12px; }
+.latest-draw .draw-label { font-size: 11px; color: var(--text-muted); font-weight: 700; }
+.latest-draw h2 { font-size: 15px; margin: 2px 0 10px; color: var(--text-strong); font-weight: 800; }
+.latest-balls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.plus { font-weight: 800; color: var(--text-muted); }
+.first-prize { font-size: 13px; font-weight: 700; color: var(--text-strong); margin: 10px 0 0; }
+
+.mode-segment { display: flex; border-radius: 999px; padding: 3px; margin: 12px 0 8px; }
+.mode-option {
+  flex: 1; text-align: center; font-size: 13px; font-weight: 700; padding: 8px 0; border-radius: 999px;
+  color: var(--text-strong); background: none; border: none; cursor: pointer;
+}
+.mode-option.active { background: var(--active-bg); color: var(--active-text); box-shadow: var(--cta-glow); }
+.mode-option:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.recommend-cta {
+  display: block; width: 100%; text-align: center; border: none; border-radius: 16px;
+  background: var(--cta-bg); color: var(--cta-text); box-shadow: var(--cta-glow);
+  font-weight: 800; font-size: 14px; padding: 12px; cursor: pointer; margin-bottom: 8px;
+}
+.recommend-cta:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+
 .lotto-sets { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
-.number-set { display: flex; align-items: center; gap: 8px; }
-.set-label { width: 18px; font-weight: 700; color: #718096; }
+.number-set { display: flex; align-items: center; gap: 8px; border-radius: 16px; }
+.set-generating { opacity: 0.85; }
+.set-spinner {
+  width: 16px; height: 16px; border-radius: 50%; flex: none;
+  border: 2px solid var(--surface-border); border-top-color: var(--text-strong);
+  animation: spin 0.7s linear infinite;
+}
+.generating-text { font-size: 12px; color: var(--text-muted); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.set-label { width: 18px; font-weight: 800; color: var(--text-muted); }
 .set-balls { display: flex; flex-wrap: wrap; gap: 6px; }
-.lotto-ball { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; font-size: 13px; font-weight: 700; color: #1a202c; }
+.lotto-ball {
+  display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px;
+  border-radius: 50%; font-size: 12px; font-weight: 800; color: #1a202c;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.45), inset 0 -2px 4px rgba(0, 0, 0, 0.15);
+}
 .ball-yellow { background: #fbc400; }
 .ball-blue { background: #69c8f2; }
 .ball-red { background: #ff7272; color: #fff; }
 .ball-gray { background: #aaaaaa; color: #fff; }
 .ball-green { background: #b0d840; }
-.latest-draw { margin-bottom: 12px; }
-.latest-balls { display: flex; align-items: center; gap: 8px; }
-.plus { font-weight: 700; color: #718096; }
-.hotcold { display: flex; gap: 24px; margin-top: 20px; flex-wrap: wrap; }
-.hint { color: #c05621; font-size: 13px; }
 
-/* --- Speetto 1등 잔여 --- */
-.game-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
-.game-tab { border: 1px solid #cbd5e0; background: #fff; color: #4a5568; border-radius: 999px; padding: 6px 14px; font-size: 14px; cursor: pointer; }
-.game-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-.speetto-rounds { display: flex; flex-direction: column; gap: 16px; margin-top: 8px; }
-.round-region { border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; }
-.round-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
-.round-head .round-no { font-weight: 700; font-size: 15px; color: #1a202c; }
-.round-head .round-meta { display: flex; align-items: center; gap: 10px; }
-.round-head .stock-rate { font-size: 13px; color: #2b6cb0; font-weight: 600; }
-.round-head .rank1-remain { font-size: 14px; color: #c05621; font-weight: 600; }
-.round-region .store-list { margin-top: 8px; }
-.round-region .empty { padding: 8px 0; }
+.hotcold { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.hotcold > div { flex: 1; min-width: 140px; border-radius: 16px; padding: 10px 12px; }

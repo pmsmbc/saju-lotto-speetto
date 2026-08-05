@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest'
 import {
-  randomSet, weightedSet, recommendSets, hotCold,
+  randomSet, weightedSet, recommendSets, hotCold, formatWon,
   POOL_MIN, POOL_MAX, SET_SIZE,
 } from './lotto.js'
 
@@ -74,5 +74,24 @@ describe('hotCold', () => {
     expect(hot).toEqual([10, 20, 30])
     // 0인 번호가 다수 → 하위 3개는 가장 작은 번호의 0짜리들
     expect(cold).toEqual([4, 5, 6])
+  })
+})
+
+describe('formatWon', () => {
+  test('억+만 단위 조합', () => {
+    expect(formatWon(3090961625)).toBe('30억 9,096만원')
+  })
+  test('억 단위만 딱 떨어지면 만 단위 생략', () => {
+    expect(formatWon(2400000000)).toBe('24억원')
+  })
+  test('만 단위만', () => {
+    expect(formatWon(56541981)).toBe('5,654만원')
+  })
+  test('만 단위 미만은 그대로 원 표기', () => {
+    expect(formatWon(5000)).toBe('5,000원')
+  })
+  test('금액 없으면 null', () => {
+    expect(formatWon(0)).toBeNull()
+    expect(formatWon(undefined)).toBeNull()
   })
 })

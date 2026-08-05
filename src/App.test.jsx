@@ -18,6 +18,6 @@ test('준비중 메뉴 클릭 시 안내 표시', () => {
     ok: true, json: async () => ({ updatedAt: null, rounds: [] }),
   }))
   render(<App />)
-  fireEvent.click(screen.getByRole('button', { name: '오늘의 띠별 번호' }))
+  fireEvent.click(screen.getByRole('button', { name: /오늘의 띠별 번호/ }))
   expect(screen.getByText('준비중입니다')).toBeInTheDocument()
 })
