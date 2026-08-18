@@ -1,4 +1,4 @@
-export const COPYRIGHT = '© 2026 사주로또 사또 (satto.kr). All rights reserved.'
+export const COPYRIGHT = '© 2026 사또 (satto.kr). All rights reserved.'
 
 export default function Footer() {
   return (
