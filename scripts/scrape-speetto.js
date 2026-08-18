@@ -24,17 +24,29 @@ async function getCookie(homePath) {
   return cookies.map((c) => c.split(';')[0]).join('; ')
 }
 
+const RETRIES = Number(process.env.RETRIES ?? 4)
+
 async function getJson(path, cookie, referer) {
-  const res = await fetch(`${BASE}${path}`, {
-    headers: {
-      'User-Agent': UA,
-      'X-Requested-With': 'XMLHttpRequest',
-      Referer: `${BASE}${referer}`,
-      Cookie: cookie,
-    },
-  })
-  if (!res.ok) throw new Error(`HTTP ${res.status} for ${path}`)
-  return res.json()
+  let lastErr
+  for (let attempt = 0; attempt <= RETRIES; attempt++) {
+    if (attempt > 0) await sleep(1000 * 2 ** (attempt - 1)) // 1s, 2s, 4s, 8s
+    try {
+      const res = await fetch(`${BASE}${path}`, {
+        headers: {
+          'User-Agent': UA,
+          'X-Requested-With': 'XMLHttpRequest',
+          Referer: `${BASE}${referer}`,
+          Cookie: cookie,
+        },
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status} for ${path}`)
+      return await res.json()
+    } catch (err) {
+      lastErr = err
+      console.error(`재시도 ${attempt + 1}/${RETRIES} 실패 (${path}): ${err.message}`)
+    }
+  }
+  throw lastErr
 }
 
 // 1등 잔여 현황 (발행/소진 상태)
@@ -51,13 +63,15 @@ async function fetchRounds() {
 
 // 당첨 판매점 (지역/판매점)
 async function fetchStores() {
-  const cookie = await getCookie('/wnprchsplcsrch/home')
+  let cookie = ''
   const referer = '/wnprchsplcsrch/home'
   const allStores = []
 
   for (const { code, name } of GAME_CODES) {
     let episodes = []
     try {
+      await sleep(SLEEP_MS * 4)
+      cookie = await getCookie('/wnprchsplcsrch/home')
       const epsdJson = await getJson(
         `/wnprchsplcsrch/selectStEpsdInfo.do?srchLtGdsCd=${code}`,
         cookie,
