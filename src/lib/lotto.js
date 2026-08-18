@@ -57,6 +57,19 @@ export function recommendSets({ count, mode, frequencies, rng = Math.random }) {
   return sets
 }
 
+// 큰 원화 금액을 "30억 9,096만원" 형태로 표기
+export function formatWon(amount) {
+  const n = Number(amount)
+  if (!Number.isFinite(n) || n <= 0) return null
+  const eok = Math.floor(n / 100000000)
+  const man = Math.floor((n % 100000000) / 10000)
+  if (eok === 0 && man === 0) return `${n.toLocaleString('ko-KR')}원`
+  const parts = []
+  if (eok > 0) parts.push(`${eok}억`)
+  if (man > 0) parts.push(`${man.toLocaleString('ko-KR')}만`)
+  return `${parts.join(' ')}원`
+}
+
 export function hotCold(frequencies, n) {
   const entries = poolNumbers().map((num) => ({ num, w: freqWeight(frequencies, num) }))
   const hot = [...entries].sort((a, b) => b.w - a.w || a.num - b.num).slice(0, n).map((e) => e.num)

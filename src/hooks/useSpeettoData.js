@@ -6,6 +6,7 @@ export function useSpeettoData() {
     error: null,
     updatedAt: null,
     rounds: [],
+    stores: [],
   })
 
   useEffect(() => {
@@ -23,11 +24,18 @@ export function useSpeettoData() {
           error: null,
           updatedAt: data.updatedAt ?? null,
           rounds: data.rounds ?? [],
+          stores: data.stores ?? [],
         })
       })
       .catch(() => {
         if (cancelled) return
-        setState({ loading: false, error: '데이터를 불러올 수 없습니다', updatedAt: null, rounds: [] })
+        setState({
+          loading: false,
+          error: '데이터를 불러올 수 없습니다',
+          updatedAt: null,
+          rounds: [],
+          stores: [],
+        })
       })
     return () => {
       cancelled = true

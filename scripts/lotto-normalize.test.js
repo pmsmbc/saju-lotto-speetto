@@ -1,13 +1,17 @@
 import { describe, test, expect } from 'vitest'
 import { parseDraw, computeFrequencies, buildStats, isCompleteLottoStats } from './lotto-normalize.js'
 
-const item1230 = { ltEpsd: 1230, tm1WnNo: 42, tm2WnNo: 3, tm3WnNo: 28, tm4WnNo: 9, tm5WnNo: 8, tm6WnNo: 22, bnsWnNo: 45, ltRflYmd: '20260627' }
-const item1229 = { ltEpsd: 1229, tm1WnNo: 12, tm2WnNo: 13, tm3WnNo: 29, tm4WnNo: 34, tm5WnNo: 37, tm6WnNo: 42, bnsWnNo: 16, ltRflYmd: '20260620' }
+const item1230 = { ltEpsd: 1230, tm1WnNo: 42, tm2WnNo: 3, tm3WnNo: 28, tm4WnNo: 9, tm5WnNo: 8, tm6WnNo: 22, bnsWnNo: 45, ltRflYmd: '20260627', rnk1WnNope: 9, rnk1WnAmt: 3090961625 }
+const item1229 = { ltEpsd: 1229, tm1WnNo: 12, tm2WnNo: 13, tm3WnNo: 29, tm4WnNo: 34, tm5WnNo: 37, tm6WnNo: 42, bnsWnNo: 16, ltRflYmd: '20260620', rnk1WnNope: 11, rnk1WnAmt: 2400000000 }
 
 describe('parseDraw', () => {
   test('번호를 오름차순 정렬하고 날짜를 포맷', () => {
     expect(parseDraw(item1230)).toEqual({
-      round: 1230, numbers: [3, 8, 9, 22, 28, 42], bonus: 45, date: '2026-06-27',
+      round: 1230,
+      numbers: [3, 8, 9, 22, 28, 42],
+      bonus: 45,
+      date: '2026-06-27',
+      firstPrize: { winners: 9, amount: 3090961625 },
     })
   })
 })
@@ -27,6 +31,7 @@ describe('buildStats', () => {
     const s = buildStats([parseDraw(item1229), parseDraw(item1230)])
     expect(s.latestRound).toBe(1230)
     expect(s.latestDraw.numbers).toEqual([3, 8, 9, 22, 28, 42])
+    expect(s.latestDraw.firstPrize).toEqual({ winners: 9, amount: 3090961625 })
     expect(s.totalDraws).toBe(2)
     expect(s.frequencies[42]).toBe(2)
   })
