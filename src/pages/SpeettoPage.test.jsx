@@ -119,3 +119,10 @@ test('로드 실패 시 에러', async () => {
   render(<SpeettoPage />)
   await waitFor(() => expect(screen.getByText('데이터를 불러올 수 없습니다')).toBeInTheDocument())
 })
+
+test('formatDate는 KST 기준 날짜+시간을 표시', async () => {
+  const { formatDate } = await import('./SpeettoPage.jsx')
+  expect(formatDate('2026-08-18T08:26:29.583Z')).toBe('2026-08-18 17:26')
+  expect(formatDate('2026-08-18T15:30:00Z')).toBe('2026-08-19 00:30')
+  expect(formatDate(null)).toBe('')
+})

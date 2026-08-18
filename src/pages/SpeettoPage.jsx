@@ -5,13 +5,19 @@ import { aggregateByArea, filterByArea } from '../lib/aggregate.js'
 import { RegionStats } from '../components/RegionStats.jsx'
 import { StoreList } from '../components/StoreList.jsx'
 
-function formatDate(iso) {
+export function formatDate(iso) {
   if (!iso) return ''
   const d = new Date(iso)
   if (Number.isNaN(d.getTime())) return iso
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(
-    d.getDate(),
-  ).padStart(2, '0')}`
+  // 한국 시간(KST) 기준 YYYY-MM-DD HH:mm
+  const parts = new Intl.DateTimeFormat('ko-KR', {
+    timeZone: 'Asia/Seoul',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', hour12: false,
+  }).formatToParts(d)
+  const get = (t) => parts.find((p) => p.type === t)?.value ?? ''
+  const hour = get('hour') === '24' ? '00' : get('hour')
+  return `${get('year')}-${get('month')}-${get('day')} ${hour}:${get('minute')}`
 }
 
 // 한 회차의 1등 당첨 지역 + 판매점 (지역 클릭 시 판매점 목록 필터)
