@@ -19,7 +19,7 @@ export default function App() {
       <header className="app-header">
         <div className="app-brand">
           <img src="/logo.png" alt="" className="app-logo" />
-          <h1 className="app-title">사주로또 사또</h1>
+          <h1 className="app-title">사또</h1>
         </div>
       </header>
       <nav className="app-nav">
