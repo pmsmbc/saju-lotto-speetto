@@ -156,7 +156,7 @@ body {
 .latest-draw { margin-bottom: 12px; }
 .latest-draw .draw-label { font-size: var(--fs-caption); color: var(--text-muted); font-weight: 700; }
 .latest-draw h2 { font-size: var(--fs-title-m); margin: 2px 0 10px; color: var(--text-strong); font-weight: 800; }
-.latest-balls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.latest-balls { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
 .plus { font-weight: 800; color: var(--text-muted); }
 .first-prize { font-size: var(--fs-body-m); font-weight: 700; color: var(--text-strong); margin: 10px 0 0; }
 
@@ -176,7 +176,7 @@ body {
 .recommend-cta:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
 
 .lotto-sets { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
-.number-set { display: flex; align-items: center; gap: 8px; border-radius: 16px; }
+.number-set { display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 16px; }
 .set-generating { opacity: 0.85; }
 .set-spinner {
   width: 16px; height: 16px; border-radius: 50%; flex: none;
@@ -186,7 +186,7 @@ body {
 .generating-text { font-size: var(--fs-body-s); color: var(--text-muted); }
 @keyframes spin { to { transform: rotate(360deg); } }
 .set-label { width: 18px; font-weight: 800; color: var(--text-muted); }
-.set-balls { display: flex; flex-wrap: wrap; gap: 6px; }
+.set-balls { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
 .lotto-ball {
   display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px;
   border-radius: 50%; font-size: var(--fs-body-s); font-weight: 800; color: #1a202c;
