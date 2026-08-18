@@ -1,14 +1,23 @@
 {
-  "updatedAt": "2026-08-03T08:48:54.544Z",
+  "updatedAt": "2026-08-18T08:26:29.583Z",
   "rounds": [
+    {
+      "game": "스피또1000",
+      "gameCode": "SP1000",
+      "round": 109,
+      "status": "판매중",
+      "rank1Remaining": 12,
+      "rank1Total": 12,
+      "stockRate": 0
+    },
     {
       "game": "스피또1000",
       "gameCode": "SP1000",
       "round": 108,
       "status": "판매중",
-      "rank1Remaining": 7,
+      "rank1Remaining": 6,
       "rank1Total": 11,
-      "stockRate": 51
+      "stockRate": 90
     },
     {
       "game": "스피또1000",
@@ -170,14 +179,14 @@
       "status": "판매중",
       "rank1Remaining": 10,
       "rank1Total": 10,
-      "stockRate": 22
+      "stockRate": 38
     },
     {
       "game": "스피또2000",
       "gameCode": "SP2000",
       "round": 68,
       "status": "판매중",
-      "rank1Remaining": 5,
+      "rank1Remaining": 3,
       "rank1Total": 8,
       "stockRate": 100
     },
@@ -267,9 +276,9 @@
       "gameCode": "SP500",
       "round": 48,
       "status": "판매중",
-      "rank1Remaining": 4,
+      "rank1Remaining": 3,
       "rank1Total": 5,
-      "stockRate": 45
+      "stockRate": 47
     },
     {
       "game": "스피또500",
@@ -282,6 +291,38 @@
     }
   ],
   "stores": [
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "대박 복권방",
+      "address": "경기 부천시 원미구 삼작로 303 성진그린타운103동102호",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "로또복권편의점",
+      "address": "경기 수원시 권선구 세류로 51 1층",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "명학대박복권",
+      "address": "경기 안양시 만안구 만안로 31-3 안양인터비즈 1층, 102호",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "희망복권",
+      "address": "대전 유성구 원신흥남로42번길 24 ",
+      "region": "대전"
+    },
     {
       "game": "스피또2000",
       "round": 68,
@@ -352,6 +393,22 @@
       "rank": 2,
       "store": "천하제일복권명당",
       "address": "경기 수원시 팔달구 고매로 21 1층(고등동)",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 68,
+      "rank": 1,
+      "store": "행운복권",
+      "address": "경기 연천군 현문로5번길 3 나동",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 68,
+      "rank": 1,
+      "store": "행운복권",
+      "address": "경기 연천군 현문로5번길 3 나동",
       "region": "경기"
     },
     {
@@ -5451,134 +5508,6 @@
       "region": "충북"
     },
     {
-      "game": "스피또2000",
-      "round": 39,
-      "rank": 2,
-      "store": "으뜸과버금",
-      "address": "경기도 성남시 분당구 불정로 254 삼평프라자 1층",
-      "region": "경기"
-    },
-    {
-      "game": "스피또2000",
-      "round": 39,
-      "rank": 2,
-      "store": "황금복권판매점",
-      "address": "경기도 양주시 부흥로 2152-4 1동 2호",
-      "region": "경기"
-    },
-    {
-      "game": "스피또2000",
-      "round": 39,
-      "rank": 2,
-      "store": "PC닥터",
-      "address": "경남 창원시 용원로7번길 18 용원엘룩스상가1층",
-      "region": "경남"
-    },
-    {
-      "game": "스피또2000",
-      "round": 39,
-      "rank": 2,
-      "store": "GS25우암자유점",
-      "address": "부산 남구 우암로154번길 . 1층",
-      "region": "부산"
-    },
-    {
-      "game": "스피또2000",
-      "round": 39,
-      "rank": 2,
-      "store": "로또비버리지",
-      "address": "부산 해운대구 해운대로349번길 24 상가동 1층",
-      "region": "부산"
-    },
-    {
-      "game": "스피또2000",
-      "round": 39,
-      "rank": 1,
-      "store": "조은생각",
-      "address": "부산 사상구 운산로 74-1 1층",
-      "region": "부산"
-    },
-    {
-      "game": "스피또2000",
-      "round": 39,
-      "rank": 1,
-      "store": "조은생각",
-      "address": "부산 사상구 운산로 74-1 1층",
-      "region": "부산"
-    },
-    {
-      "game": "스피또2000",
-      "round": 39,
-      "rank": 2,
-      "store": "부자나라석촌점",
-      "address": "서울 송파구 백제고분로17길 37 1F",
-      "region": "서울"
-    },
-    {
-      "game": "스피또2000",
-      "round": 39,
-      "rank": 2,
-      "store": "행운나라",
-      "address": "서울 관악구 양지길 2 1층",
-      "region": "서울"
-    },
-    {
-      "game": "스피또2000",
-      "round": 39,
-      "rank": 2,
-      "store": "따봉복권방",
-      "address": "인천 부평구 주부토로 109 1층",
-      "region": "인천"
-    },
-    {
-      "game": "스피또2000",
-      "round": 39,
-      "rank": 2,
-      "store": "복권나라(완정로)",
-      "address": "인천 서구 완정로65번길 10 1층",
-      "region": "인천"
-    },
-    {
-      "game": "스피또2000",
-      "round": 39,
-      "rank": 2,
-      "store": "벼락부자",
-      "address": "전북 정읍시 서부산업도로 294 1층",
-      "region": "전북"
-    },
-    {
-      "game": "스피또2000",
-      "round": 39,
-      "rank": 2,
-      "store": "로또복권나눔커피",
-      "address": "충남 아산시 배방읍 모산로 163 1층 105호",
-      "region": "충남"
-    },
-    {
-      "game": "스피또2000",
-      "round": 39,
-      "rank": 1,
-      "store": "로또복권나눔커피",
-      "address": "충남 아산시 모산로  1층 105호",
-      "region": "충남"
-    },
-    {
-      "game": "스피또2000",
-      "round": 39,
-      "rank": 1,
-      "store": "로또복권나눔커피",
-      "address": "충남 아산시 모산로  1층 105호",
-      "region": "충남"
-    },
-    {
-      "game": "스피또2000",
-      "round": 39,
-      "rank": 2,
-      "store": "원동슈퍼",
-      "address": "충남 보령시 대천동  172-8번지",
-      "region": "충남"
-    },
-    {
       "game": "스피또1000",
       "round": 108,
       "rank": 1,
@@ -5593,6 +5522,14 @@
       "store": "안성휴게소 복권판매점(부산방향)",
       "address": "경기 안성시 경부고속도로 365 안성휴게소 하행선 내",
       "region": "경기"
+    },
+    {
+      "game": "스피또1000",
+      "round": 108,
+      "rank": 1,
+      "store": "스파",
+      "address": "서울 노원구 동일로 1493 주공10단지종합상가111",
+      "region": "서울"
     },
     {
       "game": "스피또1000",
@@ -7777,6 +7714,14 @@
       "store": "용꿈돼지꿈복권전문점",
       "address": "강원 동해시 중앙로 234 이주민상가1층15호",
       "region": "강원"
+    },
+    {
+      "game": "스피또500",
+      "round": 48,
+      "rank": 1,
+      "store": "운수대통",
+      "address": "전남광주 광산구 어등대로 581-1 1층 운수대통",
+      "region": "전남광주"
     },
     {
       "game": "스피또500",
