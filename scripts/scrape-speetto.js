@@ -13,7 +13,7 @@ const BASE = 'https://www.dhlottery.co.kr'
 const UA =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36'
 const MAX_ROUNDS = Number(process.env.MAX_ROUNDS ?? 30)
-const SLEEP_MS = Number(process.env.SLEEP_MS ?? 250)
+const SLEEP_MS = Number(process.env.SLEEP_MS ?? 1000)
 const OUT = fileURLToPath(new URL('../public/data/speetto.json', import.meta.url))
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
@@ -29,7 +29,7 @@ const RETRIES = Number(process.env.RETRIES ?? 4)
 async function getJson(path, cookie, referer) {
   let lastErr
   for (let attempt = 0; attempt <= RETRIES; attempt++) {
-    if (attempt > 0) await sleep(1000 * 2 ** (attempt - 1)) // 1s, 2s, 4s, 8s
+    if (attempt > 0) await sleep(5000 * 2 ** (attempt - 1)) // 5s, 10s, 20s, 40s
     try {
       const res = await fetch(`${BASE}${path}`, {
         headers: {
@@ -43,7 +43,8 @@ async function getJson(path, cookie, referer) {
       return await res.json()
     } catch (err) {
       lastErr = err
-      console.error(`재시도 ${attempt + 1}/${RETRIES} 실패 (${path}): ${err.message}`)
+      const cause = err.cause ? ` [${err.cause.code ?? err.cause.name}: ${err.cause.message}]` : ''
+      console.error(`시도 ${attempt + 1}/${RETRIES + 1} 실패 (${path}): ${err.message}${cause}`)
     }
   }
   throw lastErr
