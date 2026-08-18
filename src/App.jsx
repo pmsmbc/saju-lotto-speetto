@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import SpeettoPage from './pages/SpeettoPage.jsx'
 import LottoPage from './pages/LottoPage.jsx'
+import Footer from './components/Footer.jsx'
 import './App.css'
 
 const TABS = [
@@ -39,6 +40,7 @@ export default function App() {
         {tab === 'lotto' && <LottoPage />}
         {tab !== 'speetto' && tab !== 'lotto' && <p className="status">준비중입니다</p>}
       </main>
+      <Footer />
     </div>
   )
 }

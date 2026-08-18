@@ -55,6 +55,11 @@ body {
 .empty { padding: 16px 0; text-align: center; color: var(--text-muted); opacity: 0.8; }
 .hint { color: #ffb877; font-size: 13px; }
 
+/* --- Footer --- */
+.app-footer { margin-top: 40px; padding: 20px 0 8px; border-top: 1px solid var(--line); text-align: center; }
+.footer-copy { margin: 0 0 6px; font-size: 13px; font-weight: 600; color: var(--text-muted); }
+.footer-note { margin: 0; font-size: 12px; line-height: 1.5; color: var(--text-body); opacity: 0.7; }
+
 /* --- Shared surface card --- */
 .surface-card,
 .round-region,
