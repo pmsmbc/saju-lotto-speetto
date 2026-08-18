@@ -11,23 +11,45 @@ const OUT = fileURLToPath(new URL('../public/data/lotto-stats.json', import.meta
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
+const RETRIES = Number(process.env.RETRIES ?? 4)
+
+// 동행복권은 GitHub Actions IP에서 간헐적으로 Connect Timeout을 내므로 백오프 재시도
+async function withRetry(label, fn) {
+  let lastErr
+  for (let attempt = 0; attempt <= RETRIES; attempt++) {
+    if (attempt > 0) await sleep(5000 * 2 ** (attempt - 1)) // 5s, 10s, 20s, 40s
+    try {
+      return await fn()
+    } catch (err) {
+      lastErr = err
+      const cause = err.cause ? ` [${err.cause.code ?? err.cause.name}: ${err.cause.message}]` : ''
+      console.error(`시도 ${attempt + 1}/${RETRIES + 1} 실패 (${label}): ${err.message}${cause}`)
+    }
+  }
+  throw lastErr
+}
+
 async function getCookie() {
-  const res = await fetch(`${BASE}/lt645/result`, { headers: { 'User-Agent': UA } })
-  const cookies = res.headers.getSetCookie?.() ?? []
-  return cookies.map((c) => c.split(';')[0]).join('; ')
+  return withRetry('/lt645/result', async () => {
+    const res = await fetch(`${BASE}/lt645/result`, { headers: { 'User-Agent': UA } })
+    const cookies = res.headers.getSetCookie?.() ?? []
+    return cookies.map((c) => c.split(';')[0]).join('; ')
+  })
 }
 
 async function getJson(path, cookie) {
-  const res = await fetch(`${BASE}${path}`, {
-    headers: {
-      'User-Agent': UA,
-      'X-Requested-With': 'XMLHttpRequest',
-      Referer: `${BASE}/lt645/result`,
-      Cookie: cookie,
-    },
+  return withRetry(path, async () => {
+    const res = await fetch(`${BASE}${path}`, {
+      headers: {
+        'User-Agent': UA,
+        'X-Requested-With': 'XMLHttpRequest',
+        Referer: `${BASE}/lt645/result`,
+        Cookie: cookie,
+      },
+    })
+    if (!res.ok) throw new Error(`HTTP ${res.status} for ${path}`)
+    return res.json()
   })
-  if (!res.ok) throw new Error(`HTTP ${res.status} for ${path}`)
-  return res.json()
 }
 
 async function getLatestRound(cookie) {
