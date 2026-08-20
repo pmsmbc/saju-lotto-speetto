@@ -10,6 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "scrape": "node scripts/scrape-speetto.js",
+    "scrape:push": "npm run scrape && git add public/data/speetto.json && git commit -m \"data: update speetto (로컬 스크래핑)\" && git push",
     "scrape:lotto": "node scripts/scrape-lotto.js"
   },
   "dependencies": {
