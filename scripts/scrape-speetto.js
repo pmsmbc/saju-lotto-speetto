@@ -1,13 +1,9 @@
-import { writeFile, mkdir } from 'node:fs/promises'
+import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { buildStatus, isCompleteSpeettoStatus } from './speetto-normalize.js'
-import {
-  GAME_CODES,
-  extractEpisodes,
-  normalizeStores,
-  isCompleteScrape,
-} from './speetto-store-normalize.js'
+import { buildStatus } from './speetto-normalize.js'
+import { GAME_CODES, extractEpisodes, normalizeStores } from './speetto-store-normalize.js'
+import { buildPayload } from './speetto-payload.js'
 
 const BASE = 'https://www.dhlottery.co.kr'
 const UA =
@@ -108,19 +104,26 @@ async function main() {
   const rounds = await fetchRounds()
   const stores = await fetchStores()
 
-  if (!isCompleteSpeettoStatus({ rounds })) {
+  const previous = await readFile(OUT, 'utf8').then(JSON.parse).catch(() => null)
+  const result = buildPayload({
+    rounds,
+    stores,
+    previous,
+    gameNames: GAME_CODES.map((g) => g.name),
+    now: new Date().toISOString(),
+  })
+  if (!result) {
     console.error('1등 잔여 현황 스크래프가 불완전함 — 기존 JSON 보존을 위해 비정상 종료')
     process.exit(1)
   }
-  if (!isCompleteScrape(stores, GAME_CODES.map((g) => g.name))) {
-    console.error('당첨 판매점 스크래프가 불완전함 — 기존 JSON 보존을 위해 비정상 종료')
-    process.exit(1)
+  if (result.storesFellBack) {
+    console.error('당첨 판매점 스크래프가 불완전함 — 기존 판매점 데이터를 유지하고 잔여 현황만 갱신')
   }
 
-  const payload = { updatedAt: new Date().toISOString(), rounds, stores }
+  const { payload } = result
   await mkdir(dirname(OUT), { recursive: true })
   await writeFile(OUT, JSON.stringify(payload, null, 2) + '\n', 'utf8')
-  console.log(`회차 ${rounds.length}개 · 판매점 ${stores.length}건 저장 → ${OUT}`)
+  console.log(`회차 ${payload.rounds.length}개 · 판매점 ${payload.stores.length}건 저장 → ${OUT}`)
 }
 
 main().catch((err) => {
