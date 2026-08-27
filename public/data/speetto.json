@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-26T00:58:46.212Z",
+  "updatedAt": "2026-08-27T06:44:56.607Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -15,7 +15,7 @@
       "gameCode": "SP1000",
       "round": 108,
       "status": "판매중",
-      "rank1Remaining": 5,
+      "rank1Remaining": 4,
       "rank1Total": 11,
       "stockRate": 99
     },
@@ -322,6 +322,14 @@
       "store": "희망복권",
       "address": "대전 유성구 원신흥남로42번길 24 ",
       "region": "대전"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "태안로또복권방",
+      "address": "충남 태안군 독샘로 57 ",
+      "region": "충남"
     },
     {
       "game": "스피또2000",
@@ -5545,6 +5553,14 @@
       "rank": 1,
       "store": "잠실매점",
       "address": "서울 송파구 올림픽로 269 잠실역 8번출구 앞 가판",
+      "region": "서울"
+    },
+    {
+      "game": "스피또1000",
+      "round": 108,
+      "rank": 1,
+      "store": "평안당",
+      "address": "서울 종로구 종로 219 ",
       "region": "서울"
     },
     {
