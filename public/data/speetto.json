@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-31T03:01:38.051Z",
+  "updatedAt": "2026-09-01T03:07:21.617Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -23,7 +23,7 @@
       "game": "스피또1000",
       "gameCode": "SP1000",
       "round": 107,
-      "status": "판매중",
+      "status": "판매종료",
       "rank1Remaining": 1,
       "rank1Total": 12,
       "stockRate": 100
@@ -194,7 +194,7 @@
       "game": "스피또2000",
       "gameCode": "SP2000",
       "round": 67,
-      "status": "판매중",
+      "status": "판매종료",
       "rank1Remaining": 0,
       "rank1Total": 6,
       "stockRate": 81
