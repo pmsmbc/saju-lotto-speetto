@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ZODIACS, dailyNumbers, recentYears } from '../lib/zodiac.js'
+import { ZODIACS, dailyNumbers } from '../lib/zodiac.js'
 import { NumberSet } from '../components/NumberSet.jsx'
 
 function todayKST() {
@@ -28,9 +28,6 @@ export function ZodiacPage({ today = todayKST() }) {
           >
             <span className="zodiac-emoji" aria-hidden="true">{z.emoji}</span>
             <span className="zodiac-label">{z.label}</span>
-            <span className="zodiac-years">
-              {recentYears(z, 3).map((y) => `${String(y).slice(2)}`).join('·')}년생
-            </span>
           </button>
         ))}
       </div>

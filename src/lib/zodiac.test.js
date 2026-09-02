@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import { ZODIACS, zodiacForYear, recentYears, dailyNumbers } from './zodiac.js'
+import { ZODIACS, zodiacForYear, dailyNumbers } from './zodiac.js'
 
 describe('ZODIACS', () => {
   test('12개 띠가 정의되어 있다', () => {
@@ -25,12 +25,6 @@ describe('zodiacForYear', () => {
   })
 })
 
-describe('recentYears', () => {
-  test('해당 띠의 최근 출생년도를 내림차순으로 돌려준다', () => {
-    const rat = ZODIACS.find((z) => z.label === '쥐띠')
-    expect(recentYears(rat, 3, 2026)).toEqual([2020, 2008, 1996])
-  })
-})
 
 describe('dailyNumbers', () => {
   test('1~45 사이 서로 다른 6개 번호를 오름차순으로 돌려준다', () => {

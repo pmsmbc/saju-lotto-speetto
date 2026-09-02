@@ -19,14 +19,6 @@ export function zodiacForYear(year) {
   return ZODIACS.find((z) => z.rem === ((year % 12) + 12) % 12)
 }
 
-export function recentYears(zodiac, count = 3, currentYear = new Date().getFullYear()) {
-  let y = currentYear
-  while ((((y % 12) + 12) % 12) !== zodiac.rem) y--
-  const years = []
-  for (let i = 0; i < count; i++) years.push(y - i * 12)
-  return years
-}
-
 // 문자열 → 32비트 시드 (FNV-1a)
 function hashSeed(str) {
   let h = 0x811c9dc5
