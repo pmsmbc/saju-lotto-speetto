@@ -2,19 +2,21 @@ import { useState } from 'react'
 import SpeettoPage from './pages/SpeettoPage.jsx'
 import LottoPage from './pages/LottoPage.jsx'
 import ZodiacPage from './pages/ZodiacPage.jsx'
+import FortunePage from './pages/FortunePage.jsx'
 import SajuPage from './pages/SajuPage.jsx'
 import Footer from './components/Footer.jsx'
 import './App.css'
 
 const TABS = [
-  { id: 'zodiac', label: '오늘의 띠별 번호', ready: true },
-  { id: 'saju', label: '오늘의 사주 번호', ready: true },
-  { id: 'lotto', label: '로또 번호 추천', ready: true },
-  { id: 'speetto', label: '스피또 당첨 지역', ready: true },
+  { id: 'fortune', label: '오늘의 운세', ready: true },
+  { id: 'zodiac', label: '띠별 번호', ready: true },
+  { id: 'saju', label: '사주 번호', ready: true },
+  { id: 'lotto', label: '로또 추천', ready: true },
+  { id: 'speetto', label: '스피또 지역', ready: true },
 ]
 
 export default function App() {
-  const [tab, setTab] = useState('zodiac')
+  const [tab, setTab] = useState('fortune')
 
   return (
     <div className="app">
@@ -42,6 +44,7 @@ export default function App() {
         ))}
       </nav>
       <main className="app-main">
+        {tab === 'fortune' && <FortunePage />}
         {tab === 'speetto' && <SpeettoPage />}
         {tab === 'lotto' && <LottoPage />}
         {tab === 'zodiac' && <ZodiacPage />}

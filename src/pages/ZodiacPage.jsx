@@ -18,25 +18,9 @@ const ZODIAC_ICONS = {
   monkey: monkeyIcon, rooster: roosterIcon, dog: dogIcon, pig: pigIcon,
 }
 import { lunarDateKorean } from '../lib/lunar.js'
+import { todayKST, formatKoreanDate, weekdayInfo } from '../lib/dateformat.js'
 import { LottoBall } from '../components/LottoBall.jsx'
 
-function todayKST() {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul' }).format(new Date())
-}
-
-const WEEKDAYS = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일']
-
-function formatKoreanDate(dateStr) {
-  const [y, m, d] = dateStr.split('-').map(Number)
-  return `${y}년 ${m}월 ${d}일`
-}
-
-function weekdayInfo(dateStr) {
-  const [y, m, d] = dateStr.split('-').map(Number)
-  const day = new Date(Date.UTC(y, m - 1, d)).getUTCDay()
-  const cls = day === 6 ? 'weekday sat' : day === 0 ? 'weekday sun' : 'weekday'
-  return { name: WEEKDAYS[day], cls }
-}
 
 export function ZodiacPage({ today = todayKST() }) {
   return (
