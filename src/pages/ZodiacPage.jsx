@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ZODIACS, dailyNumbers } from '../lib/zodiac.js'
+import { ZODIACS, dailyNumberSets } from '../lib/zodiac.js'
 import { NumberSet } from '../components/NumberSet.jsx'
 
 function todayKST() {
@@ -36,7 +36,11 @@ export function ZodiacPage({ today = todayKST() }) {
           <h2>
             {zodiac.emoji} {zodiac.label} 오늘의 행운 번호
           </h2>
-          <NumberSet numbers={dailyNumbers(zodiac.id, today)} />
+          <div className="zodiac-sets">
+            {dailyNumberSets(zodiac.id, today).map((nums, i) => (
+              <NumberSet key={i} numbers={nums} />
+            ))}
+          </div>
           <p className="hint">같은 날에는 항상 같은 번호가 나와요. 내일 다시 확인해 보세요!</p>
         </div>
       ) : (

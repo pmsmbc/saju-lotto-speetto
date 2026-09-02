@@ -41,6 +41,7 @@ function mulberry32(seed) {
   }
 }
 
-export function dailyNumbers(zodiacId, dateStr) {
-  return randomSet(mulberry32(hashSeed(`${dateStr}:${zodiacId}`)))
+export function dailyNumberSets(zodiacId, dateStr, count = 3) {
+  const rng = mulberry32(hashSeed(`${dateStr}:${zodiacId}`))
+  return Array.from({ length: count }, () => randomSet(rng))
 }
