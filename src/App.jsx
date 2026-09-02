@@ -7,14 +7,14 @@ import Footer from './components/Footer.jsx'
 import './App.css'
 
 const TABS = [
-  { id: 'speetto', label: '스피또 당첨 지역', ready: true },
-  { id: 'lotto', label: '로또 번호 추천', ready: true },
   { id: 'zodiac', label: '오늘의 띠별 번호', ready: true },
-  { id: 'saju', label: '사주 번호 추천', ready: true },
+  { id: 'saju', label: '오늘의 사주 번호', ready: true },
+  { id: 'lotto', label: '로또 번호 추천', ready: true },
+  { id: 'speetto', label: '스피또 당첨 지역', ready: true },
 ]
 
 export default function App() {
-  const [tab, setTab] = useState('speetto')
+  const [tab, setTab] = useState('zodiac')
 
   return (
     <div className="app">
