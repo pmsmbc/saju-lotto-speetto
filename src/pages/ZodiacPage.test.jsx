@@ -23,5 +23,6 @@ test('각 띠 박스에 오늘의 번호 2개를 바로 보여준다', () => {
 
 test('날짜를 한국어로 표시한다', () => {
   render(<ZodiacPage today="2026-08-21" />)
-  expect(screen.getByText('2026년 8월 21일')).toBeInTheDocument()
+  expect(screen.getByText(/2026년 8월 21일/)).toBeInTheDocument()
+  expect(screen.getByText(/음력 7월 9일/)).toBeInTheDocument()
 })

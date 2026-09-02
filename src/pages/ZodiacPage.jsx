@@ -1,4 +1,5 @@
 import { ZODIACS, dailyLuckyPair } from '../lib/zodiac.js'
+import { lunarDateKorean } from '../lib/lunar.js'
 import { LottoBall } from '../components/LottoBall.jsx'
 
 function todayKST() {
@@ -13,7 +14,10 @@ function formatKoreanDate(dateStr) {
 export function ZodiacPage({ today = todayKST() }) {
   return (
     <section className="zodiac-page">
-      <p className="zodiac-date">{formatKoreanDate(today)}</p>
+      <p className="zodiac-date">
+        {formatKoreanDate(today)}
+        <span className="zodiac-lunar"> ({lunarDateKorean(today)})</span>
+      </p>
       <div className="zodiac-grid">
         {ZODIACS.map((z) => (
           <div key={z.id} className="zodiac-item">

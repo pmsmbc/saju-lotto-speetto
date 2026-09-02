@@ -201,6 +201,7 @@ body {
 
 /* --- Zodiac --- */
 .zodiac-date { text-align: center; font-size: var(--fs-body-s); color: var(--text-muted); font-weight: 600; margin: 0 0 12px; }
+.zodiac-lunar { font-weight: 500; opacity: 0.85; }
 .zodiac-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .zodiac-item {
   display: flex; flex-direction: column; align-items: center; gap: 2px;
