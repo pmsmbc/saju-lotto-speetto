@@ -34,7 +34,7 @@ test('랜덤 모드는 통계 로딩 실패와 무관하게 순차적으로 5세
   await waitFor(() => expect(screen.getByRole('button', { name: '랜덤' })).toBeInTheDocument())
 
   vi.useFakeTimers()
-  fireEvent.click(screen.getByRole('button', { name: '✨ 5세트 추천받기' }))
+  fireEvent.click(screen.getByRole('button', { name: '5세트 추천받기' }))
   // 클릭 직후에는 아직 완성된 세트가 없고 생성 중 표시만 있음
   expect(screen.getByText('생성 중...')).toBeInTheDocument()
 
@@ -63,7 +63,7 @@ test('통계 로드 시 지난 회차 표시 + 통계 기반 모드 선택 후 �
   fireEvent.click(modeBtn)
 
   vi.useFakeTimers()
-  fireEvent.click(screen.getByRole('button', { name: '✨ 5세트 추천받기' }))
+  fireEvent.click(screen.getByRole('button', { name: '5세트 추천받기' }))
   advanceAllReveals()
   for (const label of ['A', 'B', 'C', 'D', 'E']) {
     expect(screen.getByText(label)).toBeInTheDocument()

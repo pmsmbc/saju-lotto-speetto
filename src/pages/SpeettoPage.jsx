@@ -4,6 +4,7 @@ import { GAME_TABS, sellingWithRank1, recentFinished } from '../lib/speetto.js'
 import { aggregateByArea, filterByArea } from '../lib/aggregate.js'
 import { RegionStats } from '../components/RegionStats.jsx'
 import { StoreList } from '../components/StoreList.jsx'
+import bulbIcon from '../assets/twemoji/1f4a1.svg'
 
 export function formatDate(iso) {
   if (!iso) return ''
@@ -138,7 +139,7 @@ export function SpeettoPage() {
       </nav>
 
       <div className="speetto-guide surface-card">
-        <h2 className="guide-title">💡 이렇게 활용하세요</h2>
+        <h2 className="guide-title"><img className="guide-icon" src={bulbIcon} alt="" aria-hidden="true" /> 이렇게 활용하세요</h2>
         <p>스피또는 회차마다 1등이 정해진 수량만 인쇄되어 전국 판매점에 배포됩니다.</p>
         <ul>
           <li>

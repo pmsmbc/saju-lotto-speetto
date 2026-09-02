@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import sparklesIcon from '../assets/twemoji/2728.svg'
 import { useLottoStats } from '../hooks/useLottoStats.js'
 import { recommendSets, hotCold, formatWon } from '../lib/lotto.js'
 import { NumberSet } from '../components/NumberSet.jsx'
@@ -80,7 +81,13 @@ export function LottoPage() {
         </button>
       </div>
       <button type="button" className="recommend-cta" onClick={recommend} disabled={generating}>
-        {generating ? `번호 생성 중... (${revealCount}/${sets.length})` : '✨ 5세트 추천받기'}
+        {generating ? (
+          `번호 생성 중... (${revealCount}/${sets.length})`
+        ) : (
+          <>
+            <img className="btn-icon" src={sparklesIcon} alt="" aria-hidden="true" /> 5세트 추천받기
+          </>
+        )}
       </button>
       {loading ? <p className="status">통계 불러오는 중...</p> : null}
       {error ? <p className="hint">{error} (랜덤 추천은 사용할 수 있어요)</p> : null}
