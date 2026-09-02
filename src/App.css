@@ -78,6 +78,43 @@ body {
 .footer-youtube:hover { text-decoration: underline; }
 .youtube-icon { width: 22px; height: 22px; flex: none; }
 .footer-copy { margin: 0; font-size: var(--fs-body-s); font-weight: 600; color: var(--text-muted); }
+.footer-privacy {
+  margin-top: 8px; border: none; background: none; cursor: pointer; font: inherit;
+  font-size: var(--fs-caption); font-weight: 600; color: var(--text-muted);
+  text-decoration: underline; text-underline-offset: 3px; padding: 4px;
+}
+
+/* --- KRDS Modal --- */
+.krds-modal {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+}
+.modal-dialog {
+  position: relative; width: 100%; max-width: 440px; max-height: 80vh; text-align: left;
+  display: flex; flex-direction: column;
+  background: var(--surface-solid); border-radius: 16px;
+  box-shadow: inset 0 0 0 1px var(--surface-border), 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+.modal-header { padding: 20px 52px 0 20px; }
+.modal-header h2 { margin: 0; font-size: var(--fs-title-s); font-weight: 800; color: var(--text-strong); }
+.modal-conts { padding: 8px 20px 4px; overflow-y: auto; }
+.modal-conts h3 { margin: 12px 0 4px; font-size: var(--fs-body-m); font-weight: 700; color: var(--text-strong); }
+.modal-conts p { margin: 0; font-size: var(--fs-body-s); line-height: 1.6; color: var(--text-body); }
+.modal-btn { padding: 16px 20px 20px; display: flex; justify-content: flex-end; }
+.modal-confirm {
+  border: none; cursor: pointer; font: inherit; font-weight: 700;
+  background: var(--active-bg); color: var(--active-text);
+  border-radius: 10px; padding: 10px 24px; font-size: var(--fs-body-s);
+}
+.btn-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 32px; height: 32px; border: none; cursor: pointer; border-radius: 8px;
+  background: none; color: var(--text-muted);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.btn-close svg { width: 18px; height: 18px; }
+.btn-close:hover { color: var(--text-strong); }
 
 /* --- Shared surface card --- */
 .surface-card,

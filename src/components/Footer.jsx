@@ -1,7 +1,16 @@
+import { useRef, useState } from 'react'
+import PrivacyModal from './PrivacyModal.jsx'
+
 export const COPYRIGHT = '© 2026 사또 (satto.kr). All rights reserved.'
 export const YOUTUBE_URL = 'https://www.youtube.com/@ssangmun-center'
 
 export default function Footer() {
+  const [privacyOpen, setPrivacyOpen] = useState(false)
+  const privacyBtnRef = useRef(null)
+  const closePrivacy = () => {
+    setPrivacyOpen(false)
+    privacyBtnRef.current?.focus() // KRDS: 닫힐 때 열기 버튼으로 포커스 복귀
+  }
   return (
     <footer className="app-footer">
       <a
@@ -20,6 +29,15 @@ export default function Footer() {
         <span>북한산쌍문철학원</span>
       </a>
       <p className="footer-copy">{COPYRIGHT}</p>
+      <button
+        type="button"
+        className="footer-privacy"
+        ref={privacyBtnRef}
+        onClick={() => setPrivacyOpen(true)}
+      >
+        개인정보 안내
+      </button>
+      <PrivacyModal open={privacyOpen} onClose={closePrivacy} />
     </footer>
   )
 }
