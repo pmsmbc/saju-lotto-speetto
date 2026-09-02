@@ -71,15 +71,16 @@ body {
 
 /* --- Footer --- */
 .app-footer { margin-top: 40px; padding: 20px 0 8px; border-top: 1px solid var(--line); text-align: center; }
+.footer-links { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .footer-youtube {
-  display: inline-flex; align-items: center; gap: 7px; margin-bottom: 10px;
+  display: inline-flex; align-items: center; gap: 7px;
   color: var(--text-body); text-decoration: none; font-size: var(--fs-body-s); font-weight: 700;
 }
 .footer-youtube:hover { text-decoration: underline; }
 .youtube-icon { width: 22px; height: 22px; flex: none; }
 .footer-copy { margin: 0; font-size: var(--fs-body-s); font-weight: 600; color: var(--text-muted); }
 .footer-privacy {
-  margin-top: 8px; border: none; background: none; cursor: pointer; font: inherit;
+  border: none; background: none; cursor: pointer; font: inherit;
   font-size: var(--fs-caption); font-weight: 600; color: var(--text-muted);
   text-decoration: underline; text-underline-offset: 3px; padding: 4px;
 }
