@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import SpeettoPage from './pages/SpeettoPage.jsx'
 import LottoPage from './pages/LottoPage.jsx'
+import ZodiacPage from './pages/ZodiacPage.jsx'
 import Footer from './components/Footer.jsx'
 import './App.css'
 
 const TABS = [
   { id: 'speetto', label: '스피또 당첨 지역', ready: true },
   { id: 'lotto', label: '로또 번호 추천', ready: true },
-  { id: 'zodiac', label: '오늘의 띠별 번호', ready: false },
+  { id: 'zodiac', label: '오늘의 띠별 번호', ready: true },
   { id: 'saju', label: '사주 번호 추천', ready: false },
 ]
 
@@ -38,7 +39,8 @@ export default function App() {
       <main className="app-main">
         {tab === 'speetto' && <SpeettoPage />}
         {tab === 'lotto' && <LottoPage />}
-        {tab !== 'speetto' && tab !== 'lotto' && <p className="status">준비중입니다</p>}
+        {tab === 'zodiac' && <ZodiacPage />}
+        {tab === 'saju' && <p className="status">준비중입니다</p>}
       </main>
       <Footer />
     </div>

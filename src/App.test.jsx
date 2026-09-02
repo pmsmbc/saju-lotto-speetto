@@ -13,11 +13,20 @@ test('기본으로 스피또 페이지를 보여준다', async () => {
   await waitFor(() => expect(screen.getByText(/마지막 업데이트/)).toBeInTheDocument())
 })
 
-test('준비중 메뉴 클릭 시 안내 표시', () => {
+test('오늘의 띠별 번호 탭 클릭 시 띠 선택 화면 표시', () => {
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
     ok: true, json: async () => ({ updatedAt: null, rounds: [] }),
   }))
   render(<App />)
   fireEvent.click(screen.getByRole('button', { name: /오늘의 띠별 번호/ }))
+  expect(screen.getByText(/띠를 선택/)).toBeInTheDocument()
+})
+
+test('준비중 메뉴 클릭 시 안내 표시', () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+    ok: true, json: async () => ({ updatedAt: null, rounds: [] }),
+  }))
+  render(<App />)
+  fireEvent.click(screen.getByRole('button', { name: /사주 번호 추천/ }))
   expect(screen.getByText('준비중입니다')).toBeInTheDocument()
 })
