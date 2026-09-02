@@ -70,6 +70,12 @@ body {
 
 /* --- Footer --- */
 .app-footer { margin-top: 40px; padding: 20px 0 8px; border-top: 1px solid var(--line); text-align: center; }
+.footer-youtube {
+  display: inline-flex; align-items: center; gap: 7px; margin-bottom: 10px;
+  color: var(--text-body); text-decoration: none; font-size: var(--fs-body-s); font-weight: 700;
+}
+.footer-youtube:hover { text-decoration: underline; }
+.youtube-icon { width: 22px; height: 22px; flex: none; }
 .footer-copy { margin: 0; font-size: var(--fs-body-s); font-weight: 600; color: var(--text-muted); }
 
 /* --- Shared surface card --- */
