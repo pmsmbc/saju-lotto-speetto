@@ -126,3 +126,10 @@ test('formatDate는 KST 기준 날짜+시간을 표시', async () => {
   expect(formatDate('2026-08-18T15:30:00Z')).toBe('2026-08-19 00:30')
   expect(formatDate(null)).toBe('')
 })
+
+test('사용 안내 카드를 항상 표시한다', async () => {
+  mockFetch()
+  render(<SpeettoPage />)
+  await waitFor(() => expect(screen.getByText(/이렇게 활용하세요/)).toBeInTheDocument())
+  expect(screen.getByText(/당첨 확률을 보장하지 않는 참고용/)).toBeInTheDocument()
+})
