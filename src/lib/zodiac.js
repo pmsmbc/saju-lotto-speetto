@@ -1,3 +1,4 @@
+import { hashSeed, mulberry32 } from './seed.js'
 export const ZODIACS = [
   { id: 'rat', label: '쥐띠', emoji: '🐭', rem: 4 },
   { id: 'ox', label: '소띠', emoji: '🐮', rem: 5 },
@@ -17,27 +18,6 @@ export function zodiacForYear(year) {
   return ZODIACS.find((z) => z.rem === ((year % 12) + 12) % 12)
 }
 
-// 문자열 → 32비트 시드 (FNV-1a)
-function hashSeed(str) {
-  let h = 0x811c9dc5
-  for (let i = 0; i < str.length; i++) {
-    h ^= str.charCodeAt(i)
-    h = Math.imul(h, 0x01000193)
-  }
-  return h >>> 0
-}
-
-// 시드 기반 결정적 난수 (mulberry32)
-function mulberry32(seed) {
-  let a = seed
-  return () => {
-    a |= 0
-    a = (a + 0x6d2b79f5) | 0
-    let t = Math.imul(a ^ (a >>> 15), 1 | a)
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
-  }
-}
 
 export function dailyLuckyPair(zodiacId, dateStr) {
   const rng = mulberry32(hashSeed(`${dateStr}:${zodiacId}`))

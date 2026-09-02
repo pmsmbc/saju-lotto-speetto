@@ -214,6 +214,29 @@ body {
 .zodiac-nums { display: flex; gap: 5px; margin-top: 5px; }
 .zodiac-hint { display: block; text-align: center; margin: 14px 0 0; }
 
+/* --- Saju --- */
+.saju-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.saju-field { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.saju-field > span { font-size: var(--fs-body-s); font-weight: 700; color: var(--text-muted); flex: none; }
+.saju-field input, .saju-field select {
+  flex: 1; min-width: 0; color-scheme: dark;
+  background: var(--surface-solid); color: var(--text-body);
+  border: none; box-shadow: inset 0 0 0 1px var(--surface-border);
+  border-radius: 10px; padding: 9px 10px; font: inherit; font-size: var(--fs-body-s);
+}
+.saju-pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.pillar-card {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  border-radius: 14px; padding: 10px 4px;
+  background: var(--surface); box-shadow: inset 0 0 0 1px var(--surface-border);
+}
+.pillar-hanja { font-size: 22px; font-weight: 800; color: var(--text-strong); }
+.pillar-name { font-size: var(--fs-body-s); font-weight: 700; color: var(--text-body); }
+.pillar-label { font-size: var(--fs-caption); color: var(--text-muted); }
+.saju-result { margin-top: 14px; text-align: center; }
+.saju-result h2 { font-size: var(--fs-title-s); color: var(--text-strong); font-weight: 800; margin: 4px 0 12px; }
+.saju-result .hint { display: block; margin: 12px 0 4px; }
+
 @media (max-width: 420px) {
   .zodiac-grid { grid-template-columns: repeat(3, 1fr); }
 }

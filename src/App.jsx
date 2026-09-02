@@ -2,6 +2,7 @@ import { useState } from 'react'
 import SpeettoPage from './pages/SpeettoPage.jsx'
 import LottoPage from './pages/LottoPage.jsx'
 import ZodiacPage from './pages/ZodiacPage.jsx'
+import SajuPage from './pages/SajuPage.jsx'
 import Footer from './components/Footer.jsx'
 import './App.css'
 
@@ -9,7 +10,7 @@ const TABS = [
   { id: 'speetto', label: '스피또 당첨 지역', ready: true },
   { id: 'lotto', label: '로또 번호 추천', ready: true },
   { id: 'zodiac', label: '오늘의 띠별 번호', ready: true },
-  { id: 'saju', label: '사주 번호 추천', ready: false },
+  { id: 'saju', label: '사주 번호 추천', ready: true },
 ]
 
 export default function App() {
@@ -40,7 +41,7 @@ export default function App() {
         {tab === 'speetto' && <SpeettoPage />}
         {tab === 'lotto' && <LottoPage />}
         {tab === 'zodiac' && <ZodiacPage />}
-        {tab === 'saju' && <p className="status">준비중입니다</p>}
+        {tab === 'saju' && <SajuPage />}
       </main>
       <Footer />
     </div>
