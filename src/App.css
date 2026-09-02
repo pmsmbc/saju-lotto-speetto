@@ -50,7 +50,9 @@ body {
 .app-header { display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
 .app-brand { display: flex; align-items: center; gap: 8px; }
 .app-logo { width: 48px; height: 48px; border-radius: 50%; filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.25)); }
-.app-title { font-size: var(--fs-title-l); font-weight: 800; letter-spacing: -0.02em; color: var(--text-strong); margin: 0; }
+.app-title { font-size: var(--fs-title-l); font-weight: 800; letter-spacing: -0.02em; color: var(--text-strong); margin: 0; display: inline-flex; align-items: baseline; }
+.title-big { font-size: 1em; }
+.title-small { font-size: 0.62em; font-weight: 700; opacity: 0.9; margin: 0 2px; }
 
 .app-nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 16px; }
 .nav-tab {

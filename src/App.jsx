@@ -21,7 +21,11 @@ export default function App() {
       <header className="app-header">
         <div className="app-brand">
           <img src="/logo.png" alt="" className="app-logo" />
-          <h1 className="app-title">사또</h1>
+          <h1 className="app-title">
+            <span className="title-big">사</span>
+            <span className="title-small">주 로또 스피</span>
+            <span className="title-big">또</span>
+          </h1>
         </div>
       </header>
       <nav className="app-nav">
