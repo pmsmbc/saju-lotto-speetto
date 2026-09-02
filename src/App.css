@@ -204,19 +204,14 @@ body {
 .zodiac-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .zodiac-item {
   display: flex; flex-direction: column; align-items: center; gap: 2px;
-  border: none; border-radius: 14px; padding: 10px 4px; cursor: pointer;
+  border-radius: 14px; padding: 10px 4px;
   background: var(--surface); box-shadow: inset 0 0 0 1px var(--surface-border);
-  color: var(--text-body); font: inherit;
+  color: var(--text-body);
 }
-.zodiac-item.active { background: var(--active-bg); box-shadow: var(--cta-glow); }
-.zodiac-item.active .zodiac-label { color: var(--active-text); }
 .zodiac-emoji { font-size: 26px; line-height: 1.2; }
 .zodiac-label { font-size: var(--fs-body-s); font-weight: 700; }
-.zodiac-result { margin-top: 14px; text-align: center; }
-.zodiac-result h2 { font-size: var(--fs-title-s); color: var(--text-strong); font-weight: 800; margin: 4px 0 12px; }
-.zodiac-sets { display: flex; flex-direction: column; gap: 10px; }
-.zodiac-result .number-set { background: none; box-shadow: none; padding: 0; }
-.zodiac-result .hint { margin: 12px 0 4px; }
+.zodiac-nums { display: flex; gap: 5px; margin-top: 5px; }
+.zodiac-hint { display: block; text-align: center; margin: 14px 0 0; }
 
 @media (max-width: 420px) {
   .zodiac-grid { grid-template-columns: repeat(3, 1fr); }

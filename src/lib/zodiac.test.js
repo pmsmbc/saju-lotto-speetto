@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import { ZODIACS, zodiacForYear, dailyNumberSets } from './zodiac.js'
+import { ZODIACS, zodiacForYear, dailyLuckyPair } from './zodiac.js'
 
 describe('ZODIACS', () => {
   test('12개 띠가 정의되어 있다', () => {
@@ -25,32 +25,28 @@ describe('zodiacForYear', () => {
   })
 })
 
-
-describe('dailyNumberSets', () => {
-  test('기본 3세트, 각 세트는 1~45 사이 서로 다른 6개 오름차순', () => {
-    const sets = dailyNumberSets('rat', '2026-08-21')
-    expect(sets).toHaveLength(3)
-    for (const nums of sets) {
-      expect(nums).toHaveLength(6)
-      expect(new Set(nums).size).toBe(6)
-      for (const n of nums) {
+describe('dailyLuckyPair', () => {
+  test('1~45 사이 서로 다른 2개 번호를 오름차순으로 돌려준다', () => {
+    for (const z of ZODIACS) {
+      const pair = dailyLuckyPair(z.id, '2026-08-21')
+      expect(pair).toHaveLength(2)
+      expect(pair[0]).not.toBe(pair[1])
+      expect(pair[0]).toBeLessThan(pair[1])
+      for (const n of pair) {
         expect(Number.isInteger(n)).toBe(true)
         expect(n).toBeGreaterThanOrEqual(1)
         expect(n).toBeLessThanOrEqual(45)
       }
-      expect([...nums].sort((a, b) => a - b)).toEqual(nums)
     }
   })
 
-  test('같은 날 같은 띠는 항상 같은 세트', () => {
-    expect(dailyNumberSets('rat', '2026-08-21')).toEqual(dailyNumberSets('rat', '2026-08-21'))
+  test('같은 날 같은 띠는 항상 같은 번호', () => {
+    expect(dailyLuckyPair('rat', '2026-08-21')).toEqual(dailyLuckyPair('rat', '2026-08-21'))
   })
 
-  test('띠가 다르면 세트가 다르다', () => {
-    expect(dailyNumberSets('rat', '2026-08-21')).not.toEqual(dailyNumberSets('ox', '2026-08-21'))
-  })
-
-  test('날짜가 다르면 세트가 다르다', () => {
-    expect(dailyNumberSets('rat', '2026-08-21')).not.toEqual(dailyNumberSets('rat', '2026-08-22'))
+  test('날짜가 다르면 번호가 달라질 수 있다 (시드 반영)', () => {
+    const days = ['2026-08-21', '2026-08-22', '2026-08-23', '2026-08-24']
+    const uniq = new Set(days.map((d) => dailyLuckyPair('rat', d).join(',')))
+    expect(uniq.size).toBeGreaterThan(1)
   })
 })

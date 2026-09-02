@@ -1,5 +1,3 @@
-import { randomSet } from './lotto.js'
-
 export const ZODIACS = [
   { id: 'rat', label: '쥐띠', emoji: '🐭', rem: 4 },
   { id: 'ox', label: '소띠', emoji: '🐮', rem: 5 },
@@ -41,7 +39,10 @@ function mulberry32(seed) {
   }
 }
 
-export function dailyNumberSets(zodiacId, dateStr, count = 3) {
+export function dailyLuckyPair(zodiacId, dateStr) {
   const rng = mulberry32(hashSeed(`${dateStr}:${zodiacId}`))
-  return Array.from({ length: count }, () => randomSet(rng))
+  const a = 1 + Math.floor(rng() * 45)
+  let b = a
+  while (b === a) b = 1 + Math.floor(rng() * 45)
+  return [a, b].sort((x, y) => x - y)
 }
