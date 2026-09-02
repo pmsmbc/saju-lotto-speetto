@@ -21,8 +21,17 @@ test('각 띠 박스에 오늘의 번호 2개를 바로 보여준다', () => {
   })
 })
 
-test('날짜를 한국어로 표시한다', () => {
+test('날짜를 요일·음력과 함께 한국어로 표시한다', () => {
   render(<ZodiacPage today="2026-08-21" />)
   expect(screen.getByText(/2026년 8월 21일/)).toBeInTheDocument()
+  expect(screen.getByText('금요일')).toBeInTheDocument()
   expect(screen.getByText(/음력 7월 9일/)).toBeInTheDocument()
+})
+
+test('토요일은 파랑, 일요일은 빨강 클래스가 붙는다', () => {
+  const { unmount } = render(<ZodiacPage today="2026-09-05" />)
+  expect(screen.getByText('토요일').classList.contains('sat')).toBe(true)
+  unmount()
+  render(<ZodiacPage today="2026-09-06" />)
+  expect(screen.getByText('일요일').classList.contains('sun')).toBe(true)
 })
