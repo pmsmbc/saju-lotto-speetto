@@ -28,15 +28,6 @@ describe('compatibility', () => {
     expect(new Set(scores).size).toBeGreaterThan(1)
   })
 
-  test('커플 행운 번호: 1~45 서로 다른 2개 오름차순', () => {
-    const { lucky } = compatibility('1990-05-15', '1992-08-08')
-    expect(lucky).toHaveLength(2)
-    expect(lucky[0]).toBeLessThan(lucky[1])
-    for (const n of lucky) {
-      expect(n).toBeGreaterThanOrEqual(1)
-      expect(n).toBeLessThanOrEqual(45)
-    }
-  })
 
   test('오행 분포: 각자 5개 오행 합이 6 (년·월·일주 6글자)', () => {
     const r = compatibility('1990-05-15', '1992-08-08')

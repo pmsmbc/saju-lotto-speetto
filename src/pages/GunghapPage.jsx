@@ -3,7 +3,6 @@ import { compatibility, RELATION_TYPES, ELEM_NAMES } from '../lib/gunghap.js'
 import { HOUR_OPTIONS } from '../lib/saju.js'
 import { lunarToSolar } from '../lib/lunar.js'
 import { todayKST } from '../lib/dateformat.js'
-import { LottoBall } from '../components/LottoBall.jsx'
 
 const STORE_KEY = 'satto.gunghap'
 
@@ -157,12 +156,6 @@ export function GunghapPage({ today = todayKST() }) {
             <li><strong>기운</strong> {result.parts.stem.desc}</li>
             <li><strong>오행</strong> {result.parts.complement.desc}</li>
           </ul>
-          <div className="fortune-lucky">
-            <span className="lucky-label">커플 행운 번호</span>
-            {result.lucky.map((n) => (
-              <LottoBall key={n} number={n} />
-            ))}
-          </div>
         </div>
       ) : (
         <p className="status">두 사람의 생년월일을 입력하면 궁합을 보여드려요</p>

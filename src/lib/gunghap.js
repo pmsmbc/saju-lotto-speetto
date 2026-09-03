@@ -1,4 +1,3 @@
-import { hashSeed, mulberry32 } from './seed.js'
 import { fourPillars, STEMS, BRANCHES } from './saju.js'
 import { branchRelationInfo, BRANCH_ELEM, STEM_ELEM } from './fortune.js'
 
@@ -126,11 +125,6 @@ export function compatibility(personA, personB, type = 'lover') {
   const raw = 50 + yearInfo.score * w.year + dayInfo.score * w.day + stemScore + complementScore + hourScoreSum
   const score = Math.max(0, Math.min(100, Math.round(raw)))
 
-  // 커플 행운 번호 (두 사람 고정 시드)
-  const rng = mulberry32(hashSeed(`${a.birth}:${a.hour ?? '?'}:${b.birth}:${b.hour ?? '?'}:gunghap`))
-  const n1 = 1 + Math.floor(rng() * 45)
-  let n2 = n1
-  while (n2 === n1) n2 = 1 + Math.floor(rng() * 45)
 
   return {
     score,
@@ -144,6 +138,5 @@ export function compatibility(personA, personB, type = 'lover') {
       complement: { score: complementScore, desc: complementDesc },
       hour: hourPart,
     },
-    lucky: [n1, n2].sort((a, b) => a - b),
   }
 }
