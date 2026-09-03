@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { compatibility, RELATION_TYPES } from '../lib/gunghap.js'
+import { compatibility, RELATION_TYPES, ELEM_NAMES } from '../lib/gunghap.js'
 import { todayKST } from '../lib/dateformat.js'
 import { LottoBall } from '../components/LottoBall.jsx'
 
@@ -78,6 +78,18 @@ export function GunghapPage({ today = todayKST() }) {
           </div>
           <div className="score-bar" aria-hidden="true">
             <div className="score-fill" style={{ width: `${result.score}%` }} />
+          </div>
+          <div className="elem-rows">
+            {[['나', result.elements.mine], ['상대', result.elements.partner]].map(([who, counts]) => (
+              <p className="elem-row" key={who}>
+                <strong>{who}</strong>
+                {ELEM_NAMES.map((name, i) => (
+                  <span key={name} className={counts[i] === 0 ? 'elem-chip empty' : 'elem-chip'}>
+                    {name.slice(0, 1)} {counts[i]}
+                  </span>
+                ))}
+              </p>
+            ))}
           </div>
           <ul className="gunghap-parts">
             <li><strong>겉궁합</strong> <span className="part-name">{result.parts.year.name}</span> {result.parts.year.desc}</li>

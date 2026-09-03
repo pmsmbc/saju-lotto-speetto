@@ -44,7 +44,7 @@ function elementCounts(pillars) {
   return counts
 }
 
-const ELEM_NAMES = ['목(木)', '화(火)', '토(土)', '금(金)', '수(水)']
+export const ELEM_NAMES = ['목(木)', '화(火)', '토(土)', '금(金)', '수(水)']
 const GENERATES = (a, b) => (a + 1) % 5 === b
 const CONTROLS = (a, b) => (a + 2) % 5 === b
 
@@ -111,6 +111,7 @@ export function compatibility(birthA, birthB, type = 'lover') {
     score,
     grade: gradeOfScore(score),
     type,
+    elements: { mine: ca, partner: cb }, // 오행 분포 [목,화,토,금,수] (년·월·일주 6글자 기준)
     parts: {
       year: { ...yearInfo, name: `${pa.year.name}년생 × ${pb.year.name}년생`, desc: relationLine(yearInfo, ya === yb) },
       day: { ...dayInfo, name: `${pa.day.name}일주 × ${pb.day.name}일주`, desc: relationLine(dayInfo, da === db) },

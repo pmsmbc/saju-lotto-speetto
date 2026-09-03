@@ -38,6 +38,14 @@ describe('compatibility', () => {
     }
   })
 
+  test('오행 분포: 각자 5개 오행 합이 6 (년·월·일주 6글자)', () => {
+    const r = compatibility('1990-05-15', '1992-08-08')
+    for (const who of ['mine', 'partner']) {
+      expect(r.elements[who]).toHaveLength(5)
+      expect(r.elements[who].reduce((a, b) => a + b, 0)).toBe(6)
+    }
+  })
+
   test('네 부분(겉궁합/속궁합/일간/오행)에 설명이 있다', () => {
     const r = compatibility('1990-05-15', '1992-08-08')
     for (const k of ['year', 'day', 'stem', 'complement']) {
