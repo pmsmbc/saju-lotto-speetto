@@ -167,6 +167,28 @@ export function GunghapPage({ today = todayKST() }) {
       ) : (
         <p className="status">두 사람의 생년월일을 입력하면 궁합을 보여드려요</p>
       )}
+      <details className="gunghap-info surface-card">
+        <summary>겉궁합·속궁합이란?</summary>
+        <div className="info-body">
+          <p>
+            <strong>겉궁합</strong>은 두 사람의 띠, 곧 사주 <strong>년지(年支)</strong>의
+            관계입니다. 년주는 집안과 사회적 모습을 상징하는 자리라, 첫인상과 주변에서
+            보는 어울림 같은 겉으로 드러나는 조화를 봅니다.
+          </p>
+          <p>
+            <strong>속궁합</strong>은 태어난 날의 지지, 곧 <strong>일지(日支)</strong>의
+            관계입니다. 일지는 사주에서 배우자 자리(배우자궁)라서, 겉으론 보이지 않는
+            속마음의 합과 정서적 친밀감을 봅니다. 생년월일을 알아야만 볼 수 있는 더
+            깊은 궁합입니다.
+          </p>
+          <p>
+            두 자리 모두 지지의 <strong>삼합·육합</strong>(끌어주고 편안한 합),
+            <strong> 충</strong>(정면으로 부딪힘), <strong>형·해·파</strong>(신경전·어긋남)
+            규칙으로 판정하며, 관계 유형에 따라 비중이 달라집니다 — 부부는 속궁합을,
+            친구는 겉궁합(띠)을 더 무겁게 봅니다.
+          </p>
+        </div>
+      </details>
       <p className="hint zodiac-hint">사주 합충과 오행으로 보는 궁합으로, 참고용입니다.</p>
     </section>
   )

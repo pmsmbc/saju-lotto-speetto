@@ -21,7 +21,7 @@ test('두 생년월일 입력 시 점수·등급·항목을 보여준다', () =>
   const r = compatibility('2020-06-01', '2016-06-01', 'lover')
   expect(screen.getByText(String(r.score))).toBeInTheDocument()
   expect(screen.getByText(r.grade)).toBeInTheDocument()
-  expect(screen.getByText(/겉궁합/)).toBeInTheDocument()
+  expect(document.querySelector('.gunghap-parts')).toHaveTextContent('겉궁합')
   expect(screen.queryByText(/시궁합/)).toBeNull() // 시 미입력
 })
 
@@ -64,4 +64,12 @@ test('사주 페이지의 내 생일을 기본값으로 불러온다', () => {
   localStorage.setItem('satto.saju', JSON.stringify({ birth: '1990-05-15', hour: '' }))
   render(<GunghapPage />)
   expect(screen.getByLabelText('나 생년월일').value).toBe('1990-05-15')
+})
+
+test('겉궁합·속궁합 접이식 안내를 보여준다', () => {
+  localStorage.clear()
+  render(<GunghapPage />)
+  expect(screen.getByText('겉궁합·속궁합이란?')).toBeInTheDocument()
+  expect(screen.getByText(/배우자 자리\(배우자궁\)/)).toBeInTheDocument()
+  expect(document.querySelector('details.gunghap-info')).not.toBeNull()
 })
