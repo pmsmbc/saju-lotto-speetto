@@ -81,7 +81,7 @@ export function FortunePage({ today = todayKST() }) {
             ))}
           </ul>
           <div className="fortune-lucky">
-            <span>오늘의 행운 번호</span>
+            <span className="lucky-label">오늘의 행운 번호</span>
             {dailyLuckyPair(current.zodiac.id, today).map((n) => (
               <LottoBall key={n} number={n} />
             ))}

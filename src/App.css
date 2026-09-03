@@ -301,7 +301,7 @@ body {
 .fortune-years li { font-size: var(--fs-body-s); line-height: 1.55; color: var(--text-body); }
 .fortune-years li strong { color: var(--text-strong); margin-right: 5px; }
 .fortune-lucky { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
-.fortune-lucky > span { font-size: var(--fs-body-s); font-weight: 700; color: var(--text-strong); margin-right: 4px; }
+.fortune-lucky .lucky-label { font-size: var(--fs-body-s); font-weight: 700; color: var(--text-strong); margin-right: 4px; }
 
 /* --- Saju --- */
 .saju-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
