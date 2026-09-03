@@ -147,22 +147,6 @@ export function GunghapPage({ today = todayKST() }) {
               </p>
             ))}
           </div>
-          <details className="gunghap-info elem-info">
-            <summary>오행 분포란?</summary>
-            <div className="info-body">
-              <p>
-                사주를 이루는 글자(년·월·일주 6글자, 태어난 시까지 알면 8글자)를{' '}
-                <strong>목(木)·화(火)·토(土)·금(金)·수(水)</strong> 다섯 기운으로
-                나눠 센 것입니다. 고르게 퍼져 있을수록 균형 잡힌 사주로 봅니다.
-              </p>
-              <p>
-                <span className="elem-chip empty">목 0</span> 처럼 붉게 표시된
-                것은 내 사주에 없는 <strong>부족한 기운</strong>입니다. 상대가 그
-                기운을 갖고 있으면 서로를 채워주는 좋은 보완으로 보아 궁합 점수에
-                반영됩니다.
-              </p>
-            </div>
-          </details>
           <ul className="gunghap-parts">
             <li><strong>겉궁합</strong> <span className="part-name">{result.parts.year.name}</span> {result.parts.year.desc}</li>
             <li><strong>속궁합</strong> <span className="part-name">{result.parts.day.name}</span> {result.parts.day.desc}</li>
@@ -195,6 +179,21 @@ export function GunghapPage({ today = todayKST() }) {
             <strong> 충</strong>(정면으로 부딪힘), <strong>형·해·파</strong>(신경전·어긋남)
             규칙으로 판정하며, 관계 유형에 따라 비중이 달라집니다 — 부부는 속궁합을,
             친구는 겉궁합(띠)을 더 무겁게 봅니다.
+          </p>
+        </div>
+      </details>
+      <details className="gunghap-info surface-card">
+        <summary>오행 분포란?</summary>
+        <div className="info-body">
+          <p>
+            사주를 이루는 글자(년·월·일주 6글자, 태어난 시까지 알면 8글자)를{' '}
+            <strong>목(木)·화(火)·토(土)·금(金)·수(水)</strong> 다섯 기운으로 나눠
+            센 것입니다. 고르게 퍼져 있을수록 균형 잡힌 사주로 봅니다.
+          </p>
+          <p>
+            <span className="elem-chip empty">목 0</span> 처럼 붉게 표시된 것은 내
+            사주에 없는 <strong>부족한 기운</strong>입니다. 상대가 그 기운을 갖고
+            있으면 서로를 채워주는 좋은 보완으로 보아 궁합 점수에 반영됩니다.
           </p>
         </div>
       </details>

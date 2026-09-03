@@ -320,7 +320,8 @@ body {
   box-shadow: inset 0 0 0 1px var(--surface-border);
 }
 .elem-chip.empty { color: #ff8a8a; opacity: 0.9; }
-.gunghap-info { margin-top: 14px; padding: 0; }
+.gunghap-info { margin-top: 10px; padding: 0; }
+.gunghap-info .info-body .elem-chip { font-size: var(--fs-caption); padding: 1px 6px; }
 .gunghap-info summary {
   cursor: pointer; padding: 12px 14px; font-size: var(--fs-body-s); font-weight: 700;
   color: var(--text-strong); list-style: none; display: flex; align-items: center; gap: 6px;
@@ -332,11 +333,6 @@ body {
 .gunghap-info .info-body p { margin: 0 0 8px; font-size: var(--fs-body-s); line-height: 1.65; color: var(--text-body); }
 .gunghap-info .info-body p:last-child { margin-bottom: 0; }
 .gunghap-info .info-body strong { color: var(--text-strong); }
-.elem-info { margin: 0 0 10px; }
-.elem-info summary { padding: 4px 0 8px; font-size: var(--fs-caption); color: var(--text-muted); font-weight: 700; }
-.elem-info .info-body { padding: 0 0 6px; }
-.elem-info .info-body p { font-size: var(--fs-caption); }
-.elem-info .info-body .elem-chip { font-size: var(--fs-caption); padding: 1px 6px; }
 .gunghap-parts { list-style: none; margin: 0 0 10px; padding: 0; display: flex; flex-direction: column; gap: 7px; }
 .gunghap-parts li { font-size: var(--fs-body-s); line-height: 1.55; color: var(--text-body); }
 .gunghap-parts strong { color: var(--text-strong); margin-right: 5px; }

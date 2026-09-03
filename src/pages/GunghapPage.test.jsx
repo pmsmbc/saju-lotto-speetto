@@ -74,11 +74,10 @@ test('겉궁합·속궁합 접이식 안내를 보여준다', () => {
   expect(document.querySelector('details.gunghap-info')).not.toBeNull()
 })
 
-test('오행 분포 접이식 안내를 결과 카드에 보여준다', () => {
+test('오행 분포 접이식 안내를 하단에 항상 보여준다', () => {
   localStorage.clear()
   render(<GunghapPage />)
-  type('나 생년월일', '2020-06-01')
-  type('상대 생년월일', '2016-06-01')
   expect(screen.getByText('오행 분포란?')).toBeInTheDocument()
   expect(screen.getByText(/다섯 기운으로/)).toBeInTheDocument()
+  expect(document.querySelectorAll('details.gunghap-info')).toHaveLength(2)
 })
