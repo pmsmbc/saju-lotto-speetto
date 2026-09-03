@@ -15,20 +15,25 @@ const PA = [[0, 9], [1, 4], [2, 11], [3, 6], [5, 8], [7, 10]]
 const inPair = (pairs, a, b) => pairs.some(([x, y]) => (x === a && y === b) || (x === b && y === a))
 
 // 오행: 0木 1火 2土 3金 4水
-const BRANCH_ELEM = [4, 2, 0, 0, 2, 1, 1, 2, 3, 3, 2, 4] // 자축인묘진사오미신유술해
-const STEM_ELEM = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4] // 갑을병정무기경신임계
+export const BRANCH_ELEM = [4, 2, 0, 0, 2, 1, 1, 2, 3, 3, 2, 4] // 자축인묘진사오미신유술해
+export const STEM_ELEM = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4] // 갑을병정무기경신임계
 const GENERATES = (a, b) => (a + 1) % 5 === b // 木→火→土→金→水→木
 const CONTROLS = (a, b) => (a + 2) % 5 === b // 木克土, 火克金, 土克水, 金克木, 水克火
 
-export function branchRelationScore(dayBranch, zodiacBranch) {
+export function branchRelationInfo(a, b) {
   let score = 0
-  if (SAMHAP.some((g) => g.includes(dayBranch) && g.includes(zodiacBranch) && dayBranch !== zodiacBranch)) score += 3
-  if (inPair(YUKHAP, dayBranch, zodiacBranch)) score += 2
-  if (inPair(CHUNG, dayBranch, zodiacBranch)) score -= 3
-  if (inPair(HYEONG, dayBranch, zodiacBranch)) score -= 2
-  if (inPair(HAE, dayBranch, zodiacBranch)) score -= 1
-  if (inPair(PA, dayBranch, zodiacBranch)) score -= 1
-  return score
+  const kinds = []
+  if (SAMHAP.some((g) => g.includes(a) && g.includes(b) && a !== b)) { score += 3; kinds.push('삼합') }
+  if (inPair(YUKHAP, a, b)) { score += 2; kinds.push('육합') }
+  if (inPair(CHUNG, a, b)) { score -= 3; kinds.push('충') }
+  if (inPair(HYEONG, a, b)) { score -= 2; kinds.push('형') }
+  if (inPair(HAE, a, b)) { score -= 1; kinds.push('해') }
+  if (inPair(PA, a, b)) { score -= 1; kinds.push('파') }
+  return { score, kinds }
+}
+
+export function branchRelationScore(dayBranch, zodiacBranch) {
+  return branchRelationInfo(dayBranch, zodiacBranch).score
 }
 
 export function elementScore(dayStemIdx, zodiacBranch) {
