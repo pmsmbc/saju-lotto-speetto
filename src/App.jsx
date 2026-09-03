@@ -6,6 +6,7 @@ import FortunePage from './pages/FortunePage.jsx'
 import GunghapPage from './pages/GunghapPage.jsx'
 import SajuPage from './pages/SajuPage.jsx'
 import Footer from './components/Footer.jsx'
+import FloatingShare from './components/FloatingShare.jsx'
 import './App.css'
 
 // 경로 ↔ 화면 매핑 (scripts/make-routes.js 와 함께 유지)
@@ -125,6 +126,7 @@ export default function App() {
         {tab === 'speetto' && <SpeettoPage />}
       </main>
       <Footer />
+      <FloatingShare />
     </div>
   )
 }
