@@ -16,11 +16,11 @@ test('기본으로 사주 > 오늘의 운세를 보여준다', () => {
   expect(screen.getByText(/오늘의 일진/)).toBeInTheDocument()
 })
 
-test('대메뉴는 사주/로또/스피또/정보 4개', () => {
+test('대메뉴는 사주/로또/스피또/꿈해몽·상식 4개', () => {
   mockFetch()
   render(<App />)
   const labels = [...document.querySelectorAll('.nav-tab')].map((b) => b.textContent)
-  expect(labels).toEqual(['사주', '로또', '스피또', '정보'])
+  expect(labels).toEqual(['사주', '로또', '스피또', '꿈해몽·상식'])
 })
 
 test('사주 대메뉴의 하위: 오늘의 운세, 궁합', () => {
@@ -91,11 +91,11 @@ test('탭 이동 시 주소가 바뀐다', () => {
   window.history.pushState({}, '', '/')
 })
 
-test('정보 메뉴 클릭 시 꿈해몽 글 목록 표시', () => {
+test('꿈해몽·상식 메뉴 클릭 시 꿈해몽 글 목록 표시', () => {
   mockFetch()
   window.history.pushState({}, '', '/')
   render(<App />)
-  fireEvent.click(screen.getByRole('button', { name: '정보' }))
+  fireEvent.click(screen.getByRole('button', { name: '꿈해몽·상식' }))
   expect(window.location.pathname).toBe('/info')
   expect(screen.getByText('정보 이야기')).toBeInTheDocument()
   window.history.pushState({}, '', '/')

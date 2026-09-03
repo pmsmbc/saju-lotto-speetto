@@ -50,7 +50,7 @@ const MENUS = [
     items: [{ id: 'speetto', label: '당첨 지역' }],
   },
   {
-    id: 'info', label: '정보',
+    id: 'info', label: '꿈해몽·상식',
     items: [{ id: 'info', label: '꿈해몽' }],
   },
 ]
