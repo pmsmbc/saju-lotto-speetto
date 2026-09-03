@@ -40,7 +40,10 @@ export function InfoPage({ today = todayKST() }) {
       <section className="info-page">
         <button type="button" className="back-btn" onClick={() => open(null)}>← 글 목록</button>
         <article className="article surface-card">
-          <h1>{article.title}</h1>
+          <h1>
+            {article.icon && <img className="article-icon" src={`/twemoji/${article.icon}.svg`} alt="" aria-hidden="true" />}
+            {article.title}
+          </h1>
           {/* 본문은 저장소의 마크다운 파일에서 빌드 시 변환됨 */}
           <div className="article-body" dangerouslySetInnerHTML={{ __html: article.html }} />
           {article.category === 'dream' && (
@@ -87,7 +90,10 @@ export function InfoPage({ today = todayKST() }) {
         {ARTICLES.filter((a) => a.category === cat).map((a) => (
           <li key={a.slug}>
             <button type="button" className="info-card surface-card" onClick={() => open(a.slug)}>
-              <span className="info-card-title">{a.title}</span>
+              <span className="info-card-head">
+                {a.icon && <img className="info-icon" src={`/twemoji/${a.icon}.svg`} alt="" aria-hidden="true" />}
+                <span className="info-card-title">{a.title}</span>
+              </span>
               <span className="info-card-desc">{a.description}</span>
             </button>
           </li>

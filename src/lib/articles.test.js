@@ -30,6 +30,7 @@ describe('articles', () => {
       expect(a.slug).toMatch(/^[a-z]+$/)
       expect(a.description.length).toBeGreaterThan(10)
       expect(a.body.length).toBeGreaterThan(300)
+      expect(a.icon).toMatch(/^[0-9a-f-]+$/)
     }
   })
 

@@ -106,6 +106,9 @@ body {
   width: 100%; text-align: left; border: none; cursor: pointer; font: inherit;
   display: flex; flex-direction: column; gap: 4px;
 }
+.info-card-head { display: flex; align-items: center; gap: 8px; }
+.info-icon { width: 22px; height: 22px; flex: none; }
+.article-icon { width: 26px; height: 26px; vertical-align: -4px; margin-right: 8px; }
 .info-card-title { font-size: var(--fs-body-m); font-weight: 800; color: var(--text-strong); }
 .info-card-desc { font-size: var(--fs-body-s); line-height: 1.5; color: var(--text-muted); }
 .back-btn {
