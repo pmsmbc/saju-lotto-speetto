@@ -71,3 +71,22 @@ test('대메뉴를 오가도 하위 선택을 기억한다', () => {
   fireEvent.click(screen.getByRole('button', { name: '로또' }))
   expect(screen.getByRole('button', { name: '5세트 추천받기' })).toBeInTheDocument()
 })
+
+test('/gunghap 경로로 접속하면 궁합 화면을 보여준다', () => {
+  mockFetch()
+  window.history.pushState({}, '', '/gunghap')
+  render(<App />)
+  expect(screen.getByText(/생년월일을 입력하면 궁합/)).toBeInTheDocument()
+  window.history.pushState({}, '', '/')
+})
+
+test('탭 이동 시 주소가 바뀐다', () => {
+  mockFetch()
+  window.history.pushState({}, '', '/')
+  render(<App />)
+  fireEvent.click(screen.getByRole('button', { name: '로또' }))
+  expect(window.location.pathname).toBe('/zodiac')
+  fireEvent.click(screen.getByRole('button', { name: '로또 추천' }))
+  expect(window.location.pathname).toBe('/lotto')
+  window.history.pushState({}, '', '/')
+})

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SpeettoPage from './pages/SpeettoPage.jsx'
 import LottoPage from './pages/LottoPage.jsx'
 import ZodiacPage from './pages/ZodiacPage.jsx'
@@ -7,6 +7,23 @@ import GunghapPage from './pages/GunghapPage.jsx'
 import SajuPage from './pages/SajuPage.jsx'
 import Footer from './components/Footer.jsx'
 import './App.css'
+
+// 경로 ↔ 화면 매핑 (scripts/make-routes.js 와 함께 유지)
+const ROUTES = {
+  '/unse': { menu: 'saju', tab: 'fortune' },
+  '/gunghap': { menu: 'saju', tab: 'gunghap' },
+  '/zodiac': { menu: 'lotto', tab: 'zodiac' },
+  '/saju': { menu: 'lotto', tab: 'sajunum' },
+  '/lotto': { menu: 'lotto', tab: 'lottorec' },
+  '/speetto': { menu: 'speetto', tab: 'speetto' },
+}
+const PATH_OF = Object.fromEntries(
+  Object.entries(ROUTES).map(([path, r]) => [r.tab, path]),
+)
+
+function stateFromPath(pathname) {
+  return ROUTES[pathname.replace(/\/$/, '')] ?? ROUTES['/unse']
+}
 
 const MENUS = [
   {
@@ -31,11 +48,35 @@ const MENUS = [
 ]
 
 export default function App() {
-  const [menuId, setMenuId] = useState('saju')
+  const initial = stateFromPath(window.location.pathname)
+  const [menuId, setMenuId] = useState(initial.menu)
   // 대메뉴별 마지막 선택 하위 메뉴 기억
-  const [subByMenu, setSubByMenu] = useState({ saju: 'fortune', lotto: 'zodiac', speetto: 'speetto' })
+  const [subByMenu, setSubByMenu] = useState({
+    saju: 'fortune', lotto: 'zodiac', speetto: 'speetto',
+    [initial.menu]: initial.tab,
+  })
   const menu = MENUS.find((m) => m.id === menuId)
   const tab = subByMenu[menuId]
+
+  // 주소 반영 + 뒤로가기 지원
+  const navigate = (nextMenu, nextTab) => {
+    setMenuId(nextMenu)
+    setSubByMenu((prev) => ({ ...prev, [nextMenu]: nextTab }))
+    const path = PATH_OF[nextTab]
+    if (path && window.location.pathname !== path) {
+      window.history.pushState({}, '', path + window.location.search)
+    }
+  }
+
+  useEffect(() => {
+    const onPop = () => {
+      const st = stateFromPath(window.location.pathname)
+      setMenuId(st.menu)
+      setSubByMenu((prev) => ({ ...prev, [st.menu]: st.tab }))
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
 
   return (
     <div className="app">
@@ -55,7 +96,7 @@ export default function App() {
             key={m.id}
             type="button"
             className={m.id === menuId ? 'nav-tab active' : 'nav-tab'}
-            onClick={() => setMenuId(m.id)}
+            onClick={() => navigate(m.id, subByMenu[m.id])}
           >
             {m.label}
           </button>
@@ -68,7 +109,7 @@ export default function App() {
               key={t.id}
               type="button"
               className={t.id === tab ? 'sub-tab active' : 'sub-tab'}
-              onClick={() => setSubByMenu((prev) => ({ ...prev, [menuId]: t.id }))}
+              onClick={() => navigate(menuId, t.id)}
             >
               {t.label}
             </button>
