@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { compatibility, RELATION_TYPES, ELEM_NAMES } from '../lib/gunghap.js'
+import { HOUR_OPTIONS } from '../lib/saju.js'
+import { lunarToSolar } from '../lib/lunar.js'
 import { todayKST } from '../lib/dateformat.js'
 import { LottoBall } from '../components/LottoBall.jsx'
 
@@ -23,10 +25,66 @@ function loadMyBirth() {
 
 const isDate = (v) => /^\d{4}-\d{2}-\d{2}$/.test(v)
 
+// 입력값(달력 구분 포함) → 사주 계산용 양력 날짜. 변환 실패 시 null
+function toSolar(person) {
+  if (!isDate(person.birth)) return null
+  if (person.cal !== 'lunar') return person.birth
+  const [y, m, d] = person.birth.split('-').map(Number)
+  return lunarToSolar(y, m, d)
+}
+
+function PersonInput({ who, person, onChange, today }) {
+  const solar = toSolar(person)
+  return (
+    <div className="person-block">
+      <div className="person-head">
+        <strong>{who}</strong>
+        <div className="cal-toggle" role="group" aria-label={`${who} 달력 구분`}>
+          {[['solar', '양력'], ['lunar', '음력']].map(([id, label]) => (
+            <button
+              key={id}
+              type="button"
+              className={person.cal === id ? 'cal-btn active' : 'cal-btn'}
+              onClick={() => onChange({ ...person, cal: id })}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <label className="saju-field">
+        <span>{who === '나' ? '나' : '상대'} 생년월일</span>
+        <input
+          type="date"
+          value={person.birth}
+          min="1930-01-01"
+          max={today}
+          onChange={(e) => onChange({ ...person, birth: e.target.value })}
+        />
+      </label>
+      <label className="saju-field">
+        <span>태어난 시</span>
+        <select value={person.hour} onChange={(e) => onChange({ ...person, hour: e.target.value })}>
+          <option value="">모름</option>
+          {HOUR_OPTIONS.map((o) => (
+            <option key={o.value} value={o.value}>{o.label}</option>
+          ))}
+        </select>
+      </label>
+      {person.cal === 'lunar' && isDate(person.birth) && (
+        <p className={solar ? 'cal-note' : 'cal-note error'}>
+          {solar ? `양력 ${solar}으로 계산합니다` : '음력 날짜를 확인해 주세요 (윤달은 지원하지 않아요)'}
+        </p>
+      )}
+    </div>
+  )
+}
+
 export function GunghapPage({ today = todayKST() }) {
   const saved = loadSaved()
-  const [mine, setMine] = useState(saved.mine ?? loadMyBirth())
-  const [partner, setPartner] = useState(saved.partner ?? '')
+  const defaultPerson = { birth: '', hour: '', cal: 'solar' }
+  const [mine, setMine] = useState({ ...defaultPerson, birth: loadMyBirth(), ...(saved.mine ?? {}) })
+  const [partner, setPartner] = useState({ ...defaultPerson, ...(saved.partner ?? {}) })
   const [type, setType] = useState(saved.type ?? 'lover')
   const resultRef = useRef(null)
 
@@ -38,8 +96,12 @@ export function GunghapPage({ today = todayKST() }) {
     }
   }, [mine, partner, type])
 
-  const ready = isDate(mine) && isDate(partner)
-  const result = ready ? compatibility(mine, partner, type) : null
+  const solarMine = toSolar(mine)
+  const solarPartner = toSolar(partner)
+  const ready = Boolean(solarMine && solarPartner)
+  const result = ready
+    ? compatibility({ birth: solarMine, hour: mine.hour }, { birth: solarPartner, hour: partner.hour }, type)
+    : null
 
   useEffect(() => {
     if (result) resultRef.current?.scrollIntoView?.({ behavior: 'smooth', block: 'nearest' })
@@ -48,14 +110,8 @@ export function GunghapPage({ today = todayKST() }) {
   return (
     <section className="gunghap-page">
       <div className="saju-form surface-card">
-        <label className="saju-field">
-          <span>나</span>
-          <input type="date" value={mine} min="1930-01-01" max={today} onChange={(e) => setMine(e.target.value)} />
-        </label>
-        <label className="saju-field">
-          <span>상대</span>
-          <input type="date" value={partner} min="1930-01-01" max={today} onChange={(e) => setPartner(e.target.value)} />
-        </label>
+        <PersonInput who="나" person={mine} onChange={setMine} today={today} />
+        <PersonInput who="상대" person={partner} onChange={setPartner} today={today} />
         <div className="relation-tabs" role="group" aria-label="관계 선택">
           {RELATION_TYPES.map((t) => (
             <button
@@ -94,6 +150,9 @@ export function GunghapPage({ today = todayKST() }) {
           <ul className="gunghap-parts">
             <li><strong>겉궁합</strong> <span className="part-name">{result.parts.year.name}</span> {result.parts.year.desc}</li>
             <li><strong>속궁합</strong> <span className="part-name">{result.parts.day.name}</span> {result.parts.day.desc}</li>
+            {result.parts.hour && (
+              <li><strong>시궁합</strong> <span className="part-name">{result.parts.hour.name}</span> {result.parts.hour.desc}</li>
+            )}
             <li><strong>기운</strong> {result.parts.stem.desc}</li>
             <li><strong>오행</strong> {result.parts.complement.desc}</li>
           </ul>

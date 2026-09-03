@@ -34,10 +34,11 @@ function relationLine(info, sameBranch) {
   return '특별한 합충 없음 — 무난한 관계'
 }
 
-// 사람의 오행 분포 (년·월·일 천간+지지 6글자)
+// 사람의 오행 분포 (년·월·일 + 시주가 있으면 포함, 6~8글자)
 function elementCounts(pillars) {
   const counts = [0, 0, 0, 0, 0]
-  for (const k of ['year', 'month', 'day']) {
+  for (const k of ['year', 'month', 'day', 'hour']) {
+    if (!pillars[k]) continue
     counts[STEM_ELEM[stemIdxOf(pillars[k])]]++
     counts[BRANCH_ELEM[branchIdxOf(pillars[k])]]++
   }
@@ -56,10 +57,19 @@ export function gradeOfScore(score) {
   return '상극 — 서로 배려가 열쇠'
 }
 
-export function compatibility(birthA, birthB, type = 'lover') {
+// person: 'YYYY-MM-DD' 또는 { birth: 'YYYY-MM-DD', hour: 시지(0~11) | null }
+function normalize(person) {
+  if (typeof person === 'string') return { birth: person, hour: null }
+  const hour = person.hour === '' || person.hour == null ? null : Number(person.hour)
+  return { birth: person.birth, hour }
+}
+
+export function compatibility(personA, personB, type = 'lover') {
   const w = WEIGHTS[type] ?? WEIGHTS.lover
-  const pa = fourPillars(birthA, null)
-  const pb = fourPillars(birthB, null)
+  const a = normalize(personA)
+  const b = normalize(personB)
+  const pa = fourPillars(a.birth, a.hour)
+  const pb = fourPillars(b.birth, b.hour)
 
   // 겉궁합: 년지(띠) 관계
   const ya = branchIdxOf(pa.year)
@@ -98,11 +108,26 @@ export function compatibility(birthA, birthB, type = 'lover') {
   else if (aMissing.length > 0) complementDesc = `상대가 나의 부족한 ${aMissing.join('·')} 기운을 채워줍니다`
   else if (bMissing.length > 0) complementDesc = `내가 상대의 부족한 ${bMissing.join('·')} 기운을 채워줍니다`
 
-  const raw = 50 + yearInfo.score * w.year + dayInfo.score * w.day + stemScore + complementScore
+  // 시궁합: 두 사람 모두 태어난 시를 알 때만 시지 관계 반영
+  let hourPart = null
+  let hourScoreSum = 0
+  if (pa.hour && pb.hour) {
+    const ha = branchIdxOf(pa.hour)
+    const hb = branchIdxOf(pb.hour)
+    const hourInfo = branchRelationInfo(ha, hb)
+    hourScoreSum = hourInfo.score * Math.round(w.day / 2)
+    hourPart = {
+      ...hourInfo,
+      name: `${pa.hour.name}시 × ${pb.hour.name}시`,
+      desc: relationLine(hourInfo, ha === hb),
+    }
+  }
+
+  const raw = 50 + yearInfo.score * w.year + dayInfo.score * w.day + stemScore + complementScore + hourScoreSum
   const score = Math.max(0, Math.min(100, Math.round(raw)))
 
-  // 커플 행운 번호 (두 생일 고정 시드)
-  const rng = mulberry32(hashSeed(`${birthA}:${birthB}:gunghap`))
+  // 커플 행운 번호 (두 사람 고정 시드)
+  const rng = mulberry32(hashSeed(`${a.birth}:${a.hour ?? '?'}:${b.birth}:${b.hour ?? '?'}:gunghap`))
   const n1 = 1 + Math.floor(rng() * 45)
   let n2 = n1
   while (n2 === n1) n2 = 1 + Math.floor(rng() * 45)
@@ -117,6 +142,7 @@ export function compatibility(birthA, birthB, type = 'lover') {
       day: { ...dayInfo, name: `${pa.day.name}일주 × ${pb.day.name}일주`, desc: relationLine(dayInfo, da === db) },
       stem: { score: stemScore, desc: stemDesc },
       complement: { score: complementScore, desc: complementDesc },
+      hour: hourPart,
     },
     lucky: [n1, n2].sort((a, b) => a - b),
   }

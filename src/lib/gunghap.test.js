@@ -54,6 +54,31 @@ describe('compatibility', () => {
   })
 })
 
+describe('시주 반영', () => {
+  test('둘 다 시를 알면 오행 합이 8, 시궁합 항목 존재', () => {
+    const r = compatibility({ birth: '1990-05-15', hour: 0 }, { birth: '1992-08-08', hour: 6 })
+    expect(r.elements.mine.reduce((x, y) => x + y, 0)).toBe(8)
+    expect(r.elements.partner.reduce((x, y) => x + y, 0)).toBe(8)
+    expect(r.parts.hour).not.toBeNull()
+    expect(r.parts.hour.desc.length).toBeGreaterThan(3)
+  })
+
+  test('한 명이라도 시를 모르면 시궁합 없음, 문자열 입력과 동일 동작', () => {
+    const r = compatibility({ birth: '1990-05-15', hour: 0 }, { birth: '1992-08-08', hour: '' })
+    expect(r.parts.hour).toBeNull()
+    const r2 = compatibility('1990-05-15', '1992-08-08')
+    expect(r2.parts.hour).toBeNull()
+    expect(r2.elements.mine.reduce((x, y) => x + y, 0)).toBe(6)
+  })
+
+  test('시지가 합이면 점수가 오르고 충이면 내린다 (자시×진시 삼합 vs 자시×오시 충)', () => {
+    const base = { birth: '1990-05-15', hour: 0 } // 자시
+    const samhap = compatibility(base, { birth: '1992-08-08', hour: 4 }).score // 진시
+    const chung = compatibility(base, { birth: '1992-08-08', hour: 6 }).score // 오시
+    expect(samhap).toBeGreaterThan(chung)
+  })
+})
+
 describe('gradeOfScore', () => {
   test('구간별 등급', () => {
     expect(gradeOfScore(95)).toBe('천생연분')
