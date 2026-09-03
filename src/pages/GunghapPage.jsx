@@ -3,6 +3,7 @@ import { compatibility, RELATION_TYPES, ELEM_NAMES } from '../lib/gunghap.js'
 import { HOUR_OPTIONS } from '../lib/saju.js'
 import { lunarToSolar } from '../lib/lunar.js'
 import { todayKST } from '../lib/dateformat.js'
+import ShareButton from '../components/ShareButton.jsx'
 
 const STORE_KEY = 'satto.gunghap'
 
@@ -80,12 +81,29 @@ function PersonInput({ who, person, onChange, today }) {
   )
 }
 
+// 공유 링크 파라미터 (?m=&mh=&mc=&p=&ph=&pc=&t=)
+function fromUrl() {
+  const q = new URLSearchParams(window.location.search)
+  if (!isDate(q.get('m') ?? '') || !isDate(q.get('p') ?? '')) return null
+  const person = (b, h, c) => ({
+    birth: q.get(b),
+    hour: /^\d+$/.test(q.get(h) ?? '') ? q.get(h) : '',
+    cal: q.get(c) === 'lunar' ? 'lunar' : 'solar',
+  })
+  return {
+    mine: person('m', 'mh', 'mc'),
+    partner: person('p', 'ph', 'pc'),
+    type: RELATION_TYPES.some((t) => t.id === q.get('t')) ? q.get('t') : 'lover',
+  }
+}
+
 export function GunghapPage({ today = todayKST() }) {
   const saved = loadSaved()
+  const shared = fromUrl()
   const defaultPerson = { birth: '', hour: '', cal: 'solar' }
-  const [mine, setMine] = useState({ ...defaultPerson, ...loadMyBirth(), ...(saved.mine ?? {}) })
-  const [partner, setPartner] = useState({ ...defaultPerson, ...(saved.partner ?? {}) })
-  const [type, setType] = useState(saved.type ?? 'lover')
+  const [mine, setMine] = useState(shared?.mine ?? { ...defaultPerson, ...loadMyBirth(), ...(saved.mine ?? {}) })
+  const [partner, setPartner] = useState(shared?.partner ?? { ...defaultPerson, ...(saved.partner ?? {}) })
+  const [type, setType] = useState(shared?.type ?? saved.type ?? 'lover')
   const resultRef = useRef(null)
 
   useEffect(() => {
@@ -156,6 +174,13 @@ export function GunghapPage({ today = todayKST() }) {
             <li><strong>기운</strong> {result.parts.stem.desc}</li>
             <li><strong>오행</strong> {result.parts.complement.desc}</li>
           </ul>
+          <div className="share-row">
+            <ShareButton
+              title="사또 - 궁합"
+              text={`우리 궁합 ${result.score}점 — ${result.grade}`}
+              url={`${window.location.origin}/gunghap?m=${mine.birth}&mh=${mine.hour}&mc=${mine.cal}&p=${partner.birth}&ph=${partner.hour}&pc=${partner.cal}&t=${type}`}
+            />
+          </div>
         </div>
       ) : (
         <p className="status">두 사람의 생년월일을 입력하면 궁합을 보여드려요</p>

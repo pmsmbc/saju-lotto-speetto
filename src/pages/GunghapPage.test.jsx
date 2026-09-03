@@ -82,3 +82,13 @@ test('오행 분포 접이식 안내를 하단에 항상 보여준다', () => {
   const summaries = [...document.querySelectorAll('details.gunghap-info summary')].map((el) => el.textContent)
   expect(summaries).toEqual(['오행 분포란?', '겉궁합·속궁합이란?'])
 })
+
+test('공유 링크 파라미터로 접속하면 결과를 바로 보여준다', () => {
+  localStorage.clear()
+  window.history.pushState({}, '', '/gunghap?m=2020-06-01&mh=&mc=solar&p=2016-06-01&ph=&pc=solar&t=lover')
+  render(<GunghapPage />)
+  const r = compatibility('2020-06-01', '2016-06-01', 'lover')
+  expect(screen.getByText(String(r.score))).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: /공유하기/ })).toBeInTheDocument()
+  window.history.pushState({}, '', '/')
+})

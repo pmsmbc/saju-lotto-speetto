@@ -4,6 +4,7 @@ import { allFortunes, todayIljin } from '../lib/fortune.js'
 import { lunarDateKorean } from '../lib/lunar.js'
 import { todayKST, formatKoreanDate, weekdayInfo } from '../lib/dateformat.js'
 import { LottoBall } from '../components/LottoBall.jsx'
+import ShareButton from '../components/ShareButton.jsx'
 import ratIcon from '../assets/twemoji/1f42d.svg'
 import oxIcon from '../assets/twemoji/1f42e.svg'
 import tigerIcon from '../assets/twemoji/1f42f.svg'
@@ -25,8 +26,13 @@ const ZODIAC_ICONS = {
 
 const GRADE_CLASS = { 대길: 'g-best', 길: 'g-good', 보통: 'g-normal', 주의: 'g-care' }
 
+function zodiacFromUrl() {
+  const id = new URLSearchParams(window.location.search).get('ddi')
+  return ZODIACS.some((z) => z.id === id) ? id : null
+}
+
 export function FortunePage({ today = todayKST() }) {
-  const [selected, setSelected] = useState(null)
+  const [selected, setSelected] = useState(zodiacFromUrl)
   const detailRef = useRef(null)
 
   // 띠 선택 시 상세 카드로 부드럽게 스크롤
@@ -85,6 +91,13 @@ export function FortunePage({ today = todayKST() }) {
             {dailyLuckyPair(current.zodiac.id, today).map((n) => (
               <LottoBall key={n} number={n} />
             ))}
+          </div>
+          <div className="share-row">
+            <ShareButton
+              title="사또 - 오늘의 운세"
+              text={`${current.zodiac.label} 오늘의 운세: ${current.grade}`}
+              url={`${window.location.origin}/unse?ddi=${current.zodiac.id}`}
+            />
           </div>
         </div>
       ) : (

@@ -320,6 +320,16 @@ body {
   box-shadow: inset 0 0 0 1px var(--surface-border);
 }
 .elem-chip.empty { color: #ff8a8a; opacity: 0.9; }
+.share-row { display: flex; justify-content: center; margin-top: 12px; }
+.share-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: none; cursor: pointer; font: inherit; font-size: var(--fs-body-s); font-weight: 700;
+  background: var(--surface-solid); color: var(--text-strong);
+  box-shadow: inset 0 0 0 1px var(--surface-border);
+  border-radius: 999px; padding: 8px 18px;
+}
+.share-btn svg { width: 15px; height: 15px; }
+.share-btn:hover { background: var(--active-bg); color: var(--active-text); }
 .gunghap-info { margin-top: 10px; padding: 0; }
 .gunghap-info .info-body .elem-chip { font-size: var(--fs-caption); padding: 1px 6px; }
 .gunghap-info summary {

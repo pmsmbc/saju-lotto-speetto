@@ -33,3 +33,11 @@ test('선택 전에는 안내 문구를 보여준다', () => {
   render(<FortunePage today="2026-09-02" />)
   expect(screen.getByText(/띠를 선택하면 오늘의 운세/)).toBeInTheDocument()
 })
+
+test('?ddi= 파라미터로 접속하면 해당 띠 상세를 바로 보여준다', () => {
+  window.history.pushState({}, '', '/unse?ddi=rat')
+  render(<FortunePage today="2026-09-02" />)
+  expect(document.querySelector('.fortune-detail')).not.toBeNull()
+  expect(screen.getByText(/쥐띠 오늘의 운세/)).toBeInTheDocument()
+  window.history.pushState({}, '', '/')
+})
