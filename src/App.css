@@ -32,6 +32,8 @@
 
 * { box-sizing: border-box; }
 
+html { overflow-y: scroll; } /* 스크롤바 상시 표시 - 탭 전환 시 화면 흔들림 방지 */
+
 body {
   margin: 0;
   min-width: 320px;
