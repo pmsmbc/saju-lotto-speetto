@@ -79,5 +79,6 @@ test('오행 분포 접이식 안내를 하단에 항상 보여준다', () => {
   render(<GunghapPage />)
   expect(screen.getByText('오행 분포란?')).toBeInTheDocument()
   expect(screen.getByText(/다섯 기운으로/)).toBeInTheDocument()
-  expect(document.querySelectorAll('details.gunghap-info')).toHaveLength(2)
+  const summaries = [...document.querySelectorAll('details.gunghap-info summary')].map((el) => el.textContent)
+  expect(summaries).toEqual(['오행 분포란?', '겉궁합·속궁합이란?'])
 })
