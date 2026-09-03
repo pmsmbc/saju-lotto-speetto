@@ -14,9 +14,9 @@ for (const r of ROUTES) {
 copyFileSync(join(dist, 'index.html'), join(dist, '404.html'))
 
 // 글 페이지: 크롤러가 본문을 읽도록 실제 콘텐츠를 HTML에 주입 (앱 로드 시 React가 대체)
-const articles = readdirSync('content/dreams')
-  .filter((f) => f.endsWith('.md'))
-  .map((f) => parseArticle(readFileSync(join('content/dreams', f), 'utf-8')))
+const articles = ['content/dreams', 'content/guides']
+  .flatMap((dir) => readdirSync(dir).filter((f) => f.endsWith('.md')).map((f) => join(dir, f)))
+  .map((f) => parseArticle(readFileSync(f, 'utf-8')))
   .filter(Boolean)
   .sort((a, b) => a.order - b.order)
 

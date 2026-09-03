@@ -24,7 +24,7 @@ describe('markdown', () => {
 
 describe('articles', () => {
   test('글이 10개 이상 로드되고 필수 필드가 있다', () => {
-    expect(ARTICLES.length).toBeGreaterThanOrEqual(10)
+    expect(ARTICLES.length).toBeGreaterThanOrEqual(31)
     for (const a of ARTICLES) {
       expect(a.title.length).toBeGreaterThan(3)
       expect(a.slug).toMatch(/^[a-z]+$/)

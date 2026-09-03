@@ -97,6 +97,6 @@ test('정보 메뉴 클릭 시 꿈해몽 글 목록 표시', () => {
   render(<App />)
   fireEvent.click(screen.getByRole('button', { name: '정보' }))
   expect(window.location.pathname).toBe('/info')
-  expect(screen.getByText('꿈해몽 이야기')).toBeInTheDocument()
+  expect(screen.getByText('정보 이야기')).toBeInTheDocument()
   window.history.pushState({}, '', '/')
 })

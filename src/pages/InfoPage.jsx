@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ARTICLES, articleBySlug } from '../lib/articles.js'
+import { ARTICLES, CATEGORIES, articleBySlug } from '../lib/articles.js'
 import { hashSeed, mulberry32 } from '../lib/seed.js'
 import { randomSet } from '../lib/lotto.js'
 import { todayKST } from '../lib/dateformat.js'
@@ -18,6 +18,7 @@ function dreamNumbers(slug, dateStr) {
 
 export function InfoPage({ today = todayKST() }) {
   const [slug, setSlug] = useState(slugFromPath)
+  const [cat, setCat] = useState('dream')
 
   useEffect(() => {
     const onPop = () => setSlug(slugFromPath())
@@ -42,15 +43,17 @@ export function InfoPage({ today = todayKST() }) {
           <h1>{article.title}</h1>
           {/* 본문은 저장소의 마크다운 파일에서 빌드 시 변환됨 */}
           <div className="article-body" dangerouslySetInnerHTML={{ __html: article.html }} />
-          <div className="dream-lucky">
-            <h2>오늘의 {article.title.split(' ')[0]} 행운 번호</h2>
-            <div className="set-balls">
-              {dreamNumbers(article.slug, today).map((n) => (
-                <LottoBall key={n} number={n} />
-              ))}
+          {article.category === 'dream' && (
+            <div className="dream-lucky">
+              <h2>오늘의 {article.title.split(' ')[0]} 행운 번호</h2>
+              <div className="set-balls">
+                {dreamNumbers(article.slug, today).map((n) => (
+                  <LottoBall key={n} number={n} />
+                ))}
+              </div>
+              <p className="hint">이 꿈을 꾼 분들을 위한 오늘의 번호예요. 매일 자정에 바뀝니다.</p>
             </div>
-            <p className="hint">이 꿈을 꾼 분들을 위한 오늘의 번호예요. 매일 자정에 바뀝니다.</p>
-          </div>
+          )}
           <div className="share-row">
             <ShareButton
               title={article.title}
@@ -66,10 +69,22 @@ export function InfoPage({ today = todayKST() }) {
 
   return (
     <section className="info-page">
-      <h1 className="info-title">꿈해몽 이야기</h1>
-      <p className="info-sub">자주 꾸는 꿈의 전통 해몽과 오늘의 행운 번호를 정리했습니다.</p>
+      <h1 className="info-title">정보 이야기</h1>
+      <p className="info-sub">꿈해몽과 사주·로또 상식을 쉽게 정리했습니다.</p>
+      <div className="cat-tabs" role="group" aria-label="카테고리">
+        {CATEGORIES.map((c) => (
+          <button
+            key={c.id}
+            type="button"
+            className={c.id === cat ? 'sub-tab active' : 'sub-tab'}
+            onClick={() => setCat(c.id)}
+          >
+            {c.label}
+          </button>
+        ))}
+      </div>
       <ul className="info-list">
-        {ARTICLES.map((a) => (
+        {ARTICLES.filter((a) => a.category === cat).map((a) => (
           <li key={a.slug}>
             <button type="button" className="info-card surface-card" onClick={() => open(a.slug)}>
               <span className="info-card-title">{a.title}</span>
