@@ -293,8 +293,11 @@ body {
 .fortune-item.active .g-care { color: #7a1f1f; }
 .fortune-detail { margin-top: 14px; }
 .fortune-detail h2 { display: flex; align-items: center; gap: 8px; margin: 0 0 10px; font-size: var(--fs-title-s); font-weight: 800; color: var(--text-strong); }
-.fortune-line { margin: 0 0 8px; font-size: var(--fs-body-s); line-height: 1.6; color: var(--text-body); }
-.fortune-line strong { color: var(--text-strong); margin-right: 4px; }
+.fortune-keywords { margin: 0 0 10px; font-size: var(--fs-body-s); line-height: 1.6; color: var(--text-muted); }
+.fortune-keywords strong { color: var(--text-strong); }
+.fortune-years { list-style: none; margin: 0 0 4px; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.fortune-years li { font-size: var(--fs-body-s); line-height: 1.55; color: var(--text-body); }
+.fortune-years li strong { color: var(--text-strong); margin-right: 5px; }
 .fortune-lucky { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
 .fortune-lucky > span { font-size: var(--fs-body-s); font-weight: 700; color: var(--text-strong); margin-right: 4px; }
 

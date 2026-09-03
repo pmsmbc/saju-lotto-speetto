@@ -61,8 +61,19 @@ export function FortunePage({ today = todayKST() }) {
             {current.zodiac.label} 오늘의 운세{' '}
             <span className={`grade-badge ${GRADE_CLASS[current.grade]}`}>{current.grade}</span>
           </h2>
-          <p className="fortune-line"><strong>총운</strong> {current.total}</p>
-          <p className="fortune-line"><strong>금전운</strong> {current.money}</p>
+          <p className="fortune-keywords">
+            재물: <strong>{current.keywords.money}</strong> · 건강:{' '}
+            <strong>{current.keywords.health}</strong> · 사랑:{' '}
+            <strong>{current.keywords.love}</strong> · 길방:{' '}
+            <strong>{current.direction}</strong>
+          </p>
+          <ul className="fortune-years">
+            {current.yearLines.map((l) => (
+              <li key={l.year}>
+                <strong>{l.label}</strong> {l.text}
+              </li>
+            ))}
+          </ul>
           <div className="fortune-lucky">
             <span>오늘의 행운 번호</span>
             {dailyLuckyPair(current.zodiac.id, today).map((n) => (

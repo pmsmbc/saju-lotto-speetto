@@ -74,10 +74,27 @@ describe('dailyFortune', () => {
     expect(dailyFortune('rat', '2026-09-02')).toEqual(dailyFortune('rat', '2026-09-02'))
   })
 
-  test('문구는 등급 풀에서 나온 비어있지 않은 문자열', () => {
+  test('재물/건강/사랑 키워드와 길방을 돌려준다', () => {
     const f = dailyFortune('pig', '2026-09-02')
-    expect(f.total.length).toBeGreaterThan(5)
-    expect(f.money.length).toBeGreaterThan(5)
+    expect(f.keywords.money.length).toBeGreaterThan(0)
+    expect(f.keywords.health.length).toBeGreaterThan(0)
+    expect(f.keywords.love.length).toBeGreaterThan(0)
+    expect(['東', '西', '南', '北', '南西']).toContain(f.direction)
+  })
+
+  test('길방은 오행 규칙: 쥐(水)=西, 말(火)=東', () => {
+    expect(dailyFortune('rat', '2026-09-02').direction).toBe('西')
+    expect(dailyFortune('horse', '2026-09-02').direction).toBe('東')
+  })
+
+  test('년생별 한 줄: 쥐띠는 36년생부터 6줄, 문장 중복 없음', () => {
+    const f = dailyFortune('rat', '2026-09-02')
+    expect(f.yearLines).toHaveLength(6)
+    expect(f.yearLines.map((l) => l.year)).toEqual([1936, 1948, 1960, 1972, 1984, 1996])
+    expect(f.yearLines[0].label).toBe('36년생')
+    const texts = f.yearLines.map((l) => l.text)
+    expect(new Set(texts).size).toBe(6)
+    for (const t of texts) expect(t.length).toBeGreaterThan(3)
   })
 })
 
