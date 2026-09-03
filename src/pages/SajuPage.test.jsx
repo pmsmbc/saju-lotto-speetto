@@ -37,3 +37,14 @@ test('입력한 생년월일을 localStorage에 저장한다', () => {
   fireEvent.change(screen.getByLabelText('생년월일'), { target: { value: '1990-05-15' } })
   expect(JSON.parse(localStorage.getItem('satto.saju')).birth).toBe('1990-05-15')
 })
+
+test('음력 선택 시 양력으로 변환해 사주를 계산한다', () => {
+  localStorage.clear()
+  render(<SajuPage today="2026-09-03" />)
+  fireEvent.click(screen.getByRole('button', { name: '음력' }))
+  fireEvent.change(screen.getByLabelText('생년월일'), { target: { value: '2026-01-01' } })
+  // 음력 2026-01-01 = 양력 2026-02-17 (병오년 설날)
+  expect(screen.getByText(/양력 2026-02-17으로 계산합니다/)).toBeInTheDocument()
+  const p = fourPillars('2026-02-17', null)
+  expect(screen.getByText(p.year.name)).toBeInTheDocument() // 병오
+})

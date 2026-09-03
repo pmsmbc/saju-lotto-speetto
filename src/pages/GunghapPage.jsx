@@ -17,9 +17,10 @@ function loadSaved() {
 
 function loadMyBirth() {
   try {
-    return JSON.parse(localStorage.getItem('satto.saju'))?.birth ?? ''
+    const saju = JSON.parse(localStorage.getItem('satto.saju'))
+    return { birth: saju?.birth ?? '', cal: saju?.cal ?? 'solar' }
   } catch {
-    return ''
+    return { birth: '', cal: 'solar' }
   }
 }
 
@@ -83,7 +84,7 @@ function PersonInput({ who, person, onChange, today }) {
 export function GunghapPage({ today = todayKST() }) {
   const saved = loadSaved()
   const defaultPerson = { birth: '', hour: '', cal: 'solar' }
-  const [mine, setMine] = useState({ ...defaultPerson, birth: loadMyBirth(), ...(saved.mine ?? {}) })
+  const [mine, setMine] = useState({ ...defaultPerson, ...loadMyBirth(), ...(saved.mine ?? {}) })
   const [partner, setPartner] = useState({ ...defaultPerson, ...(saved.partner ?? {}) })
   const [type, setType] = useState(saved.type ?? 'lover')
   const resultRef = useRef(null)

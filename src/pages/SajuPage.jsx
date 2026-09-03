@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { HOUR_OPTIONS, fourPillars, sajuNumbers } from '../lib/saju.js'
 import { LottoBall } from '../components/LottoBall.jsx'
+import { lunarToSolar } from '../lib/lunar.js'
 
 function todayKST() {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul' }).format(new Date())
@@ -32,21 +33,41 @@ export function SajuPage({ today = todayKST() }) {
   const saved = loadSaved()
   const [birth, setBirth] = useState(saved.birth ?? '')
   const [hour, setHour] = useState(saved.hour ?? '')
+  const [cal, setCal] = useState(saved.cal ?? 'solar')
 
   useEffect(() => {
     try {
-      localStorage.setItem(STORE_KEY, JSON.stringify({ birth, hour }))
+      localStorage.setItem(STORE_KEY, JSON.stringify({ birth, hour, cal }))
     } catch {
       // 저장 실패는 무시
     }
-  }, [birth, hour])
+  }, [birth, hour, cal])
 
   const valid = /^\d{4}-\d{2}-\d{2}$/.test(birth)
-  const pillars = valid ? fourPillars(birth, hour === '' ? null : Number(hour)) : null
+  // 음력 입력이면 양력으로 변환해 계산
+  const solarBirth = !valid ? null : cal === 'lunar'
+    ? lunarToSolar(...birth.split('-').map(Number))
+    : birth
+  const pillars = solarBirth ? fourPillars(solarBirth, hour === '' ? null : Number(hour)) : null
 
   return (
     <section className="saju-page">
       <div className="saju-form surface-card">
+        <div className="person-head">
+          <strong>사주 정보</strong>
+          <div className="cal-toggle" role="group" aria-label="달력 구분">
+            {[['solar', '양력'], ['lunar', '음력']].map(([id, label]) => (
+              <button
+                key={id}
+                type="button"
+                className={cal === id ? 'cal-btn active' : 'cal-btn'}
+                onClick={() => setCal(id)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
         <label className="saju-field">
           <span>생년월일</span>
           <input
@@ -66,6 +87,11 @@ export function SajuPage({ today = todayKST() }) {
             ))}
           </select>
         </label>
+        {cal === 'lunar' && valid && (
+          <p className={solarBirth ? 'cal-note' : 'cal-note error'}>
+            {solarBirth ? `양력 ${solarBirth}으로 계산합니다` : '음력 날짜를 확인해 주세요 (윤달은 지원하지 않아요)'}
+          </p>
+        )}
       </div>
 
       {pillars ? (
@@ -78,7 +104,7 @@ export function SajuPage({ today = todayKST() }) {
           <div className="saju-result surface-card">
             <h2>오늘의 사주 행운 번호</h2>
             <div className="set-balls">
-              {sajuNumbers(birth, hour === '' ? null : Number(hour), today).map((n) => (
+              {sajuNumbers(solarBirth, hour === '' ? null : Number(hour), today).map((n) => (
                 <LottoBall key={n} number={n} />
               ))}
             </div>
