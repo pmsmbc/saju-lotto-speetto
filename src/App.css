@@ -127,6 +127,17 @@ body {
 .dream-lucky h2 { margin: 0 0 10px; font-size: var(--fs-body-m); font-weight: 800; color: var(--text-strong); }
 .dream-lucky .hint { display: block; margin-top: 10px; }
 
+.related { margin-top: 12px; }
+.related-title { margin: 0 0 8px; font-size: var(--fs-body-m); font-weight: 800; color: var(--text-strong); }
+.related-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.related-list button {
+  border: none; cursor: pointer; font: inherit; background: none; padding: 0;
+  display: flex; align-items: center; gap: 7px; text-align: left;
+  font-size: var(--fs-body-s); font-weight: 600; color: var(--text-body);
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.related-list button:hover { color: var(--text-strong); }
+
 /* --- Floating share --- */
 .floating-share {
   position: fixed; right: 16px; bottom: 16px; z-index: 50;

@@ -20,8 +20,25 @@ const articles = ['content/dreams', 'content/guides']
   .filter(Boolean)
   .sort((a, b) => a.order - b.order)
 
+// 홈에 WebSite 구조화 데이터
+const siteLd = JSON.stringify({
+  '@context': 'https://schema.org', '@type': 'WebSite',
+  name: '사또 - 사주 로또 스피또', url: 'https://satto.kr/',
+  description: '오늘의 운세, 궁합, 띠별·사주 행운 번호, 로또 추천, 스피또 당첨 지역',
+})
+writeFileSync(join(dist, 'index.html'), base.replace('</head>', `<script type="application/ld+json">${siteLd}</script></head>`))
+
 for (const a of articles) {
+  const ld = JSON.stringify({
+    '@context': 'https://schema.org', '@type': 'Article',
+    headline: a.title, description: a.description,
+    datePublished: a.date ?? '2026-09-03',
+    author: { '@type': 'Organization', name: '사또' },
+    publisher: { '@type': 'Organization', name: '사또', url: 'https://satto.kr/' },
+    mainEntityOfPage: `https://satto.kr/info/${a.slug}/`,
+  })
   const html = base
+    .replace('</head>', `<script type="application/ld+json">${ld}</script></head>`)
     .replace(/<title>[^<]*<\/title>/, `<title>${a.title} | 사또</title>`)
     .replace(/(name="description" content=")[^"]*(")/, `$1${a.description}$2`)
     .replace(/(property="og:title" content=")[^"]*(")/, `$1${a.title} | 사또$2`)
@@ -43,5 +60,14 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://w
   .map(([u, f]) => `  <url><loc>https://satto.kr/${u}</loc><lastmod>${today}</lastmod><changefreq>${f}</changefreq></url>`)
   .join('\n')}\n</urlset>\n`
 writeFileSync(join(dist, 'sitemap.xml'), sitemap)
+
+// RSS 피드 (네이버 서치어드바이저 제출용)
+const rss = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel>
+<title>사또 - 꿈해몽·사주·로또 이야기</title>
+<link>https://satto.kr/info</link>
+<description>꿈해몽과 사주·로또 상식을 쉽게 정리했습니다</description>
+${articles.map((a) => `<item><title>${a.title}</title><link>https://satto.kr/info/${a.slug}/</link><description>${a.description}</description><pubDate>${new Date((a.date ?? '2026-09-03') + 'T09:00:00+09:00').toUTCString()}</pubDate><guid>https://satto.kr/info/${a.slug}/</guid></item>`).join('\n')}
+</channel></rss>\n`
+writeFileSync(join(dist, 'rss.xml'), rss)
 
 console.log('routes:', ROUTES.join(', '), '| articles:', articles.map((a) => a.slug).join(', '))

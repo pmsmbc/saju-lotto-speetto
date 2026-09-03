@@ -35,6 +35,16 @@ export function InfoPage({ today = todayKST() }) {
 
   const article = slug ? articleBySlug(slug) : null
 
+  // 같은 카테고리에서 다음 순서 3개 (끝이면 앞으로 순환)
+  const related = article
+    ? (() => {
+        const pool = ARTICLES.filter((a) => a.category === article.category && a.slug !== article.slug)
+        const idx = pool.findIndex((a) => a.order > article.order)
+        const start = idx === -1 ? 0 : idx
+        return [...pool.slice(start), ...pool.slice(0, start)].slice(0, 3)
+      })()
+    : []
+
   if (article) {
     return (
       <section className="info-page">
@@ -65,6 +75,21 @@ export function InfoPage({ today = todayKST() }) {
             />
           </div>
         </article>
+        {related.length > 0 && (
+          <div className="related surface-card">
+            <h2 className="related-title">함께 보면 좋은 글</h2>
+            <ul className="related-list">
+              {related.map((r) => (
+                <li key={r.slug}>
+                  <button type="button" onClick={() => open(r.slug)}>
+                    {r.icon && <img className="info-icon" src={`/twemoji/${r.icon}.svg`} alt="" aria-hidden="true" />}
+                    {r.title}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <p className="hint zodiac-hint">꿈해몽은 전통 풀이를 정리한 참고용 콘텐츠입니다.</p>
       </section>
     )
