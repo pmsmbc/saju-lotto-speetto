@@ -249,8 +249,8 @@ body {
 }
 .ball-yellow { background: #fbc400; }
 .ball-blue { background: #69c8f2; }
-.ball-red { background: #ff7272; color: #fff; }
-.ball-gray { background: #aaaaaa; color: #fff; }
+.ball-red { background: #ff7272; }
+.ball-gray { background: #b5bcc9; }
 .ball-green { background: #b0d840; }
 
 .hotcold { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
@@ -296,7 +296,7 @@ body {
 .fortune-line { margin: 0 0 8px; font-size: var(--fs-body-s); line-height: 1.6; color: var(--text-body); }
 .fortune-line strong { color: var(--text-strong); margin-right: 4px; }
 .fortune-lucky { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
-.fortune-lucky > span { font-size: var(--fs-body-s); font-weight: 700; color: var(--text-muted); margin-right: 4px; }
+.fortune-lucky > span { font-size: var(--fs-body-s); font-weight: 700; color: var(--text-strong); margin-right: 4px; }
 
 /* --- Saju --- */
 .saju-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
