@@ -90,7 +90,7 @@ export function FortunePage({ today = todayKST() }) {
       ) : (
         <p className="status">띠를 선택하면 오늘의 운세를 보여드려요</p>
       )}
-      <p className="hint zodiac-hint">일진과 띠의 관계(합·충)로 보는 재미용 운세입니다.</p>
+      <p className="hint zodiac-hint">일진과 띠의 관계(합·충)로 보는 운세입니다.</p>
     </section>
   )
 }

@@ -64,7 +64,7 @@ export default function PrivacyModal({ open, onClose }) {
           </p>
           <h3>면책</h3>
           <p>
-            제공되는 번호는 재미를 위한 것으로 당첨을 보장하지 않습니다. 복권
+            제공되는 번호는 참고용으로, 당첨을 보장하지 않습니다. 복권
             구매는 만 19세 이상만 가능합니다.
           </p>
         </div>
