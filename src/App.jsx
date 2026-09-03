@@ -7,6 +7,7 @@ import GunghapPage from './pages/GunghapPage.jsx'
 import SajuPage from './pages/SajuPage.jsx'
 import Footer from './components/Footer.jsx'
 import FloatingShare from './components/FloatingShare.jsx'
+import InfoPage from './pages/InfoPage.jsx'
 import './App.css'
 
 // 경로 ↔ 화면 매핑 (scripts/make-routes.js 와 함께 유지)
@@ -18,11 +19,13 @@ const ROUTES = {
   '/lotto': { menu: 'lotto', tab: 'lottorec' },
   '/speetto': { menu: 'speetto', tab: 'speetto' },
 }
-const PATH_OF = Object.fromEntries(
-  Object.entries(ROUTES).map(([path, r]) => [r.tab, path]),
-)
+const PATH_OF = {
+  ...Object.fromEntries(Object.entries(ROUTES).map(([path, r]) => [r.tab, path])),
+  info: '/info',
+}
 
 function stateFromPath(pathname) {
+  if (pathname.startsWith('/info')) return { menu: 'info', tab: 'info' }
   return ROUTES[pathname.replace(/\/$/, '')] ?? ROUTES['/unse']
 }
 
@@ -46,6 +49,10 @@ const MENUS = [
     id: 'speetto', label: '스피또',
     items: [{ id: 'speetto', label: '당첨 지역' }],
   },
+  {
+    id: 'info', label: '정보',
+    items: [{ id: 'info', label: '꿈해몽' }],
+  },
 ]
 
 export default function App() {
@@ -53,7 +60,7 @@ export default function App() {
   const [menuId, setMenuId] = useState(initial.menu)
   // 대메뉴별 마지막 선택 하위 메뉴 기억
   const [subByMenu, setSubByMenu] = useState({
-    saju: 'fortune', lotto: 'zodiac', speetto: 'speetto',
+    saju: 'fortune', lotto: 'zodiac', speetto: 'speetto', info: 'info',
     [initial.menu]: initial.tab,
   })
   const menu = MENUS.find((m) => m.id === menuId)
@@ -66,6 +73,8 @@ export default function App() {
     const path = PATH_OF[nextTab]
     if (path && window.location.pathname !== path) {
       window.history.pushState({}, '', path + window.location.search)
+      // InfoPage 등 하위 라우터가 경로 변화를 인지하도록
+      window.dispatchEvent(new PopStateEvent('popstate'))
     }
   }
 
@@ -124,6 +133,7 @@ export default function App() {
         {tab === 'sajunum' && <SajuPage />}
         {tab === 'lottorec' && <LottoPage />}
         {tab === 'speetto' && <SpeettoPage />}
+        {tab === 'info' && <InfoPage />}
       </main>
       <Footer />
       <FloatingShare />

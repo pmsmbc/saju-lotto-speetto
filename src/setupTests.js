@@ -15,3 +15,7 @@ if (typeof globalThis.localStorage?.clear !== 'function') {
     },
   })
 }
+
+// jsdom의 window.scrollTo 미구현 소음 제거
+window.scrollTo = () => {}
+Element.prototype.scrollIntoView = Element.prototype.scrollIntoView ?? (() => {})
