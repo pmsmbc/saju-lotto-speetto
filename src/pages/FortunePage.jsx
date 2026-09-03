@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ZODIACS, dailyLuckyPair } from '../lib/zodiac.js'
 import { allFortunes, todayIljin } from '../lib/fortune.js'
 import { lunarDateKorean } from '../lib/lunar.js'
@@ -27,6 +27,12 @@ const GRADE_CLASS = { 대길: 'g-best', 길: 'g-good', 보통: 'g-normal', 주�
 
 export function FortunePage({ today = todayKST() }) {
   const [selected, setSelected] = useState(null)
+  const detailRef = useRef(null)
+
+  // 띠 선택 시 상세 카드로 부드럽게 스크롤
+  useEffect(() => {
+    if (selected) detailRef.current?.scrollIntoView?.({ behavior: 'smooth', block: 'nearest' })
+  }, [selected])
   const fortunes = allFortunes(today)
   const iljin = todayIljin(today)
   const current = fortunes.find((f) => f.zodiac.id === selected)
@@ -56,7 +62,7 @@ export function FortunePage({ today = todayKST() }) {
         ))}
       </div>
       {current ? (
-        <div className="fortune-detail surface-card">
+        <div className="fortune-detail surface-card" ref={detailRef}>
           <h2>
             {current.zodiac.label} 오늘의 운세{' '}
             <span className={`grade-badge ${GRADE_CLASS[current.grade]}`}>{current.grade}</span>
