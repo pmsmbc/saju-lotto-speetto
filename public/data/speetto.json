@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-03T02:35:53.352Z",
+  "updatedAt": "2026-09-04T02:31:06.734Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -8,7 +8,7 @@
       "status": "판매중",
       "rank1Remaining": 11,
       "rank1Total": 12,
-      "stockRate": 27
+      "stockRate": 45
     },
     {
       "game": "스피또1000",
@@ -179,7 +179,7 @@
       "status": "판매중",
       "rank1Remaining": 10,
       "rank1Total": 10,
-      "stockRate": 52
+      "stockRate": 61
     },
     {
       "game": "스피또2000",
@@ -278,7 +278,7 @@
       "status": "판매중",
       "rank1Remaining": 3,
       "rank1Total": 5,
-      "stockRate": 49
+      "stockRate": 50
     },
     {
       "game": "스피또500",
@@ -335,9 +335,41 @@
       "game": "스피또2000",
       "round": 69,
       "rank": 2,
+      "store": "씨스페이스 경주세방매점",
+      "address": "경북 경주시 산업로 4447 (용강동)",
+      "region": "경북"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
       "store": "희망복권",
       "address": "대전 유성구 원신흥남로42번길 24 ",
       "region": "대전"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "행운나눔",
+      "address": "부산 사하구 사하로 204 ",
+      "region": "부산"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "버스충전소",
+      "address": "서울 서초구 신반포로 177 반포쇼핑3동정문앞",
+      "region": "서울"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "행복로또",
+      "address": "서울 영등포구 도신로 39 1층",
+      "region": "서울"
     },
     {
       "game": "스피또2000",
