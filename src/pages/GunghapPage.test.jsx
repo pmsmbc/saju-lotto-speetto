@@ -92,3 +92,18 @@ test('공유 링크 파라미터로 접속하면 결과를 바로 보여준다',
   expect(screen.getByRole('button', { name: /공유하기/ })).toBeInTheDocument()
   window.history.pushState({}, '', '/')
 })
+
+test('초기화 버튼이 해당 입력을 비우고 결과를 닫는다', () => {
+  localStorage.clear()
+  render(<GunghapPage />)
+  type('나 생년월일', '2020-06-01')
+  type('상대 생년월일', '2016-06-01')
+  expect(document.querySelector('.gunghap-result')).not.toBeNull()
+  fireEvent.click(screen.getByRole('button', { name: '나 입력 초기화' }))
+  expect(screen.getByLabelText('나 생년월일').value).toBe('')
+  expect(document.querySelector('.gunghap-result')).toBeNull()
+  // 상대 입력은 유지
+  expect(screen.getByLabelText('상대 생년월일').value).toBe('2016-06-01')
+  // localStorage에도 반영
+  expect(JSON.parse(localStorage.getItem('satto.gunghap')).mine.birth).toBe('')
+})

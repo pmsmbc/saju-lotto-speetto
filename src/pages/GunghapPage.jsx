@@ -40,6 +40,14 @@ function PersonInput({ who, person, onChange, today }) {
     <div className="person-block">
       <div className="person-head">
         <strong>{who}</strong>
+        <button
+          type="button"
+          className="reset-btn"
+          aria-label={`${who} 입력 초기화`}
+          onClick={() => onChange({ birth: '', hour: '', cal: 'solar' })}
+        >
+          초기화
+        </button>
         <div className="cal-toggle" role="group" aria-label={`${who} 달력 구분`}>
           {[['solar', '양력'], ['lunar', '음력']].map(([id, label]) => (
             <button
