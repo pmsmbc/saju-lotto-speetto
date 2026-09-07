@@ -48,3 +48,14 @@ test('음력 선택 시 양력으로 변환해 사주를 계산한다', () => {
   const p = fourPillars('2026-02-17', null)
   expect(screen.getByText(p.year.name)).toBeInTheDocument() // 병오
 })
+
+test('초기화 버튼이 입력과 결과를 비운다', () => {
+  localStorage.clear()
+  render(<SajuPage today="2026-09-07" />)
+  fireEvent.change(screen.getByLabelText('생년월일'), { target: { value: '1990-05-15' } })
+  expect(document.querySelector('.saju-pillars')).not.toBeNull()
+  fireEvent.click(screen.getByRole('button', { name: '입력 초기화' }))
+  expect(screen.getByLabelText('생년월일').value).toBe('')
+  expect(document.querySelector('.saju-pillars')).toBeNull()
+  expect(JSON.parse(localStorage.getItem('satto.saju')).birth).toBe('')
+})

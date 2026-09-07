@@ -55,6 +55,14 @@ export function SajuPage({ today = todayKST() }) {
       <div className="saju-form surface-card">
         <div className="person-head">
           <strong>사주 정보</strong>
+          <button
+            type="button"
+            className="reset-btn"
+            aria-label="입력 초기화"
+            onClick={() => { setBirth(''); setHour(''); setCal('solar') }}
+          >
+            초기화
+          </button>
           <div className="cal-toggle" role="group" aria-label="달력 구분">
             {[['solar', '양력'], ['lunar', '음력']].map(([id, label]) => (
               <button
