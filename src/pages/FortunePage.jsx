@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { ZODIACS, dailyLuckyPair } from '../lib/zodiac.js'
+import { ZODIACS } from '../lib/zodiac.js'
 import { allFortunes, todayIljin } from '../lib/fortune.js'
 import { lunarDateKorean } from '../lib/lunar.js'
 import { todayKST, formatKoreanDate, weekdayInfo } from '../lib/dateformat.js'
-import { LottoBall } from '../components/LottoBall.jsx'
 import ShareButton from '../components/ShareButton.jsx'
 import ratIcon from '../assets/twemoji/1f42d.svg'
 import oxIcon from '../assets/twemoji/1f42e.svg'
@@ -86,12 +85,6 @@ export function FortunePage({ today = todayKST() }) {
               </li>
             ))}
           </ul>
-          <div className="fortune-lucky">
-            <span className="lucky-label">오늘의 행운 번호</span>
-            {dailyLuckyPair(current.zodiac.id, today).map((n) => (
-              <LottoBall key={n} number={n} />
-            ))}
-          </div>
           <div className="share-row">
             <ShareButton
               title="사또 - 오늘의 운세"
