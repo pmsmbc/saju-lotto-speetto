@@ -16,3 +16,9 @@ test('북한산쌍문철학원 유튜브 링크를 새 탭으로 연다', () => 
   expect(link).toHaveAttribute('rel', expect.stringContaining('noopener'))
   expect(YOUTUBE_URL).toBe('https://www.youtube.com/@ssangmun-center')
 })
+
+test('푸터에 개인정보처리방침·사이트 소개 페이지 링크가 있다', () => {
+  render(<Footer />)
+  expect(screen.getByRole('link', { name: '개인정보처리방침' })).toHaveAttribute('href', '/privacy/')
+  expect(screen.getByRole('link', { name: '사이트 소개' })).toHaveAttribute('href', '/about/')
+})

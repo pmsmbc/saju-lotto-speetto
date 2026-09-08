@@ -100,3 +100,11 @@ test('꿈해몽·상식 메뉴 클릭 시 꿈해몽 글 목록 표시', () => {
   expect(screen.getByText('정보 이야기')).toBeInTheDocument()
   window.history.pushState({}, '', '/')
 })
+
+test('/privacy 경로로 접속하면 개인정보처리방침을 보여준다', () => {
+  mockFetch()
+  window.history.pushState({}, '', '/privacy/')
+  render(<App />)
+  expect(screen.getByRole('heading', { level: 1, name: '개인정보처리방침' })).toBeInTheDocument()
+  window.history.pushState({}, '', '/')
+})

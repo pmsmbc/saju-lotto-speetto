@@ -49,11 +49,26 @@ for (const a of articles) {
   writeFileSync(join(dist, 'info', a.slug, 'index.html'), html)
 }
 
+// 정적 페이지(/privacy /about): 크롤러가 전문을 읽도록 생성
+const pages = readdirSync('content/pages')
+  .filter((f) => f.endsWith('.md'))
+  .map((f) => parseArticle(readFileSync(join('content/pages', f), 'utf-8')))
+  .filter(Boolean)
+for (const pg of pages) {
+  const html = base
+    .replace(/<title>[^<]*<\/title>/, `<title>${pg.title} | 사또</title>`)
+    .replace(/(name="description" content=")[^"]*(")/, `$1${pg.description}$2`)
+    .replace('<div id="root"></div>', `<div id="root"><article><h1>${pg.title}</h1>${pg.html}</article></div>`)
+  mkdirSync(join(dist, pg.slug), { recursive: true })
+  writeFileSync(join(dist, pg.slug, 'index.html'), html)
+}
+
 // sitemap
 const today = new Date().toISOString().slice(0, 10)
 const urls = [
   ['', 'daily'], ['unse/', 'daily'], ['gunghap/', 'weekly'], ['zodiac/', 'daily'],
   ['saju/', 'daily'], ['lotto/', 'weekly'], ['speetto/', 'daily'], ['info/', 'weekly'],
+  ['privacy/', 'yearly'], ['about/', 'yearly'],
   ...articles.map((a) => [`info/${a.slug}/`, 'monthly']),
 ]
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls

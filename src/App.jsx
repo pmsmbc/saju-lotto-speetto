@@ -8,6 +8,7 @@ import SajuPage from './pages/SajuPage.jsx'
 import Footer from './components/Footer.jsx'
 import FloatingShare from './components/FloatingShare.jsx'
 import InfoPage from './pages/InfoPage.jsx'
+import StaticPage from './pages/StaticPage.jsx'
 import './App.css'
 
 // 경로 ↔ 화면 매핑 (scripts/make-routes.js 와 함께 유지)
@@ -18,6 +19,8 @@ const ROUTES = {
   '/saju': { menu: 'lotto', tab: 'sajunum' },
   '/lotto': { menu: 'lotto', tab: 'lottorec' },
   '/speetto': { menu: 'speetto', tab: 'speetto' },
+  '/privacy': { menu: 'page', tab: 'privacy' },
+  '/about': { menu: 'page', tab: 'about' },
 }
 const PATH_OF = {
   ...Object.fromEntries(Object.entries(ROUTES).map(([path, r]) => [r.tab, path])),
@@ -60,7 +63,7 @@ export default function App() {
   const [menuId, setMenuId] = useState(initial.menu)
   // 대메뉴별 마지막 선택 하위 메뉴 기억
   const [subByMenu, setSubByMenu] = useState({
-    saju: 'fortune', lotto: 'zodiac', speetto: 'speetto', info: 'info',
+    saju: 'fortune', lotto: 'zodiac', speetto: 'speetto', info: 'info', page: 'privacy',
     [initial.menu]: initial.tab,
   })
   const menu = MENUS.find((m) => m.id === menuId)
@@ -112,7 +115,7 @@ export default function App() {
           </button>
         ))}
       </nav>
-      {menu.items.length > 1 && (
+      {menu && menu.items.length > 1 && (
         <nav className="sub-nav">
           {menu.items.map((t) => (
             <button
@@ -134,6 +137,8 @@ export default function App() {
         {tab === 'lottorec' && <LottoPage />}
         {tab === 'speetto' && <SpeettoPage />}
         {tab === 'info' && <InfoPage />}
+        {tab === 'privacy' && <StaticPage slug="privacy" />}
+        {tab === 'about' && <StaticPage slug="about" />}
       </main>
       <Footer />
       <FloatingShare />

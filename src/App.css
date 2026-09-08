@@ -91,6 +91,7 @@ body {
 .footer-youtube:hover { text-decoration: underline; }
 .youtube-icon { width: 22px; height: 22px; flex: none; }
 .footer-copy { margin: 0; font-size: var(--fs-body-s); font-weight: 600; color: var(--text-muted); }
+.footer-pages { display: inline-flex; gap: 12px; }
 .footer-privacy {
   border: none; background: none; cursor: pointer; font: inherit;
   font-size: var(--fs-caption); font-weight: 600; color: var(--text-muted);
