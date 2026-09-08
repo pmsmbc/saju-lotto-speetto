@@ -61,11 +61,11 @@ const KEYWORDS = {
   주의: { money: ['지출', '손재', '낭비'], health: ['주의', '과로', '피로'], love: ['갈등', '오해', '냉각'] },
 }
 
-// 길방: 띠의 오행을 생(生)해주는 오행의 방위 (木=東 火=南 土=南西 金=西 水=北)
+// 길방: 띠의 오행을 생(生)해주는 오행의 방위 (목=동 화=남 토=남서 금=서 수=북)
 export function luckyDirection(zodiacBranch) {
   const z = BRANCH_ELEM[zodiacBranch]
   const generator = (z + 4) % 5 // z를 생하는 오행 (木→火→土→金→水 순환의 역방향)
-  return ['東', '南', '南西', '西', '北'][generator] // 木=東 火=南 土=南西 金=西 水=北
+  return ['동쪽', '남쪽', '남서쪽', '서쪽', '북쪽'][generator]
 }
 
 // 년생별 한 줄 (신문 운세체)

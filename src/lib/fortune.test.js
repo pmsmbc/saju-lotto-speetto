@@ -79,12 +79,12 @@ describe('dailyFortune', () => {
     expect(f.keywords.money.length).toBeGreaterThan(0)
     expect(f.keywords.health.length).toBeGreaterThan(0)
     expect(f.keywords.love.length).toBeGreaterThan(0)
-    expect(['東', '西', '南', '北', '南西']).toContain(f.direction)
+    expect(['동쪽', '서쪽', '남쪽', '북쪽', '남서쪽']).toContain(f.direction)
   })
 
-  test('길방은 오행 규칙: 쥐(水)=西, 말(火)=東', () => {
-    expect(dailyFortune('rat', '2026-09-02').direction).toBe('西')
-    expect(dailyFortune('horse', '2026-09-02').direction).toBe('東')
+  test('길방은 오행 규칙: 쥐(수)=서쪽, 말(화)=동쪽', () => {
+    expect(dailyFortune('rat', '2026-09-02').direction).toBe('서쪽')
+    expect(dailyFortune('horse', '2026-09-02').direction).toBe('동쪽')
   })
 
   test('년생별 한 줄: 쥐띠는 36년생부터 6줄, 문장 중복 없음', () => {
