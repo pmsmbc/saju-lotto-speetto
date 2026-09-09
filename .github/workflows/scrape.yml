@@ -2,7 +2,7 @@ name: Scrape Speetto
 
 on:
   schedule:
-    - cron: '0 0 * * *'   # 매일 09:00 KST
+    - cron: '0 0,6,12 * * *'   # 매일 09:00·15:00·21:00 KST (실제 실행은 2~4시간 지연됨)
   workflow_dispatch:
 
 permissions:
