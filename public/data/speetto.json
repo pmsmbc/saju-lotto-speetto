@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-10T15:28:18.853Z",
+  "updatedAt": "2026-09-10T23:31:46.936Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -8,7 +8,7 @@
       "status": "판매중",
       "rank1Remaining": 7,
       "rank1Total": 12,
-      "stockRate": 45
+      "stockRate": 63
     },
     {
       "game": "스피또1000",
@@ -179,7 +179,7 @@
       "status": "판매중",
       "rank1Remaining": 10,
       "rank1Total": 10,
-      "stockRate": 61
+      "stockRate": 68
     },
     {
       "game": "스피또2000",
@@ -278,7 +278,7 @@
       "status": "판매중",
       "rank1Remaining": 3,
       "rank1Total": 5,
-      "stockRate": 50
+      "stockRate": 52
     },
     {
       "game": "스피또500",
@@ -330,6 +330,14 @@
       "store": "복권파는집",
       "address": "경남 창원시 마산회원구 3·15대로 765 1층",
       "region": "경남"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "복권명당",
+      "address": "경북 경산시 경안로 214 1층",
+      "region": "경북"
     },
     {
       "game": "스피또2000",
@@ -393,6 +401,14 @@
       "rank": 2,
       "store": "태안로또복권방",
       "address": "충남 태안군 독샘로 57 1층",
+      "region": "충남"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "파리스뷰티 복권",
+      "address": "충남 천안시 동남구 개목8길 5 1층",
       "region": "충남"
     },
     {
