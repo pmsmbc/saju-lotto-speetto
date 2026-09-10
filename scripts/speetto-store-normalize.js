@@ -32,13 +32,26 @@ const REGION_PREFIX = [
   ['인터넷', '인터넷'],
 ]
 
+// "(당첨 당시 상호) 명당복권" 같은 접두 안내문 제거
+const stripLegacyPrefix = (v) => (typeof v === 'string' ? v.replace(/^\([^)]*\)\s*/, '').trim() : '')
+
+// 폐점 판매점은 shpNm/shpAddr가 null로 오고, 당첨 당시 값이 *Asis / bef* 필드에 남는다.
+export function resolveStoreName(item) {
+  return item.shpNm?.trim() || item.shpNmAsis?.trim() || stripLegacyPrefix(item.befConmNm) || '미확인 판매점'
+}
+
+export function resolveAddress(item) {
+  return item.shpAddr?.trim() || item.shpAddrAsis?.trim() || stripLegacyPrefix(item.befRdnm) || ''
+}
+
+// 주소로 시·도를 판단하고, 주소에서 알 수 없을 때만 API의 region 값을 쓴다.
+// (API region은 폐점 건에서 '서울'로 잘못 오거나 '전남광주'처럼 두 지역이 합쳐져 온다)
 export function resolveRegion(item) {
-  if (item.region) return item.region
-  const addr = item.shpAddr ?? ''
+  const addr = resolveAddress(item)
   for (const [prefix, label] of REGION_PREFIX) {
     if (addr.startsWith(prefix)) return label
   }
-  return '기타'
+  return item.region || '기타'
 }
 
 export function extractEpisodes(apiJson) {
@@ -50,14 +63,16 @@ export function extractEpisodes(apiJson) {
 export function normalizeStores(apiJson, gameName, round) {
   const list = apiJson?.data?.list
   if (!Array.isArray(list)) return []
-  return list.map((item) => ({
-    game: gameName,
-    round,
-    rank: Number(item.wnShpRnk),
-    store: item.shpNm,
-    address: item.shpAddr,
-    region: resolveRegion(item),
-  }))
+  return list
+    .map((item) => ({
+      game: gameName,
+      round,
+      rank: item.wnShpRnk == null || item.wnShpRnk === '' ? NaN : Number(item.wnShpRnk),
+      store: resolveStoreName(item),
+      address: resolveAddress(item),
+      region: resolveRegion(item),
+    }))
+    .filter((s) => Number.isFinite(s.rank))
 }
 
 export function isCompleteScrape(stores, expectedGameNames) {
