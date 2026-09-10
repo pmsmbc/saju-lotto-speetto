@@ -1,88 +1,138 @@
-// 빌드 후: 라우트별 index.html 생성 + 글 페이지에 제목/설명/본문 주입(SEO) + sitemap 생성
-import { mkdirSync, copyFileSync, readFileSync, writeFileSync, readdirSync } from 'node:fs'
+// 빌드 후: 라우트별 index.html 생성 + 제목/설명/본문 주입(SEO) + sitemap/RSS 생성
+import { mkdirSync, copyFileSync, readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { parseArticle } from '../src/lib/markdown.js'
+import { SITE, esc, staticPages, speettoOverview, speettoRoundPages, lottoOverview } from './seo-pages.js'
 
-const ROUTES = ['unse', 'gunghap', 'zodiac', 'saju', 'lotto', 'speetto', 'info']
 const dist = 'dist'
 const base = readFileSync(join(dist, 'index.html'), 'utf-8')
+const today = new Date().toISOString().slice(0, 10)
+const readJson = (p) => (existsSync(p) ? JSON.parse(readFileSync(p, 'utf-8')) : null)
 
-for (const r of ROUTES) {
-  mkdirSync(join(dist, r), { recursive: true })
-  writeFileSync(join(dist, r, 'index.html'), base)
+// 페이지별 head/본문을 주입한 HTML을 만든다.
+function render({ title, description, canonical, html, ld }) {
+  let out = base
+    .replace(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>`)
+    .replace(/(name="description" content=")[^"]*(")/, `$1${esc(description)}$2`)
+    .replace(/(property="og:title" content=")[^"]*(")/, `$1${esc(title)}$2`)
+    .replace(/(property="og:description" content=")[^"]*(")/, `$1${esc(description)}$2`)
+    .replace(/(property="og:url" content=")[^"]*(")/, `$1${esc(canonical)}$2`)
+  const head = `<link rel="canonical" href="${esc(canonical)}" />` + (ld ? `<script type="application/ld+json">${ld}</script>` : '')
+  out = out.replace('</head>', `${head}</head>`)
+  if (html) out = out.replace('<div id="root"></div>', `<div id="root">${html}</div>`)
+  return out
 }
-copyFileSync(join(dist, 'index.html'), join(dist, '404.html'))
 
-// 글 페이지: 크롤러가 본문을 읽도록 실제 콘텐츠를 HTML에 주입 (앱 로드 시 React가 대체)
+function writePage(path, htmlText) {
+  const dir = path ? join(dist, path) : dist
+  mkdirSync(dir, { recursive: true })
+  writeFileSync(join(dir, 'index.html'), htmlText)
+}
+
+// ---------- 글 ----------
 const articles = ['content/dreams', 'content/guides']
   .flatMap((dir) => readdirSync(dir).filter((f) => f.endsWith('.md')).map((f) => join(dir, f)))
   .map((f) => parseArticle(readFileSync(f, 'utf-8')))
   .filter(Boolean)
+  .map((a) => ({ ...a, category: a.category ?? 'dream' }))
   .sort((a, b) => a.order - b.order)
 
-// 홈에 WebSite 구조화 데이터
-const siteLd = JSON.stringify({
-  '@context': 'https://schema.org', '@type': 'WebSite',
-  name: '사또 - 사주 로또 스피또', url: 'https://satto.kr/',
-  description: '오늘의 운세, 궁합, 띠별·사주 행운 번호, 로또 추천, 스피또 당첨 지역',
-})
-writeFileSync(join(dist, 'index.html'), base.replace('</head>', `<script type="application/ld+json">${siteLd}</script></head>`))
+const speetto = readJson('public/data/speetto.json')
+const lotto = readJson('public/data/lotto-stats.json')
 
+const sitemap = [] // { loc, lastmod, changefreq }
+const addUrl = (path, lastmod, changefreq) =>
+  sitemap.push({ loc: `${SITE}/${path}`, lastmod: lastmod ?? today, changefreq })
+
+// ---------- 기능 페이지(홈·운세·궁합·띠별·사주·글목록) ----------
+for (const p of staticPages({ articles, speetto, lotto, today })) {
+  const ld = p.path === ''
+    ? JSON.stringify({
+        '@context': 'https://schema.org', '@type': 'WebSite',
+        name: '사또 - 사주 로또 스피또', url: `${SITE}/`,
+        description: '오늘의 운세, 궁합, 띠별·사주 행운 번호, 로또 추천, 스피또 당첨 지역',
+      })
+    : null
+  writePage(p.path, render({ ...p, canonical: `${SITE}/${p.path}`, ld }))
+  addUrl(p.path, p.lastmod, p.changefreq ?? 'weekly')
+}
+
+// ---------- 스피또: 전체 + 회차별 ----------
+if (speetto) {
+  const ov = speettoOverview(speetto)
+  writePage('speetto/', render({ ...ov, canonical: `${SITE}/speetto/` }))
+  addUrl('speetto/', ov.lastmod, 'daily')
+
+  for (const p of speettoRoundPages(speetto)) {
+    writePage(p.path, render({ ...p, canonical: `${SITE}/${p.path}` }))
+    addUrl(p.path, p.lastmod, p.changefreq)
+  }
+} else {
+  writePage('speetto/', base)
+  addUrl('speetto/', today, 'daily')
+}
+
+// ---------- 로또 ----------
+if (lotto) {
+  const lo = lottoOverview(lotto)
+  writePage('lotto/', render({ ...lo, canonical: `${SITE}/lotto/` }))
+  addUrl('lotto/', lo.lastmod, 'weekly')
+} else {
+  writePage('lotto/', base)
+  addUrl('lotto/', today, 'weekly')
+}
+
+// ---------- 글 상세 ----------
 for (const a of articles) {
   const ld = JSON.stringify({
     '@context': 'https://schema.org', '@type': 'Article',
     headline: a.title, description: a.description,
     datePublished: a.date ?? '2026-09-03',
+    dateModified: a.date ?? '2026-09-03',
     author: { '@type': 'Organization', name: '사또' },
-    publisher: { '@type': 'Organization', name: '사또', url: 'https://satto.kr/' },
-    mainEntityOfPage: `https://satto.kr/info/${a.slug}/`,
+    publisher: { '@type': 'Organization', name: '사또', url: `${SITE}/` },
+    mainEntityOfPage: `${SITE}/info/${a.slug}/`,
   })
-  const html = base
-    .replace('</head>', `<script type="application/ld+json">${ld}</script></head>`)
-    .replace(/<title>[^<]*<\/title>/, `<title>${a.title} | 사또</title>`)
-    .replace(/(name="description" content=")[^"]*(")/, `$1${a.description}$2`)
-    .replace(/(property="og:title" content=")[^"]*(")/, `$1${a.title} | 사또$2`)
-    .replace(/(property="og:description" content=")[^"]*(")/, `$1${a.description}$2`)
-    .replace(/(property="og:url" content=")[^"]*(")/, `$1https://satto.kr/info/${a.slug}/$2`)
-    .replace('<div id="root"></div>', `<div id="root"><article><h1>${a.title}</h1>${a.html}</article></div>`)
-  mkdirSync(join(dist, 'info', a.slug), { recursive: true })
-  writeFileSync(join(dist, 'info', a.slug, 'index.html'), html)
+  writePage(`info/${a.slug}/`, render({
+    title: `${a.title} | 사또`,
+    description: a.description,
+    canonical: `${SITE}/info/${a.slug}/`,
+    html: `<article><h1>${esc(a.title)}</h1>${a.html}</article>`,
+    ld,
+  }))
+  addUrl(`info/${a.slug}/`, a.date ?? '2026-09-03', 'monthly')
 }
 
-// 정적 페이지(/privacy /about): 크롤러가 전문을 읽도록 생성
+// ---------- 정적 페이지(/privacy /about) ----------
 const pages = readdirSync('content/pages')
   .filter((f) => f.endsWith('.md'))
   .map((f) => parseArticle(readFileSync(join('content/pages', f), 'utf-8')))
   .filter(Boolean)
 for (const pg of pages) {
-  const html = base
-    .replace(/<title>[^<]*<\/title>/, `<title>${pg.title} | 사또</title>`)
-    .replace(/(name="description" content=")[^"]*(")/, `$1${pg.description}$2`)
-    .replace('<div id="root"></div>', `<div id="root"><article><h1>${pg.title}</h1>${pg.html}</article></div>`)
-  mkdirSync(join(dist, pg.slug), { recursive: true })
-  writeFileSync(join(dist, pg.slug, 'index.html'), html)
+  writePage(`${pg.slug}/`, render({
+    title: `${pg.title} | 사또`,
+    description: pg.description,
+    canonical: `${SITE}/${pg.slug}/`,
+    html: `<article><h1>${esc(pg.title)}</h1>${pg.html}</article>`,
+  }))
+  addUrl(`${pg.slug}/`, pg.date ?? '2026-09-08', 'yearly')
 }
 
-// sitemap
-const today = new Date().toISOString().slice(0, 10)
-const urls = [
-  ['', 'daily'], ['unse/', 'daily'], ['gunghap/', 'weekly'], ['zodiac/', 'daily'],
-  ['saju/', 'daily'], ['lotto/', 'weekly'], ['speetto/', 'daily'], ['info/', 'weekly'],
-  ['privacy/', 'yearly'], ['about/', 'yearly'],
-  ...articles.map((a) => [`info/${a.slug}/`, 'monthly']),
-]
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
-  .map(([u, f]) => `  <url><loc>https://satto.kr/${u}</loc><lastmod>${today}</lastmod><changefreq>${f}</changefreq></url>`)
-  .join('\n')}\n</urlset>\n`
-writeFileSync(join(dist, 'sitemap.xml'), sitemap)
+copyFileSync(join(dist, 'index.html'), join(dist, '404.html'))
 
-// RSS 피드 (네이버 서치어드바이저 제출용)
-const rss = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel>
+// ---------- sitemap ----------
+writeFileSync(join(dist, 'sitemap.xml'),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemap
+    .map((u) => `  <url><loc>${u.loc}</loc><lastmod>${u.lastmod}</lastmod><changefreq>${u.changefreq}</changefreq></url>`)
+    .join('\n')}\n</urlset>\n`)
+
+// ---------- RSS ----------
+const byDate = [...articles].sort((a, b) => (b.date ?? '').localeCompare(a.date ?? '') || b.order - a.order)
+writeFileSync(join(dist, 'rss.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel>
 <title>사또 - 꿈해몽·사주·로또 이야기</title>
-<link>https://satto.kr/info</link>
+<link>${SITE}/info/</link>
 <description>꿈해몽과 사주·로또 상식을 쉽게 정리했습니다</description>
-${articles.map((a) => `<item><title>${a.title}</title><link>https://satto.kr/info/${a.slug}/</link><description>${a.description}</description><pubDate>${new Date((a.date ?? '2026-09-03') + 'T09:00:00+09:00').toUTCString()}</pubDate><guid>https://satto.kr/info/${a.slug}/</guid></item>`).join('\n')}
-</channel></rss>\n`
-writeFileSync(join(dist, 'rss.xml'), rss)
+${byDate.map((a) => `<item><title>${esc(a.title)}</title><link>${SITE}/info/${a.slug}/</link><description>${esc(a.description)}</description><pubDate>${new Date((a.date ?? '2026-09-03') + 'T09:00:00+09:00').toUTCString()}</pubDate><guid>${SITE}/info/${a.slug}/</guid></item>`).join('\n')}
+</channel></rss>\n`)
 
-console.log('routes:', ROUTES.join(', '), '| articles:', articles.map((a) => a.slug).join(', '))
+console.log(`sitemap ${sitemap.length}개 | 글 ${articles.length}편 | 스피또 회차 페이지 ${speetto ? speettoRoundPages(speetto).length : 0}개`)

@@ -29,6 +29,8 @@ const PATH_OF = {
 
 function stateFromPath(pathname) {
   if (pathname.startsWith('/info')) return { menu: 'info', tab: 'info' }
+  // /speetto/1000/109/ 같은 회차별 SEO 페이지도 스피또 화면으로
+  if (pathname.startsWith('/speetto')) return { menu: 'speetto', tab: 'speetto' }
   return ROUTES[pathname.replace(/\/$/, '')] ?? ROUTES['/unse']
 }
 

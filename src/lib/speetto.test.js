@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import { GAME_TABS, sellingWithRank1, recentFinished } from './speetto.js'
+import { GAME_TABS, sellingWithRank1, recentFinished, parseSpeettoPath } from './speetto.js'
 
 const rounds = [
   { game: '스피또2000', gameCode: 'SP2000', round: 68, status: '판매중', rank1Remaining: 7, rank1Total: 8 },
@@ -39,4 +39,18 @@ test('limit을 넘겨 개수를 조절할 수 있음', () => {
 
 test('판매종료 회차가 없으면 빈 배열', () => {
   expect(recentFinished(rounds, 'SP1000')).toEqual([])
+})
+
+describe('parseSpeettoPath', () => {
+  test('회차별 경로에서 게임코드와 회차를 뽑는다', () => {
+    expect(parseSpeettoPath('/speetto/1000/109/')).toEqual({ gameCode: 'SP1000', round: 109 })
+    expect(parseSpeettoPath('/speetto/2000/68')).toEqual({ gameCode: 'SP2000', round: 68 })
+    expect(parseSpeettoPath('/speetto/500/48/')).toEqual({ gameCode: 'SP500', round: 48 })
+  })
+  test('회차 경로가 아니면 null', () => {
+    expect(parseSpeettoPath('/speetto/')).toBe(null)
+    expect(parseSpeettoPath('/speetto/3000/1/')).toBe(null)
+    expect(parseSpeettoPath('/info/pig/')).toBe(null)
+    expect(parseSpeettoPath(undefined)).toBe(null)
+  })
 })

@@ -19,3 +19,12 @@ export function recentFinished(rounds, gameCode, limit = 2) {
     .sort((a, b) => b.round - a.round)
     .slice(0, limit)
 }
+
+// /speetto/1000/109/ → { gameCode: 'SP1000', round: 109 }. 해당 없으면 null.
+const SLUG_TO_CODE = { '2000': 'SP2000', '1000': 'SP1000', '500': 'SP500' }
+
+export function parseSpeettoPath(pathname) {
+  const m = /^\/speetto\/(2000|1000|500)\/(\d+)\/?$/.exec(pathname ?? '')
+  if (!m) return null
+  return { gameCode: SLUG_TO_CODE[m[1]], round: Number(m[2]) }
+}

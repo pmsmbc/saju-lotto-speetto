@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useSpeettoData } from '../hooks/useSpeettoData.js'
-import { GAME_TABS, sellingWithRank1, recentFinished } from '../lib/speetto.js'
+import { GAME_TABS, sellingWithRank1, recentFinished, parseSpeettoPath } from '../lib/speetto.js'
 import { aggregateByArea, filterByArea } from '../lib/aggregate.js'
 import { RegionStats } from '../components/RegionStats.jsx'
 import { StoreList } from '../components/StoreList.jsx'
@@ -77,11 +77,13 @@ function RoundRegion({ round, rank1Remaining, rank1Total, stockRate, rank1Stores
 
 export function SpeettoPage() {
   const { loading, error, updatedAt, rounds, stores } = useSpeettoData()
-  const [gameCode, setGameCode] = useState(GAME_TABS[0].code)
+  // /speetto/1000/109/ 로 들어오면 해당 게임·회차를 펼친 상태로 시작
+  const deepLink = typeof window === 'undefined' ? null : parseSpeettoPath(window.location.pathname)
+  const [gameCode, setGameCode] = useState(deepLink?.gameCode ?? GAME_TABS[0].code)
   // 아코디언: 펼쳐진 회차. undefined면 최신 회차를 기본으로 펼침, null이면 전부 접힘
-  const [expandedRound, setExpandedRound] = useState(undefined)
+  const [expandedRound, setExpandedRound] = useState(deepLink?.round ?? undefined)
   // 종료 회차 아코디언: 기본은 전부 접힘(null)
-  const [expandedFinished, setExpandedFinished] = useState(null)
+  const [expandedFinished, setExpandedFinished] = useState(deepLink?.round ?? null)
 
   const handleGameChange = (code) => {
     setGameCode(code)
