@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-09-10T05:31:44.907Z",
+  "updatedAt": "2026-09-10T06:35:28.246Z",
   "rounds": [
     {
       "game": "스피또1000",
       "gameCode": "SP1000",
       "round": 109,
       "status": "판매중",
-      "rank1Remaining": 8,
+      "rank1Remaining": 7,
       "rank1Total": 12,
       "stockRate": 45
     },
@@ -5626,6 +5626,14 @@
       "store": "복권정복",
       "address": "서울 강동구 고덕로24길 9 1층 104호",
       "region": "서울"
+    },
+    {
+      "game": "스피또1000",
+      "round": 109,
+      "rank": 1,
+      "store": "현대장미슈퍼",
+      "address": "전북 익산시 동서로61길 41 1층",
+      "region": "전북"
     },
     {
       "game": "스피또1000",
