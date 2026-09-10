@@ -46,8 +46,15 @@ export function resolveAddress(item) {
 
 // 주소로 시·도를 판단하고, 주소에서 알 수 없을 때만 API의 region 값을 쓴다.
 // (API region은 폐점 건에서 '서울'로 잘못 오거나 '전남광주'처럼 두 지역이 합쳐져 온다)
+// 동행복권 주소는 광주·전남을 "전남광주 광산구 …"처럼 한 접두어로 묶어 보낸다 → 시·군·구로 구분
+const GWANGJU_GU = new Set(['동구', '서구', '남구', '북구', '광산구'])
+
 export function resolveRegion(item) {
   const addr = resolveAddress(item)
+  if (addr.startsWith('전남광주')) {
+    const sub = addr.split(/\s+/)[1] ?? ''
+    return GWANGJU_GU.has(sub) ? '광주' : '전남'
+  }
   for (const [prefix, label] of REGION_PREFIX) {
     if (addr.startsWith(prefix)) return label
   }

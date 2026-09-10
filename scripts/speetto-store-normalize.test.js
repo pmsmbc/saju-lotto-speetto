@@ -29,6 +29,12 @@ describe('resolveRegion', () => {
     expect(resolveRegion({ region: '서울', shpAddr: '경기 이천시 장감로 1' })).toBe('경기')
     expect(resolveRegion({ region: '전남광주', shpAddr: '광주 서구 상무대로 1' })).toBe('광주')
   })
+  test('"전남광주" 합성 접두어는 시·군·구로 광주/전남 구분', () => {
+    expect(resolveRegion({ region: '전남광주', shpAddr: '전남광주 광산구 임방울대로 1' })).toBe('광주')
+    expect(resolveRegion({ region: '전남광주', shpAddr: '전남광주 북구 용봉로 1' })).toBe('광주')
+    expect(resolveRegion({ region: '전남광주', shpAddr: '전남광주 광양시 중동 1' })).toBe('전남')
+    expect(resolveRegion({ region: '전남광주', shpAddr: '전남광주 여수시 학동 1' })).toBe('전남')
+  })
   test('주소로 알 수 없으면 region 필드 사용', () => {
     expect(resolveRegion({ region: '전남광주', shpAddr: '' })).toBe('전남광주')
   })
