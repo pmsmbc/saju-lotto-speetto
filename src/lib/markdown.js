@@ -5,8 +5,13 @@ function esc(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 }
 
+// [글자](/info/slug/) 형태의 내부 링크만 허용한다. 외부 URL·javascript: 등은 링크로 만들지 않는다.
+const INTERNAL_LINK = /\[([^\]]+)\]\((\/[A-Za-z0-9\-_/]*)\)/g
+
 function inline(s) {
-  return esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+  return esc(s)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(INTERNAL_LINK, '<a href="$2">$1</a>')
 }
 
 export function mdToHtml(md) {

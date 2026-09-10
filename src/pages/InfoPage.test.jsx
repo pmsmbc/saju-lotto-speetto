@@ -17,6 +17,22 @@ test('카테고리별 글 목록을 보여준다 (기본 꿈해몽, 탭으로 �
   window.history.pushState({}, '', '/')
 })
 
+test('하이픈이 들어간 슬러그도 주소로 바로 열린다', () => {
+  window.history.pushState({}, '', '/info/taemong-fruit/')
+  render(<InfoPage today="2026-09-03" />)
+  expect(document.querySelector('.article h1').textContent).toContain('과일 태몽')
+  window.history.pushState({}, '', '/')
+})
+
+test('본문 안의 내부 링크가 a 태그로 렌더된다', () => {
+  window.history.pushState({}, '', '/info/taemong/')
+  render(<InfoPage today="2026-09-03" />)
+  const links = [...document.querySelectorAll('.article-body a')].map((a) => a.getAttribute('href'))
+  expect(links).toContain('/info/taemong-fruit/')
+  expect(links).toContain('/info/taemong-animal/')
+  window.history.pushState({}, '', '/')
+})
+
 test('상식 글에는 행운 번호가 없고 꿈 글에는 있다', () => {
   window.history.pushState({}, '', '/info/odds/')
   const { unmount } = render(<InfoPage today="2026-09-03" />)

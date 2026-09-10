@@ -7,7 +7,8 @@ import { LottoBall } from '../components/LottoBall.jsx'
 import ShareButton from '../components/ShareButton.jsx'
 
 function slugFromPath() {
-  const m = window.location.pathname.match(/^\/info\/([a-z]+)\/?$/)
+  // 슬러그는 소문자 + 하이픈 (taemong-fruit 처럼 두 단어 조합)
+  const m = window.location.pathname.match(/^\/info\/([a-z]+(?:-[a-z]+)*)\/?$/)
   return m ? m[1] : null
 }
 
