@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>kr.satto.scrape</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string>
+    <string>/Users/pjwmax/개인/site2/scripts/scrape-local.sh</string>
+  </array>
+  <!-- 매일 08:30 / 14:30 / 20:30. 잠자기 중 놓친 실행은 깨어날 때 한 번 실행됨 -->
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict><key>Hour</key><integer>8</integer><key>Minute</key><integer>30</integer></dict>
+    <dict><key>Hour</key><integer>14</integer><key>Minute</key><integer>30</integer></dict>
+    <dict><key>Hour</key><integer>20</integer><key>Minute</key><integer>30</integer></dict>
+  </array>
+  <key>StandardOutPath</key>
+  <string>/Users/pjwmax/Library/Logs/satto-scrape.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/pjwmax/Library/Logs/satto-scrape.log</string>
+  <key>RunAtLoad</key>
+  <false/>
+</dict>
+</plist>
