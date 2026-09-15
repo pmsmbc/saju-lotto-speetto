@@ -102,6 +102,16 @@ body {
 .info-title { margin: 0 0 4px; font-size: var(--fs-title-s); font-weight: 800; color: var(--text-strong); text-align: center; }
 .info-sub { margin: 0 0 14px; text-align: center; font-size: var(--fs-body-s); color: var(--text-muted); }
 .cat-tabs { display: flex; justify-content: center; gap: 6px; margin-bottom: 14px; }
+.footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; margin-bottom: 10px; }
+.footer-nav a { font-size: var(--fs-caption); color: var(--text-muted); text-decoration: none; }
+.footer-nav a:hover { color: var(--text-strong); text-decoration: underline; }
+
+.page-intro, .latest-articles { margin-top: 16px; padding: 16px; }
+.page-intro-title { margin: 0 0 10px; font-size: var(--fs-body-m); font-weight: 800; color: var(--text-strong); }
+.page-intro .article-body a, .latest-list a, .latest-articles .hint a { color: var(--text-strong); text-decoration: underline; }
+.latest-list { list-style: none; margin: 0 0 10px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.latest-list a { display: flex; align-items: center; gap: 8px; font-size: var(--fs-body-s); line-height: 1.5; }
+
 .info-search { margin: 0 0 10px; }
 .info-search input {
   width: 100%; box-sizing: border-box; color-scheme: dark;

@@ -4,6 +4,7 @@ import { useLottoStats } from '../hooks/useLottoStats.js'
 import { recommendSets, hotCold, formatWon } from '../lib/lotto.js'
 import { NumberSet } from '../components/NumberSet.jsx'
 import { LottoBall } from '../components/LottoBall.jsx'
+import PageIntro from '../components/PageIntro.jsx'
 
 const SET_LABELS = ['A', 'B', 'C', 'D', 'E']
 const REVEAL_DELAY_MS = 350
@@ -127,6 +128,7 @@ export function LottoPage() {
           </div>
         </div>
       ) : null}
+      <PageIntro id="lotto" />
     </section>
   )
 }

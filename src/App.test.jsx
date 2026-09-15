@@ -13,7 +13,8 @@ function mockFetch() {
 test('기본으로 사주 > 오늘의 운세를 보여준다', () => {
   mockFetch()
   render(<App />)
-  expect(screen.getByText(/오늘의 일진/)).toBeInTheDocument()
+  // .fortune-iljin 위젯을 지목한다 (설명 섹션에도 '오늘의 일진'이 나온다)
+  expect(document.querySelector('.fortune-iljin').textContent).toMatch(/오늘의 일진/)
 })
 
 test('대메뉴는 사주/로또/스피또/꿈해몽·상식 4개', () => {
@@ -106,5 +107,20 @@ test('/privacy 경로로 접속하면 개인정보처리방침을 보여준다',
   window.history.pushState({}, '', '/privacy/')
   render(<App />)
   expect(screen.getByRole('heading', { level: 1, name: '개인정보처리방침' })).toBeInTheDocument()
+  window.history.pushState({}, '', '/')
+})
+
+test('기능 페이지마다 설명 섹션이 화면에 보인다', () => {
+  mockFetch()
+  window.history.pushState({}, '', '/')
+  render(<App />)
+  // 기본 화면(오늘의 운세)
+  expect(document.querySelector('.page-intro')).toBeInTheDocument()
+  for (const [tab, keyword] of [['궁합', '겉궁합'], ['로또', '띠'], ['스피또', '스피또']]) {
+    fireEvent.click(screen.getByRole('button', { name: tab }))
+    if (keyword !== '스피또') {
+      expect(document.querySelector('.page-intro'), `${tab}에 설명 섹션이 없다`).toBeInTheDocument()
+    }
+  }
   window.history.pushState({}, '', '/')
 })

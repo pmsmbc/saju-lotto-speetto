@@ -20,6 +20,7 @@ const ZODIAC_ICONS = {
 import { lunarDateKorean } from '../lib/lunar.js'
 import { todayKST, formatKoreanDate, weekdayInfo } from '../lib/dateformat.js'
 import { LottoBall } from '../components/LottoBall.jsx'
+import PageIntro from '../components/PageIntro.jsx'
 
 
 export function ZodiacPage({ today = todayKST() }) {
@@ -44,6 +45,7 @@ export function ZodiacPage({ today = todayKST() }) {
         ))}
       </div>
       <p className="hint zodiac-hint">같은 날에는 항상 같은 번호가 나와요. 내일 다시 확인해 보세요!</p>
+      <PageIntro id="zodiac" />
     </section>
   )
 }

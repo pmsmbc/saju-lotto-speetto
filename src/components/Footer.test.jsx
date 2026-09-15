@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import Footer, { YOUTUBE_URL } from './Footer.jsx'
+import Footer, { YOUTUBE_URL, SITE_LINKS } from './Footer.jsx'
 
 test('푸터에 카피라이트를 렌더링', () => {
   render(<Footer />)
@@ -21,4 +21,13 @@ test('푸터에 개인정보처리방침·사이트 소개 페이지 링크가 �
   render(<Footer />)
   expect(screen.getByRole('link', { name: '개인정보처리방침' })).toHaveAttribute('href', '/privacy/')
   expect(screen.getByRole('link', { name: '사이트 소개' })).toHaveAttribute('href', '/about/')
+})
+
+test('푸터에 사이트 메뉴 링크가 모두 있다', () => {
+  render(<Footer />)
+  const hrefs = [...document.querySelectorAll('.footer-nav a')].map((a) => a.getAttribute('href'))
+  expect(hrefs).toEqual(SITE_LINKS.map((l) => l.href))
+  for (const h of ['/gunghap/', '/zodiac/', '/saju/', '/lotto/', '/speetto/', '/info/']) {
+    expect(hrefs).toContain(h)
+  }
 })

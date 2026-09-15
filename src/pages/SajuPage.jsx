@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { HOUR_OPTIONS, fourPillars, sajuNumbers } from '../lib/saju.js'
 import { LottoBall } from '../components/LottoBall.jsx'
 import { lunarToSolar } from '../lib/lunar.js'
+import PageIntro from '../components/PageIntro.jsx'
 
 function todayKST() {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul' }).format(new Date())
@@ -122,6 +123,7 @@ export function SajuPage({ today = todayKST() }) {
       ) : (
         <p className="status">생년월일을 입력하면 사주와 행운 번호를 보여드려요</p>
       )}
+      <PageIntro id="saju" />
     </section>
   )
 }

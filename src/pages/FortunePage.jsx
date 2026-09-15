@@ -16,6 +16,8 @@ import monkeyIcon from '../assets/twemoji/1f435.svg'
 import roosterIcon from '../assets/twemoji/1f414.svg'
 import dogIcon from '../assets/twemoji/1f436.svg'
 import pigIcon from '../assets/twemoji/1f437.svg'
+import PageIntro from '../components/PageIntro.jsx'
+import LatestArticles from '../components/LatestArticles.jsx'
 
 const ZODIAC_ICONS = {
   rat: ratIcon, ox: oxIcon, tiger: tigerIcon, rabbit: rabbitIcon,
@@ -97,6 +99,8 @@ export function FortunePage({ today = todayKST() }) {
         <p className="status">띠를 선택하면 오늘의 운세를 보여드려요</p>
       )}
       <p className="hint zodiac-hint">일진과 띠의 관계(합·충)로 보는 운세입니다.</p>
+      <PageIntro id="unse" />
+      <LatestArticles />
     </section>
   )
 }

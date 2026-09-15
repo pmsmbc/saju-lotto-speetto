@@ -4,6 +4,7 @@ import { HOUR_OPTIONS } from '../lib/saju.js'
 import { lunarToSolar } from '../lib/lunar.js'
 import { todayKST } from '../lib/dateformat.js'
 import ShareButton from '../components/ShareButton.jsx'
+import PageIntro from '../components/PageIntro.jsx'
 
 const STORE_KEY = 'satto.gunghap'
 
@@ -231,6 +232,7 @@ export function GunghapPage({ today = todayKST() }) {
         </div>
       </details>
       <p className="hint zodiac-hint">사주 합충과 오행으로 보는 궁합으로, 참고용입니다.</p>
+      <PageIntro id="gunghap" />
     </section>
   )
 }

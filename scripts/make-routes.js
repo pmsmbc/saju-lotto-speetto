@@ -2,7 +2,7 @@
 import { mkdirSync, copyFileSync, readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { parseArticle } from '../src/lib/markdown.js'
-import { SITE, esc, staticPages, speettoOverview, speettoRoundPages, lottoOverview, tagPages } from './seo-pages.js'
+import { SITE, esc, staticPages, speettoOverview, speettoRoundPages, lottoOverview, tagPages, footerHtml } from './seo-pages.js'
 
 const dist = 'dist'
 const base = readFileSync(join(dist, 'index.html'), 'utf-8')
@@ -19,7 +19,7 @@ function render({ title, description, canonical, html, ld }) {
     .replace(/(property="og:url" content=")[^"]*(")/, `$1${esc(canonical)}$2`)
   const head = `<link rel="canonical" href="${esc(canonical)}" />` + (ld ? `<script type="application/ld+json">${ld}</script>` : '')
   out = out.replace('</head>', `${head}</head>`)
-  if (html) out = out.replace('<div id="root"></div>', `<div id="root">${html}</div>`)
+  if (html) out = out.replace('<div id="root"></div>', `<div id="root">${html}${footerHtml()}</div>`)
   return out
 }
 
@@ -53,8 +53,8 @@ for (const p of staticPages({ articles, speetto, lotto, today })) {
         description: '오늘의 운세, 궁합, 띠별·사주 행운 번호, 로또 추천, 스피또 당첨 지역',
       })
     : null
-  writePage(p.path, render({ ...p, canonical: `${SITE}/${p.path}`, ld }))
-  addUrl(p.path, p.lastmod, p.changefreq ?? 'weekly')
+  writePage(p.path, render({ ...p, canonical: p.canonical ?? `${SITE}/${p.path}`, ld }))
+  if (!p.noSitemap) addUrl(p.path, p.lastmod, p.changefreq ?? 'weekly')
 }
 
 // ---------- 스피또: 전체 + 회차별 ----------

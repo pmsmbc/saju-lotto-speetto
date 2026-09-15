@@ -4,6 +4,7 @@ import { GAME_TABS, sellingWithRank1, recentFinished } from '../src/lib/speetto.
 import { aggregateByArea } from '../src/lib/aggregate.js'
 import { ZODIACS } from '../src/lib/zodiac.js'
 import { TAGS } from '../src/lib/tags.js'
+import { PAGE_CONTENT } from '../src/lib/page-content.js'
 
 export const SITE = 'https://satto.kr'
 
@@ -23,6 +24,24 @@ export const kstDate = (iso) => {
 
 const link = (href, text) => `<a href="${esc(href)}">${esc(text)}</a>`
 const list = (items) => `<ul>${items.map((i) => `<li>${i}</li>`).join('')}</ul>`
+
+// 기능 페이지 설명. React <PageIntro />가 화면에 그리는 것과 같은 문자열을 쓴다.
+export function introHtml(id) {
+  const c = PAGE_CONTENT[id]
+  return c ? `<h2>${esc(c.heading)}</h2>${c.html}` : ''
+}
+
+// 모든 페이지 아래에 붙는 푸터. React <Footer />와 같은 링크를 담아
+// 자바스크립트 없이도 개인정보처리방침·소개에 닿을 수 있게 한다.
+export function footerHtml() {
+  const links = [
+    ['/', '오늘의 운세'], ['/gunghap/', '궁합'], ['/zodiac/', '띠별 번호'], ['/saju/', '사주 번호'],
+    ['/lotto/', '로또 추천'], ['/speetto/', '스피또 당첨 지역'], ['/info/', '꿈해몽·상식'],
+  ]
+  return `<footer><nav>${links.map(([h, l]) => link(h, l)).join(' · ')}</nav>
+<p>${link('/about/', '사이트 소개')} · ${link('/privacy/', '개인정보처리방침')}</p>
+<p>© 2026 사또 (satto.kr). All rights reserved.</p></footer>`
+}
 
 // ---------- 스피또 ----------
 function rank1StoresOf(data, gameName, round) {
@@ -121,14 +140,13 @@ export function lottoOverview(stats) {
       : '역대 로또 당첨번호 통계로 뽑는 추천 번호와 무작위 추천, 띠별·사주 행운 번호.',
     lastmod: date,
     html: `<h1>로또 번호 추천</h1>
-<p>역대 당첨번호 출현 빈도를 반영한 통계 기반 추천과 완전 무작위 추천을 제공합니다. 회원가입 없이 바로 뽑을 수 있습니다.</p>
+${introHtml('lotto')}
 ${d ? `<h2>로또 ${d.round}회 당첨번호 (${esc(d.date)})</h2>
 <p><strong>${d.numbers.map(esc).join(' · ')}</strong> + 보너스 <strong>${esc(d.bonus)}</strong></p>
 ${d.firstPrize ? `<p>1등 ${esc(d.firstPrize.winners)}명, 1인당 약 ${esc(won(d.firstPrize.amount))}</p>` : ''}` : ''}
 ${freq.length ? `<h2>역대 출현 빈도 (1~${esc(stats.totalDraws ?? d?.round ?? '')}회)</h2>
 <p>가장 많이 나온 번호: ${hot.map(esc).join(', ')}<br>가장 적게 나온 번호: ${cold.map(esc).join(', ')}</p>` : ''}
-<h2>다른 방법으로 번호 뽑기</h2>
-${list([link('/zodiac/', '오늘의 띠별 행운 번호'), link('/saju/', '사주로 뽑는 행운 번호'), link('/info/odds/', '로또 확률 상식'), link('/info/tax/', '복권 당첨금 세금 안내')])}`,
+`,
   }
 }
 
@@ -172,6 +190,13 @@ ${list(TAGS.filter((o) => o.id !== t.id && dreams.some((a) => (a.tags ?? []).inc
   }).filter(Boolean)
 }
 
+// React <LatestArticles />가 화면에 그리는 것과 같은 목록
+function latestHtml(newest) {
+  return `<h2>새로 올라온 글</h2>
+${list(newest.map((a) => link(`/info/${a.slug}/`, a.title)))}
+<p>${link('/info/', '꿈해몽·상식 글 전체 보기')}</p>`
+}
+
 export function staticPages({ articles, speetto, lotto, today }) {
   const dreams = articles.filter((a) => (a.category ?? 'dream') === 'dream')
   const guides = articles.filter((a) => a.category === 'guide')
@@ -192,37 +217,33 @@ export function staticPages({ articles, speetto, lotto, today }) {
       description: '오늘의 띠별 운세와 궁합, 띠별·사주 행운 번호, 로또 번호 추천, 스피또 1등 남은 현황과 당첨 지역, 꿈해몽까지 한곳에서. 회원가입 없이 무료.',
       lastmod: today, changefreq: 'daily',
       html: `<h1>사또 - 사주 로또 스피또</h1>
-<p>오늘의 운세와 궁합, 띠별·사주 행운 번호, 로또 번호 추천, 스피또 1등 당첨 지역, 꿈해몽을 한곳에서 확인하는 무료 정보 사이트입니다.</p>
-<h2>바로가기</h2>
-${list([link('/unse/', '오늘의 운세'), link('/gunghap/', '궁합 보기'), link('/zodiac/', '오늘의 띠별 행운 번호'), link('/saju/', '사주 행운 번호'), link('/lotto/', '로또 번호 추천'), link('/speetto/', '스피또 1등 당첨 지역'), link('/info/', '꿈해몽·사주·로또 상식')])}
-${speettoLines.length ? `<h2>스피또 1등 남은 현황</h2>${list(speettoLines)}` : ''}
-${ld ? `<h2>로또 ${ld.round}회 당첨번호</h2><p>${ld.numbers.map(esc).join(' · ')} + 보너스 ${esc(ld.bonus)} — ${link('/lotto/', '번호 추천 보기')}</p>` : ''}
-<h2>12띠 오늘의 운세</h2>
+${introHtml('unse')}
+<h2>띠별로 바로 보기</h2>
 ${zodiacLinks()}
-<h2>최신 글</h2>
-${list(newest.map((a) => link(`/info/${a.slug}/`, a.title)))}`,
+${latestHtml(newest)}`,
     },
     {
       path: 'unse/',
+      // 홈(/)과 같은 화면이라 내용이 같다. 중복으로 잡히지 않게 대표 주소를 홈으로 지정하고
+      // sitemap에는 홈만 싣는다.
+      canonical: `${SITE}/`,
+      noSitemap: true,
       title: '오늘의 운세 - 12띠 오늘 운세 (대길·길·보통·주의) | 사또',
-      description: '오늘의 일진과 띠의 합충 관계로 보는 12띠 오늘의 운세. 총운·금전운·건강·사랑 키워드와 길방, 년생별 한 줄 운세를 매일 갱신합니다.',
+      description: '오늘의 일진과 띠의 합충 관계로 보는 12띠 오늘의 운세. 총운·금전운과 재물·건강·사랑 키워드, 길방, 년생별 한 줄 운세를 매일 갱신합니다.',
       lastmod: today, changefreq: 'daily',
       html: `<h1>오늘의 운세</h1>
-<p>오늘의 일진(日辰)과 각 띠의 지지 관계(삼합·육합·충·형·해·파)와 오행 상생상극을 계산해 12띠의 오늘 운세를 대길·길·보통·주의 4등급으로 알려드립니다. 총운·금전운과 재물·건강·사랑 키워드, 오늘의 길한 방향, 년생별 한 줄 운세까지 신문 운세처럼 매일 새로 나옵니다.</p>
-<h2>띠별 오늘의 운세 보기</h2>
+${introHtml('unse')}
+<h2>띠별로 바로 보기</h2>
 ${zodiacLinks()}
-<h2>함께 보기</h2>
-${list([link('/gunghap/', '궁합 보기'), link('/zodiac/', '오늘의 띠별 행운 번호'), link('/info/iljin/', '일진이란?'), link('/info/hap/', '지지 합충 상식')])}`,
+${latestHtml(newest)}`,
     },
     {
       path: 'gunghap/',
       title: '궁합 보기 - 생년월일로 보는 띠 궁합·사주 궁합 | 사또',
-      description: '두 사람의 생년월일(시)로 겉궁합(띠)과 속궁합(일주), 오행 상생상극을 계산해 연인·부부·동료·친구 관계별 궁합 점수와 풀이를 보여드립니다.',
-      lastmod: '2026-09-03', changefreq: 'monthly',
+      description: '두 사람의 생년월일로 겉궁합(띠)과 속궁합(일주), 오행 상생상극을 계산해 연인·부부·동료·친구 관계별 궁합 점수와 근거를 보여드립니다.',
+      lastmod: '2026-09-15', changefreq: 'monthly',
       html: `<h1>궁합 보기</h1>
-<p>두 사람의 생년월일(태어난 시는 선택)을 입력하면 년지로 보는 겉궁합, 일지로 보는 속궁합, 일간 오행의 상생상극과 오행 보완까지 계산해 0~100점 궁합 점수와 등급, 풀이를 보여드립니다. 연인·부부·직장 동료·친구 관계 유형에 따라 가중치가 달라집니다. 음력 생일도 입력할 수 있습니다.</p>
-<h2>함께 보기</h2>
-${list([link('/unse/', '오늘의 운세'), link('/info/ohaeng/', '오행 상생상극 상식'), link('/info/gapja/', '60갑자 상식'), link('/info/chung/', '충(沖)이란?')])}`,
+${introHtml('gunghap')}`,
     },
     {
       path: 'zodiac/',
@@ -230,21 +251,15 @@ ${list([link('/unse/', '오늘의 운세'), link('/info/ohaeng/', '오행 상생
       description: '쥐띠부터 돼지띠까지 12띠별 오늘의 행운 번호 2개. 날짜와 띠로 매일 새로 정해지며 로또 번호 고를 때 참고할 수 있습니다.',
       lastmod: today, changefreq: 'daily',
       html: `<h1>오늘의 띠별 행운 번호</h1>
-<p>12띠마다 오늘 날짜로 정해지는 행운 번호 2개를 보여드립니다. 같은 날에는 같은 번호가 나오고 날짜가 바뀌면 새로 정해집니다. 로또 번호를 고를 때 참고해 보세요.</p>
-<h2>12띠</h2>
-${list(ZODIACS.map((z) => esc(z.label)))}
-<h2>함께 보기</h2>
-${list([link('/saju/', '사주 행운 번호'), link('/lotto/', '로또 번호 추천'), link('/unse/', '오늘의 운세')])}`,
+${introHtml('zodiac')}`,
     },
     {
       path: 'saju/',
       title: '사주 행운 번호 - 생년월일시로 뽑는 오늘의 로또 번호 | 사또',
-      description: '생년월일과 태어난 시로 사주팔자 네 기둥을 세우고, 사주와 오늘 날짜로 정해지는 행운 번호 6개를 뽑아드립니다.',
+      description: '생년월일과 태어난 시로 사주팔자 네 기둥을 세우고, 사주와 오늘 날짜로 정해지는 행운 번호 6개를 뽑아드립니다. 음력 생일도 지원합니다.',
       lastmod: today, changefreq: 'daily',
       html: `<h1>사주 행운 번호</h1>
-<p>생년월일과 태어난 시(모르면 생략 가능)를 입력하면 년주·월주·일주·시주 네 기둥을 한자와 한글로 보여주고, 사주와 오늘 날짜로 정해지는 행운 번호 6개를 뽑아드립니다. 음력 생일도 지원합니다.</p>
-<h2>함께 보기</h2>
-${list([link('/zodiac/', '오늘의 띠별 행운 번호'), link('/lotto/', '로또 번호 추천'), link('/gunghap/', '궁합 보기'), link('/info/gapja/', '60갑자 상식')])}`,
+${introHtml('saju')}`,
     },
     {
       path: 'info/',

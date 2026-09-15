@@ -1,5 +1,6 @@
 import { describe, test, expect } from 'vitest'
-import { esc, gameSlug, kstDate, speettoOverview, speettoRoundPages, lottoOverview, staticPages, tagPages, shortName } from './seo-pages.js'
+import { PAGE_CONTENT } from '../src/lib/page-content.js'
+import { esc, gameSlug, kstDate, speettoOverview, speettoRoundPages, lottoOverview, staticPages, tagPages, shortName, footerHtml } from './seo-pages.js'
 
 const speetto = {
   updatedAt: '2026-09-10T06:35:28.246Z',
@@ -103,9 +104,13 @@ describe('staticPages', () => {
       expect(p.html.replace(/<[^>]*>/g, '').trim().length).toBeGreaterThan(100)
     }
   })
-  test('홈에 각 기능 페이지와 글 링크가 있다', () => {
-    for (const href of ['/unse/', '/gunghap/', '/zodiac/', '/saju/', '/lotto/', '/speetto/', '/info/', '/info/pig/']) {
-      expect(byPath[''].html).toContain(href)
+  test('홈에 글 링크가 있다', () => {
+    expect(byPath[''].html).toContain('/info/pig/')
+    expect(byPath[''].html).toContain('/info/')
+  })
+  test('기능 페이지 링크는 푸터가 담당한다 (모든 페이지에 붙는다)', () => {
+    for (const href of ['/gunghap/', '/zodiac/', '/saju/', '/lotto/', '/speetto/', '/info/']) {
+      expect(footerHtml(), `푸터에 ${href} 링크가 없다`).toContain(`href="${href}"`)
     }
   })
   test('글목록은 꿈해몽과 상식을 나눠 싣는다', () => {
@@ -178,4 +183,32 @@ describe('tagPages', () => {
   test('태그가 하나도 없으면 빈 배열', () => {
     expect(tagPages([{ slug: 'x', title: 't', description: 'd', order: 1, category: 'dream', tags: [] }])).toEqual([])
   })
+})
+
+describe('기능 페이지 설명 공유', () => {
+  const pages = staticPages({ articles: [], speetto: null, lotto: null, today: '2026-09-15' })
+  const byPath = Object.fromEntries(pages.map((p) => [p.path, p]))
+
+  test('도구 페이지 본문에 공용 설명이 실려 있다', () => {
+    for (const [path, id] of [['unse/', 'unse'], ['gunghap/', 'gunghap'], ['zodiac/', 'zodiac'], ['saju/', 'saju']]) {
+      const firstPara = PAGE_CONTENT[id].html.match(/<p>([^<]{20,})</)[1].slice(0, 40)
+      expect(byPath[path].html, `${path}에 공용 설명이 없다`).toContain(firstPara)
+    }
+  })
+  test('홈도 오늘의 운세 설명을 쓴다 (React가 같은 화면을 그린다)', () => {
+    expect(byPath[''].html).toContain(PAGE_CONTENT.unse.heading)
+  })
+  test('오늘의 운세는 홈을 대표 주소로 지정하고 sitemap에서 뺀다', () => {
+    expect(byPath['unse/'].canonical).toBe('https://satto.kr/')
+    expect(byPath['unse/'].noSitemap).toBe(true)
+  })
+  test('로또 페이지도 공용 설명을 쓴다', () => {
+    const lo = lottoOverview(null)
+    expect(lo.html).toContain(PAGE_CONTENT.lotto.heading)
+  })
+})
+
+test('footerHtml에 개인정보처리방침·소개 링크가 있다', () => {
+  expect(footerHtml()).toContain('href="/privacy/"')
+  expect(footerHtml()).toContain('href="/about/"')
 })
