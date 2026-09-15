@@ -2,6 +2,7 @@
 title: 귀신꿈 해몽 — 무서운 꿈의 반전 해석
 slug: ghost
 description: 귀신을 보는 꿈, 쫓아내는 꿈, 귀신과 대화하는 꿈 — 무섭지만 의외로 길몽이 많은 귀신꿈 정리.
+tags: mind
 order: 13
 icon: 1f47b
 date: 2026-09-03

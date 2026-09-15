@@ -2,6 +2,7 @@
 title: 이사 가는 꿈 해몽 — 변화가 다가온다는 신호
 slug: move
 description: 새집으로 이사하는 꿈, 좁은 집으로 가는 꿈, 짐 싸는 꿈 — 인생의 전환을 알리는 이사꿈 정리.
+tags: life
 order: 29
 icon: 1f69a
 date: 2026-09-04

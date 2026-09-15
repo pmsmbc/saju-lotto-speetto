@@ -1,3 +1,5 @@
+import { parseTags } from './tags.js'
+
 // 아주 작은 마크다운 부분집합 변환기 (##, ###, -, **굵게**, 문단)
 // 글은 우리 저장소 파일만 다루지만 안전을 위해 이스케이프한다
 
@@ -50,5 +52,6 @@ export function parseArticle(raw) {
     const i = line.indexOf(':')
     if (i > 0) meta[line.slice(0, i).trim()] = line.slice(i + 1).trim()
   }
-  return { ...meta, order: Number(meta.order ?? 999), body: m[2].trim(), html: mdToHtml(m[2].trim()) }
+  const body = m[2].trim()
+  return { ...meta, order: Number(meta.order ?? 999), tags: parseTags(meta.tags), body, html: mdToHtml(body) }
 }

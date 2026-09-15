@@ -2,6 +2,7 @@
 title: 말 꿈 해몽 — 출세와 추진력의 길몽
 slug: horse
 description: 말을 타는 꿈, 말이 달리는 꿈, 백마 꿈, 말에서 떨어지는 꿈 — 출세와 이동, 힘찬 추진력을 뜻하는 말꿈 해몽.
+tags: animal
 order: 44
 icon: 1f434
 date: 2026-09-10

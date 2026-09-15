@@ -2,6 +2,7 @@
 title: 쫓기는 꿈 해몽 — 반복해서 꾸는 이유
 slug: chase
 description: 누군가에게 쫓기는 꿈, 도망치는 꿈의 전통 해몽과 심리학적 의미, 반복될 때의 대처법.
+tags: mind
 order: 11
 icon: 1f3c3
 date: 2026-09-03

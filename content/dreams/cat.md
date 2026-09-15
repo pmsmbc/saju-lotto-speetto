@@ -2,6 +2,7 @@
 title: 고양이꿈 해몽 — 영물이 나오는 꿈
 slug: cat
 description: 고양이가 따르는 꿈, 할퀴는 꿈, 검은 고양이 꿈 — 상황에 따라 크게 갈리는 고양이꿈 해몽 정리.
+tags: animal
 order: 24
 icon: 1f431
 date: 2026-09-04

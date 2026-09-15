@@ -2,6 +2,7 @@
 title: 비 오는 꿈 해몽 — 빗줄기에 담긴 의미
 slug: rain
 description: 비를 맞는 꿈, 소나기 꿈, 장마 꿈, 비 갠 하늘 꿈 — 정화와 재물의 비꿈 해몽 정리.
+tags: nature
 order: 39
 icon: 1f327
 date: 2026-09-08

@@ -2,6 +2,7 @@
 title: 옛 애인 꿈 해몽 — 전 애인이 나오는 이유
 slug: ex
 description: 헤어진 연인이 꿈에 나오는 이유, 다시 만나는 꿈, 싸우는 꿈 — 옛 애인 꿈의 진짜 의미.
+tags: people
 order: 22
 icon: 1f494
 date: 2026-09-03

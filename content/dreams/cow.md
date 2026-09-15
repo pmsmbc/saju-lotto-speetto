@@ -2,6 +2,7 @@
 title: 소 꿈 해몽 — 재산과 조상의 큰 길몽
 slug: cow
 description: 소가 집에 들어오는 꿈, 소를 타는 꿈, 소에게 받히는 꿈, 송아지 꿈 — 재물과 가문의 상징 소꿈 해몽.
+tags: animal, money
 order: 42
 icon: 1f404
 date: 2026-09-09

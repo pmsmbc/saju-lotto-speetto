@@ -2,6 +2,7 @@
 title: 물고기꿈 해몽 — 잡을수록 좋은 재물꿈
 slug: fish
 description: 물고기를 잡는 꿈, 큰 물고기 꿈, 물고기가 죽는 꿈 — 재물과 태몽의 단골 물고기꿈 정리.
+tags: animal, money
 order: 26
 icon: 1f41f
 date: 2026-09-04

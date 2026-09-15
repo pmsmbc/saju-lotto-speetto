@@ -2,6 +2,7 @@
 title: 강아지꿈 해몽 — 개가 나오는 꿈의 의미
 slug: dog
 description: 강아지를 안는 꿈, 개에게 물리는 꿈, 큰 개가 따르는 꿈 — 인연과 재물의 개꿈 해몽 정리.
+tags: animal
 order: 25
 icon: 1f436
 date: 2026-09-04

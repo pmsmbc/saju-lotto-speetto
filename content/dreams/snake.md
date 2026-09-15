@@ -2,6 +2,7 @@
 title: 뱀꿈 해몽 — 길몽일까 흉몽일까
 slug: snake
 description: 뱀꿈은 재물운과 태몽의 단골손님입니다. 뱀 색깔별, 상황별 해몽과 오늘의 행운 번호를 정리했습니다.
+tags: animal
 order: 2
 icon: 1f40d
 date: 2026-09-03

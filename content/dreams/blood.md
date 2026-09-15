@@ -2,6 +2,7 @@
 title: 피 나는 꿈 해몽 — 흉몽 같지만 재물의 상징
 slug: blood
 description: 피를 흘리는 꿈, 코피 나는 꿈, 남이 피 흘리는 꿈, 피를 마시는 꿈 — 생명력과 재물의 피꿈 해몽.
+tags: body, money
 order: 40
 icon: 1fa78
 date: 2026-09-09

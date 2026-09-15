@@ -2,6 +2,7 @@
 title: 신발 잃어버리는 꿈 해몽 — 신발꿈의 모든 것
 slug: shoes
 description: 신발을 잃어버리는 꿈, 새 신발을 신는 꿈, 남의 신발을 신는 꿈 — 신발꿈의 상황별 의미 정리.
+tags: life
 order: 20
 icon: 1f45f
 date: 2026-09-03

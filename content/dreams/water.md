@@ -2,6 +2,7 @@
 title: 물꿈 해몽 — 맑은 물과 흐린 물의 차이
 slug: water
 description: 물에 관한 꿈은 재물과 마음 상태를 함께 보여줍니다. 바다, 홍수, 맑은 물, 흐린 물 상황별 해몽 정리.
+tags: nature
 order: 5
 icon: 1f30a
 date: 2026-09-03

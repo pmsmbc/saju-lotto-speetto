@@ -2,6 +2,7 @@
 title: 호랑이꿈 해몽 — 권력과 명예의 큰 꿈
 slug: tiger
 description: 호랑이가 나오는 꿈, 물리는 꿈, 호랑이를 타는 꿈 — 예로부터 큰 인물의 태몽으로 유명한 호랑이꿈.
+tags: animal
 order: 18
 icon: 1f42f
 date: 2026-09-03

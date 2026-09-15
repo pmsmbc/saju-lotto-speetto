@@ -74,3 +74,30 @@ test('글 하단에 같은 카테고리 관련 글 3개를 보여준다', () => 
   expect(window.location.pathname).toBe('/info/snake/')
   window.history.pushState({}, '', '/')
 })
+
+test('태그 칩으로 글 목록을 걸러낸다', () => {
+  window.history.pushState({}, '', '/info')
+  render(<InfoPage today="2026-09-03" />)
+  const all = document.querySelectorAll('.info-list li').length
+  const animal = [...document.querySelectorAll('.tag-chip')].find((b) => b.textContent.startsWith('동물'))
+  expect(animal).toBeTruthy()
+  fireEvent.click(animal)
+  const filtered = document.querySelectorAll('.info-list li').length
+  expect(filtered).toBeLessThan(all)
+  expect(filtered).toBe(Number(animal.textContent.replace('동물 ', '')))
+  // 한 번 더 누르면 전체로 돌아온다
+  fireEvent.click(animal)
+  expect(document.querySelectorAll('.info-list li')).toHaveLength(all)
+  window.history.pushState({}, '', '/')
+})
+
+test('카테고리를 바꾸면 태그 선택이 풀린다', () => {
+  window.history.pushState({}, '', '/info')
+  render(<InfoPage today="2026-09-03" />)
+  fireEvent.click([...document.querySelectorAll('.tag-chip')].find((b) => b.textContent.startsWith('동물')))
+  fireEvent.click(screen.getByRole('button', { name: '사주·로또 상식' }))
+  // 상식 글은 태그가 없으므로 칩이 사라지고 전체가 보인다
+  expect(document.querySelectorAll('.tag-chip')).toHaveLength(0)
+  expect(document.querySelectorAll('.info-list li').length).toBeGreaterThan(0)
+  window.history.pushState({}, '', '/')
+})

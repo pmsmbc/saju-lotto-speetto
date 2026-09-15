@@ -2,6 +2,7 @@
 title: 군대 다시 가는 꿈 해몽 — 국민 악몽의 정체
 slug: army
 description: 전역했는데 재입대하는 꿈, 훈련소 꿈, 군복 꿈 — 왜 수십 년이 지나도 군대꿈을 꿀까?
+tags: mind
 order: 34
 icon: 1fa96
 date: 2026-09-07

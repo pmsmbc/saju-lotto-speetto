@@ -2,6 +2,7 @@
 title: 화장실 꿈 해몽 — 못 찾고 헤매는 꿈의 정체
 slug: toilet
 description: 화장실을 못 찾는 꿈, 더러운 화장실 꿈, 화장실이 훤히 보이는 꿈 — 비움과 재물의 화장실꿈 정리.
+tags: mind, life
 order: 33
 icon: 1f6bd
 date: 2026-09-07

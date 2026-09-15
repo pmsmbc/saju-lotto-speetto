@@ -2,6 +2,7 @@
 title: 거미 꿈 해몽 — 거미줄에 걸린 재물과 인연
 slug: spider
 description: 거미가 나오는 꿈, 거미줄 치는 꿈, 거미에게 물리는 꿈, 큰 거미 꿈 — 재물과 얽힌 관계를 뜻하는 거미꿈 해몽.
+tags: animal
 order: 52
 icon: 1f577
 date: 2026-09-14

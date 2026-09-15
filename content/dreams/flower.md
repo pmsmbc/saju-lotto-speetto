@@ -2,6 +2,7 @@
 title: 꽃 꿈 해몽 — 활짝 핀 꽃이 알리는 소식
 slug: flower
 description: 꽃이 피는 꿈, 꽃다발 받는 꿈, 꽃을 꺾는 꿈, 시든 꽃 꿈 — 경사와 사랑, 결실의 시작을 뜻하는 꽃꿈 해몽.
+tags: nature, taemong
 order: 54
 icon: 1f338
 date: 2026-09-14

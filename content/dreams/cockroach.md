@@ -2,6 +2,7 @@
 title: 바퀴벌레 꿈 해몽 — 끈질긴 골칫거리의 상징
 slug: cockroach
 description: 바퀴벌레를 잡는 꿈, 떼로 나오는 꿈, 날아다니는 꿈 — 찝찝하지만 반전 있는 바퀴벌레꿈 정리.
+tags: animal
 order: 37
 icon: 1fab3
 date: 2026-09-08

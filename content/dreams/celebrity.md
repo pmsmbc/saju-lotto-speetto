@@ -2,6 +2,7 @@
 title: 연예인 꿈 해몽 — 유명인이 나오는 꿈의 의미
 slug: celebrity
 description: 연예인과 대화하는 꿈, 사귀는 꿈, 사진 찍는 꿈 — 유명인 꿈의 상황별 해몽을 정리했습니다.
+tags: people
 order: 9
 icon: 1f3a4
 date: 2026-09-03

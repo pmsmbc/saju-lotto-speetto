@@ -2,6 +2,7 @@
 title: 새꿈 해몽 — 좋은 소식을 물고 오는 꿈
 slug: bird
 description: 새가 날아드는 꿈, 새를 잡는 꿈, 새가 우는 꿈 — 소식과 명예를 상징하는 새꿈 해몽 정리.
+tags: animal
 order: 31
 icon: 1f426
 date: 2026-09-04

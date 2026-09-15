@@ -2,6 +2,7 @@
 title: 싸우는 꿈 해몽 — 누구와 싸웠는지가 핵심
 slug: fight
 description: 가족과 싸우는 꿈, 모르는 사람과 싸우는 꿈, 이기는 꿈과 지는 꿈 — 싸움꿈의 상황별 해몽.
+tags: people
 order: 30
 icon: 1f44a
 date: 2026-09-04

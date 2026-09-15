@@ -2,6 +2,7 @@
 title: 태몽 해몽 총정리 — 언제, 누가, 어떤 꿈이 태몽일까
 slug: taemong
 description: 태몽이란 무엇인지, 누가 언제 꾸는지, 보통 꿈과 어떻게 다른지, 아들딸 구분 속설까지 태몽의 기본을 정리했습니다.
+tags: taemong
 order: 49
 icon: 1f930
 date: 2026-09-10

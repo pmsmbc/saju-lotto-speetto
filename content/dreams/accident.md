@@ -2,6 +2,7 @@
 title: 차 사고 나는 꿈 해몽 — 교통사고 꿈의 의미
 slug: accident
 description: 교통사고 꿈, 차가 추락하는 꿈, 사고를 목격하는 꿈 — 불안하지만 예지몽이 아닌 이유.
+tags: mind
 order: 23
 icon: 1f697
 date: 2026-09-03

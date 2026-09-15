@@ -2,6 +2,7 @@
 title: 원숭이 꿈 해몽 — 재주와 잔꾀, 사람 조심
 slug: monkey
 description: 원숭이가 나오는 꿈, 원숭이가 재주 부리는 꿈, 원숭이에게 물리는 꿈 — 재주와 기회, 사람 조심을 뜻하는 원숭이꿈 해몽.
+tags: animal
 order: 47
 icon: 1f412
 date: 2026-09-10

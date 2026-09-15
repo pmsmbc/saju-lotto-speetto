@@ -2,6 +2,7 @@
 title: 용꿈 해몽 — 최고의 길몽이라 불리는 이유
 slug: dragon
 description: 용이 승천하는 꿈, 용을 타는 꿈, 여의주 꿈 — 꿈해몽의 왕이라 불리는 용꿈을 정리했습니다.
+tags: animal
 order: 19
 icon: 1f432
 date: 2026-09-03

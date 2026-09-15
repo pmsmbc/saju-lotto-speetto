@@ -2,6 +2,7 @@
 title: 임신꿈·태몽 해몽 — 누가 꿔도 되는 꿈
 slug: pregnancy
 description: 임신하는 꿈은 태몽일까? 본인·가족·미혼자가 꾸는 임신꿈과 대표 태몽의 의미를 정리했습니다.
+tags: taemong
 order: 12
 icon: 1f476
 date: 2026-09-03

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ARTICLES, CATEGORIES, articleBySlug } from '../lib/articles.js'
+import { tagsWithCount } from '../lib/tags.js'
 import { hashSeed, mulberry32 } from '../lib/seed.js'
 import { randomSet } from '../lib/lotto.js'
 import { todayKST } from '../lib/dateformat.js'
@@ -20,6 +21,13 @@ function dreamNumbers(slug, dateStr) {
 export function InfoPage({ today = todayKST() }) {
   const [slug, setSlug] = useState(slugFromPath)
   const [cat, setCat] = useState('dream')
+  const [tag, setTag] = useState(null)
+
+  // 카테고리를 바꾸면 태그 선택은 초기화한다 (다른 카테고리엔 없는 태그일 수 있음)
+  const changeCat = (nextCat) => {
+    setCat(nextCat)
+    setTag(null)
+  }
 
   useEffect(() => {
     const onPop = () => setSlug(slugFromPath())
@@ -96,6 +104,10 @@ export function InfoPage({ today = todayKST() }) {
     )
   }
 
+  const inCategory = ARTICLES.filter((a) => a.category === cat)
+  const tagList = tagsWithCount(inCategory)
+  const visible = tag ? inCategory.filter((a) => a.tags.includes(tag)) : inCategory
+
   return (
     <section className="info-page">
       <h1 className="info-title">정보 이야기</h1>
@@ -106,14 +118,37 @@ export function InfoPage({ today = todayKST() }) {
             key={c.id}
             type="button"
             className={c.id === cat ? 'sub-tab active' : 'sub-tab'}
-            onClick={() => setCat(c.id)}
+            onClick={() => changeCat(c.id)}
           >
             {c.label}
           </button>
         ))}
       </div>
+      {tagList.length > 0 && (
+        <div className="tag-chips" role="group" aria-label="주제별 분류">
+          <button
+            type="button"
+            className={tag === null ? 'tag-chip active' : 'tag-chip'}
+            aria-pressed={tag === null}
+            onClick={() => setTag(null)}
+          >
+            전체 {inCategory.length}
+          </button>
+          {tagList.map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              className={t.id === tag ? 'tag-chip active' : 'tag-chip'}
+              aria-pressed={t.id === tag}
+              onClick={() => setTag(t.id === tag ? null : t.id)}
+            >
+              {t.label} {t.count}
+            </button>
+          ))}
+        </div>
+      )}
       <ul className="info-list">
-        {ARTICLES.filter((a) => a.category === cat).map((a) => (
+        {visible.map((a) => (
           <li key={a.slug}>
             <button type="button" className="info-card surface-card" onClick={() => open(a.slug)}>
               <span className="info-card-head">

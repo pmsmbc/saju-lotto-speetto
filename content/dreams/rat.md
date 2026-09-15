@@ -2,6 +2,7 @@
 title: 쥐 꿈 해몽 — 손해의 경고와 뜻밖의 재물
 slug: rat
 description: 쥐가 나오는 꿈, 쥐를 잡는 꿈, 쥐에게 물리는 꿈, 쥐떼 꿈 — 도둑과 재물이 함께 담긴 쥐꿈 해몽.
+tags: animal
 order: 41
 icon: 1f400
 date: 2026-09-09

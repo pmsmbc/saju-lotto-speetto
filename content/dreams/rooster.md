@@ -2,6 +2,7 @@
 title: 닭 꿈 해몽 — 새벽을 알리는 소식과 결실
 slug: rooster
 description: 닭이 우는 꿈, 닭이 알을 낳는 꿈, 닭을 잡는 꿈, 병아리 꿈 — 소식과 결실, 부지런함의 닭꿈 해몽.
+tags: animal
 order: 45
 icon: 1f413
 date: 2026-09-10

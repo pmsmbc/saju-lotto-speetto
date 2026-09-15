@@ -2,6 +2,7 @@
 title: 떨어지는 꿈 해몽 — 추락 꿈이 말해주는 것
 slug: fall
 description: 높은 곳에서 떨어지는 꿈, 엘리베이터 추락 꿈, 떨어지다 깨는 꿈의 전통 해몽과 과학적 이유.
+tags: mind
 order: 16
 icon: 1fa82
 date: 2026-09-03

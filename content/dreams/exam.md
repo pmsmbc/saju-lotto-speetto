@@ -2,6 +2,7 @@
 title: 시험 보는 꿈 해몽 — 준비 안 된 시험의 정체
 slug: exam
 description: 시험을 망치는 꿈, 지각하는 꿈, 백지를 내는 꿈 — 어른이 되어도 반복되는 시험꿈의 의미.
+tags: mind
 order: 14
 icon: 1f4dd
 date: 2026-09-03

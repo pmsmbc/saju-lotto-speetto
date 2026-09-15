@@ -2,6 +2,7 @@
 title: 이빨 빠지는 꿈, 정말 나쁜 꿈일까
 slug: teeth
 description: 이빨 빠지는 꿈의 전통 해몽과 현대적 해석, 윗니·아랫니·어금니별 의미를 정리했습니다.
+tags: body
 order: 3
 icon: 1f9b7
 date: 2026-09-03

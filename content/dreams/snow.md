@@ -2,6 +2,7 @@
 title: 눈 오는 꿈 해몽 — 소복이 쌓이는 복
 slug: snow
 description: 눈이 펑펑 내리는 꿈, 눈길을 걷는 꿈, 눈사람 꿈, 눈이 녹는 꿈 — 재물과 정화, 기다림을 뜻하는 눈꿈 해몽.
+tags: nature
 order: 48
 icon: 1f328
 date: 2026-09-10

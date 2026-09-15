@@ -2,6 +2,7 @@
 title: 돈 줍는 꿈 해몽 — 돈 꿈은 반대라던데 사실일까
 slug: money
 description: 돈을 줍는 꿈, 받는 꿈, 잃어버리는 꿈 — 돈에 관한 꿈의 상황별 해몽과 반대 해몽설의 진실.
+tags: money
 order: 10
 icon: 1f4b0
 date: 2026-09-03

@@ -2,6 +2,7 @@
 title: 과일 태몽 해몽 — 복숭아·사과·포도·감이 뜻하는 것
 slug: taemong-fruit
 description: 복숭아, 사과, 포도, 감, 밤, 대추 등 과일 태몽의 전통 풀이와 따는 꿈·받는 꿈의 차이를 정리했습니다.
+tags: taemong
 order: 50
 icon: 1f351
 date: 2026-09-10

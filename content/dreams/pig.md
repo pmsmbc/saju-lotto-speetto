@@ -2,6 +2,7 @@
 title: 돼지꿈 해몽 완전 정리
 slug: pig
 description: 돼지꿈은 왜 재물운의 상징일까? 상황별 돼지꿈 의미 7가지와 오늘의 행운 번호까지 정리했습니다.
+tags: animal, money
 order: 1
 icon: 1f437
 date: 2026-09-03

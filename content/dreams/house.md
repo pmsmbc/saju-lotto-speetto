@@ -2,6 +2,7 @@
 title: 집 꿈 해몽 — 새집·큰 집·무너지는 집
 slug: house
 description: 새집으로 가는 꿈, 큰 집 꿈, 집이 무너지는 꿈, 옛집 꿈 — 삶의 터전과 나 자신을 비추는 집꿈 해몽.
+tags: life
 order: 53
 icon: 1f3e0
 date: 2026-09-14

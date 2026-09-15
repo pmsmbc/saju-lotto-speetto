@@ -2,6 +2,7 @@
 title: 토끼 꿈 해몽 — 다산과 행운의 작은 길몽
 slug: rabbit
 description: 토끼를 잡는 꿈, 토끼를 안는 꿈, 흰 토끼 꿈, 토끼가 도망가는 꿈 — 번창과 임신, 뜻밖의 행운을 뜻하는 토끼꿈 해몽.
+tags: animal
 order: 43
 icon: 1f430
 date: 2026-09-10

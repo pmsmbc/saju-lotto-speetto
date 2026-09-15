@@ -2,6 +2,7 @@
 title: 도둑 드는 꿈 해몽 — 잃는 꿈이 얻는 꿈?
 slug: thief
 description: 도둑이 집에 드는 꿈, 도둑을 잡는 꿈, 물건을 도둑맞는 꿈 — 반전 해석이 많은 도둑꿈 정리.
+tags: money, mind
 order: 35
 icon: 1f977
 date: 2026-09-07

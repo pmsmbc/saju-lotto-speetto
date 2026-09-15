@@ -2,6 +2,7 @@
 title: 머리카락 자르는 꿈 해몽 — 변화의 신호
 slug: hair
 description: 머리를 자르는 꿈, 머리카락이 빠지는 꿈, 흰머리 꿈 — 머리카락에 관한 꿈의 상황별 해몽.
+tags: body
 order: 21
 icon: 2702
 date: 2026-09-03

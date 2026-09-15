@@ -2,6 +2,7 @@
 title: 똥꿈 해몽 — 더러운 꿈이 재물 길몽인 이유
 slug: poop
 description: 똥꿈은 왜 로또 사는 꿈으로 유명할까? 상황별 똥꿈 해몽과 오늘의 행운 번호를 정리했습니다.
+tags: money
 order: 4
 icon: 1f4a9
 date: 2026-09-03

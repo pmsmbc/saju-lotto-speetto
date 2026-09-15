@@ -2,6 +2,7 @@
 title: 동물 태몽 해몽 — 용·호랑이·뱀·돼지가 뜻하는 것
 slug: taemong-animal
 description: 용, 호랑이, 뱀, 돼지, 잉어, 새 등 동물 태몽의 전통 풀이와 안는 꿈·따라오는 꿈의 차이를 정리했습니다.
+tags: taemong, animal
 order: 51
 icon: 1f43e
 date: 2026-09-10

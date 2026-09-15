@@ -2,6 +2,7 @@
 title: 벌레꿈 해몽 — 벌레가 나오는 꿈의 의미
 slug: bug
 description: 벌레가 몸에 붙는 꿈, 벌레를 잡는 꿈, 구더기 꿈 — 찝찝하지만 재물운 해석도 있는 벌레꿈 정리.
+tags: animal
 order: 17
 icon: 1f41b
 date: 2026-09-03

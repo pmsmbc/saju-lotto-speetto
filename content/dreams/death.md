@@ -2,6 +2,7 @@
 title: 죽는 꿈 해몽 — 무섭지만 길몽인 이유
 slug: death
 description: 내가 죽는 꿈, 가족이 죽는 꿈은 대부분 새 출발의 길몽입니다. 상황별 죽는 꿈 해몽 정리.
+tags: mind
 order: 6
 icon: 26b0
 date: 2026-09-03

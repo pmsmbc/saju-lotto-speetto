@@ -2,6 +2,7 @@
 title: 우는 꿈 해몽 — 울고 나면 풀리는 꿈
 slug: cry
 description: 내가 우는 꿈, 통곡하는 꿈, 남이 우는 꿈 — 꿈에서 울수록 좋다는 반전 해몽의 이유.
+tags: mind
 order: 28
 icon: 1f622
 date: 2026-09-04

@@ -2,6 +2,7 @@
 title: 금·보석 줍는 꿈 해몽 — 반짝이는 재물꿈의 진실
 slug: gold
 description: 금을 줍는 꿈, 금반지 받는 꿈, 보석을 잃어버리는 꿈 — 재물과 명예의 금꿈 해몽 정리.
+tags: money
 order: 32
 icon: 1f48e
 date: 2026-09-04

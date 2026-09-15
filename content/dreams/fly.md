@@ -2,6 +2,7 @@
 title: 하늘을 나는 꿈 해몽 — 자유와 상승의 길몽
 slug: fly
 description: 하늘을 나는 꿈, 높이 나는 꿈, 날다가 떨어지는 꿈의 의미와 심리학적 해석을 정리했습니다.
+tags: mind
 order: 15
 icon: 1f985
 date: 2026-09-03

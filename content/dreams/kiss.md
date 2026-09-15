@@ -2,6 +2,7 @@
 title: 키스하는 꿈 해몽 — 누구와 했는지가 핵심
 slug: kiss
 description: 좋아하는 사람과 키스하는 꿈, 모르는 사람과 하는 꿈, 연예인과 하는 꿈 — 애정과 인정의 키스꿈.
+tags: people
 order: 38
 icon: 1f48b
 date: 2026-09-08

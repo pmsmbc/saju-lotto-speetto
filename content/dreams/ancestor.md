@@ -2,6 +2,7 @@
 title: 조상꿈 해몽 — 조상님이 나오는 꿈의 의미
 slug: ancestor
 description: 돌아가신 부모님, 조부모님이 꿈에 나오면 어떤 의미일까? 표정과 상황별 조상꿈 해몽 정리.
+tags: people
 order: 8
 icon: 1f56f
 date: 2026-09-03

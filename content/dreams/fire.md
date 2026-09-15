@@ -2,6 +2,7 @@
 title: 불꿈 해몽 — 활활 탈수록 좋은 꿈
 slug: fire
 description: 불이 나는 꿈은 사업 번창과 재물운의 상징입니다. 집에 불나는 꿈, 산불 꿈 등 상황별 해몽 정리.
+tags: nature, money
 order: 7
 icon: 1f525
 date: 2026-09-03

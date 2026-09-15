@@ -56,6 +56,12 @@ order: 3
   test('frontmatter가 없으면 null', () => {
     expect(parseArticle('그냥 글')).toBe(null)
   })
+  test('tags를 배열로 바꾼다', () => {
+    expect(parseArticle('---\ntitle: a\ntags: animal, money\n---\n본문').tags).toEqual(['animal', 'money'])
+  })
+  test('tags가 없으면 빈 배열', () => {
+    expect(parseArticle('---\ntitle: a\n---\n본문').tags).toEqual([])
+  })
   test('order가 없으면 999', () => {
     expect(parseArticle('---\ntitle: a\n---\n본문').order).toBe(999)
   })

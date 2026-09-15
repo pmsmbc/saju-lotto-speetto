@@ -2,6 +2,7 @@
 title: 양 꿈 해몽 — 순한 복과 무리의 재물
 slug: sheep
 description: 양 떼를 보는 꿈, 양을 안는 꿈, 흰 양 꿈, 양이 흩어지는 꿈 — 순한 복과 재물, 온화한 인연을 뜻하는 양꿈 해몽.
+tags: animal
 order: 46
 icon: 1f411
 date: 2026-09-10

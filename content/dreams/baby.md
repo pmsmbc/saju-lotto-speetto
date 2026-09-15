@@ -2,6 +2,7 @@
 title: 아기 안는 꿈 해몽 — 태몽일까 길몽일까
 slug: baby
 description: 아기를 안는 꿈, 아기가 웃는 꿈, 아기 우는 꿈 — 결실과 새 시작을 상징하는 아기꿈 정리.
+tags: taemong, people
 order: 36
 icon: 1f37c
 date: 2026-09-07

@@ -2,6 +2,7 @@
 title: 결혼하는 꿈 해몽 — 미혼·기혼 누가 꿔도 되는 꿈
 slug: wedding
 description: 내가 결혼하는 꿈, 남의 결혼식 꿈, 웨딩드레스 꿈 — 결혼꿈의 반전 해석까지 정리했습니다.
+tags: people
 order: 27
 icon: 1f492
 date: 2026-09-04
