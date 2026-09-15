@@ -61,10 +61,12 @@ function roundLine(r, stores, gameCode) {
   return `${link(`/speetto/${gameSlug(gameCode)}/${r.round}/`, `${r.round}회`)} — ${esc(remain)}${esc(stock)}<br>${esc(where)}`
 }
 
+// 회차별 페이지(32개)에 붙는 짧은 안내. 전체 설명(introHtml('speetto'))은
+// /speetto/ 한 곳에만 두어 같은 문단이 32번 반복되지 않게 한다.
 export function speettoGuideHtml() {
-  return `<h2>이렇게 활용하세요</h2>
-<p>스피또는 회차마다 1등이 정해진 수량만 인쇄되어 전국 판매점에 배포됩니다. <strong>1등 남음</strong>은 아직 판매되지 않은 1등 매수, <strong>당첨 지역</strong>은 이미 1등이 나온 지역·판매점입니다. 남은 1등은 아직 팔리지 않은 다른 판매점의 재고에 있을 가능성이 있습니다.</p>
-<p>※ 같은 지역·판매점에서 한 회차에 1등이 여러 번 나온 사례도 있습니다. 본 정보는 당첨 확률을 보장하지 않는 참고용입니다. 자료 출처: 동행복권.</p>`
+  return `<h2>이 숫자는 무슨 뜻인가요</h2>
+<p><strong>1등 남음</strong>은 이 회차에 인쇄된 1등 가운데 아직 팔리지 않은 매수입니다. <strong>당첨 지역</strong>은 1등이 이미 나온 지역과 판매점이므로 그곳의 1등은 소진된 것입니다. 남은 1등은 아직 팔리지 않은 다른 판매점의 재고에 있습니다.</p>
+<p>※ 같은 지역이나 판매점에서 한 회차에 1등이 여러 번 나온 사례도 있습니다. 이 정보는 당첨 확률을 보장하지 않는 참고용입니다. 자료 출처는 동행복권입니다. <a href="/speetto/">스피또 보는 법 자세히</a></p>`
 }
 
 export function speettoOverview(data) {
@@ -86,7 +88,7 @@ export function speettoOverview(data) {
     html: `<h1>스피또 1등 당첨 지역·남은 1등 현황</h1>
 <p>스피또2000·스피또1000·스피또500의 판매중 회차마다 1등이 몇 장 남았는지, 1등이 이미 나온 지역과 판매점은 어디인지 정리했습니다. 동행복권 자료를 하루 3번 자동 갱신합니다.${date ? ` 마지막 업데이트: ${esc(date)}` : ''}</p>
 ${sections.join('\n')}
-${speettoGuideHtml()}`,
+${introHtml('speetto')}`,
   }
 }
 

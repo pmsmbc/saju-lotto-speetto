@@ -49,7 +49,8 @@ test('판매종료 회차(66회)는 최근 종료 회차 섹션에 노출되고,
   await waitFor(() => expect(screen.getByText(/마지막 업데이트/)).toBeInTheDocument())
   expect(screen.getByText('최근 종료 회차 당첨 지역')).toBeInTheDocument()
   expect(screen.getByText('66회')).toBeInTheDocument()
-  expect(screen.getByText('판매종료')).toBeInTheDocument()
+  // 설명 섹션에도 '판매종료'가 나오므로 배지를 지목한다
+  expect(document.querySelector('.ended-badge').textContent).toBe('판매종료')
   // 기본은 접힘 상태 → 아직 당첨 판매점 텍스트 없음
   expect(screen.queryByText('종료복권')).toBeNull()
   fireEvent.click(screen.getByRole('button', { name: /66회/ }))
@@ -127,9 +128,12 @@ test('formatDate는 KST 기준 날짜+시간을 표시', async () => {
   expect(formatDate(null)).toBe('')
 })
 
-test('사용 안내 카드를 항상 표시한다', async () => {
+test('스피또 보는 법 설명을 항상 표시한다', async () => {
   mockFetch()
   render(<SpeettoPage />)
   await waitFor(() => expect(screen.getByText(/이렇게 활용하세요/)).toBeInTheDocument())
-  expect(screen.getByText(/당첨 확률을 보장하지 않는 참고용/)).toBeInTheDocument()
+  const intro = document.querySelector('.page-intro')
+  expect(intro).toBeInTheDocument()
+  expect(intro.textContent).toMatch(/당첨 확률을 높여주지 않으며/)
+  expect(intro.textContent).toMatch(/1등 남음/)
 })

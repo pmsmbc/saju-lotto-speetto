@@ -4,7 +4,7 @@ import { GAME_TABS, sellingWithRank1, recentFinished, parseSpeettoPath } from '.
 import { aggregateByArea, filterByArea } from '../lib/aggregate.js'
 import { RegionStats } from '../components/RegionStats.jsx'
 import { StoreList } from '../components/StoreList.jsx'
-import bulbIcon from '../assets/twemoji/1f4a1.svg'
+import PageIntro from '../components/PageIntro.jsx'
 
 export function formatDate(iso) {
   if (!iso) return ''
@@ -140,29 +140,6 @@ export function SpeettoPage() {
         ))}
       </nav>
 
-      <div className="speetto-guide surface-card">
-        <h2 className="guide-title"><img className="guide-icon" src={bulbIcon} alt="" aria-hidden="true" /> 이렇게 활용하세요</h2>
-        <p>스피또는 회차마다 1등이 정해진 수량만 인쇄되어 전국 판매점에 배포됩니다.</p>
-        <ul>
-          <li>
-            <strong>1등 남음</strong>: 이번 회차에 아직 판매되지 않은 1등이 몇 매
-            남았는지 보여줍니다.
-          </li>
-          <li>
-            <strong>당첨 지역</strong>: 이미 1등이 나온 지역·판매점입니다. 그곳의
-            1등 복권은 소진되었으므로, 남은 1등은 아직 팔리지 않은 다른 판매점의
-            재고에 있을 가능성이 있습니다.
-          </li>
-          <li>
-            당첨 지역과 남은 수량을 함께 확인하고 구매할 지역을 고르는 참고
-            자료로 활용해 보세요.
-          </li>
-        </ul>
-        <p className="guide-note">
-          ※ 같은 지역·판매점에서 한 회차에 1등이 여러 번 나온 사례도 있습니다. 본
-          정보는 당첨 확률을 보장하지 않는 참고용입니다.
-        </p>
-      </div>
 
       {remainingRounds.length > 0 ? (
         <div className="speetto-rounds">
@@ -207,6 +184,7 @@ export function SpeettoPage() {
           </div>
         </>
       )}
+      <PageIntro id="speetto" />
     </section>
   )
 }

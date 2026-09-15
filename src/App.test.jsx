@@ -44,7 +44,8 @@ test('로또 대메뉴의 하위: 띠별/사주/로또 추천, 기본은 띠별 
   fireEvent.click(screen.getByRole('button', { name: '로또' }))
   const subs = [...document.querySelectorAll('.sub-tab')].map((b) => b.textContent)
   expect(subs).toEqual(['띠별 번호', '사주 번호', '로또 추천'])
-  expect(screen.getByText('쥐띠')).toBeInTheDocument()
+  // 설명 섹션에도 띠 이름이 나오므로 띠 격자를 지목한다
+  expect(document.querySelector('.zodiac-grid').textContent).toContain('쥐띠')
 })
 
 test('로또 > 사주 번호 클릭 시 입력 화면 표시', () => {

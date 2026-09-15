@@ -5,9 +5,12 @@ import { ZODIACS, dailyLuckyPair } from '../lib/zodiac.js'
 
 test('12개 띠를 모두 보여준다', () => {
   render(<ZodiacPage />)
+  // 설명 섹션에도 띠 이름이 나오므로 띠 격자 안에서 확인한다
+  const grid = document.querySelector('.zodiac-grid')
   for (const z of ZODIACS) {
-    expect(screen.getByText(z.label)).toBeInTheDocument()
+    expect(grid.textContent, `${z.label}이 격자에 없다`).toContain(z.label)
   }
+  expect(document.querySelectorAll('.zodiac-item')).toHaveLength(ZODIACS.length)
 })
 
 test('각 띠 박스에 오늘의 번호 2개를 바로 보여준다', () => {
