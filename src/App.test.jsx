@@ -38,12 +38,12 @@ test('궁합 하위 탭 클릭 시 궁합 입력 화면 표시', () => {
   expect(screen.getByText(/생년월일을 입력하면 궁합/)).toBeInTheDocument()
 })
 
-test('로또 대메뉴의 하위: 띠별/사주/로또 추천, 기본은 띠별 번호', () => {
+test('로또 대메뉴의 하위: 띠별/사주/로또 추천/1등 배출점, 기본은 띠별 번호', () => {
   mockFetch()
   render(<App />)
   fireEvent.click(screen.getByRole('button', { name: '로또' }))
   const subs = [...document.querySelectorAll('.sub-tab')].map((b) => b.textContent)
-  expect(subs).toEqual(['띠별 번호', '사주 번호', '로또 추천'])
+  expect(subs).toEqual(['띠별 번호', '사주 번호', '로또 추천', '1등 배출점'])
   // 설명 섹션에도 띠 이름이 나오므로 띠 격자를 지목한다
   expect(document.querySelector('.zodiac-grid').textContent).toContain('쥐띠')
 })
@@ -123,5 +123,25 @@ test('기능 페이지마다 설명 섹션이 화면에 보인다', () => {
       expect(document.querySelector('.page-intro'), `${tab}에 설명 섹션이 없다`).toBeInTheDocument()
     }
   }
+  window.history.pushState({}, '', '/')
+})
+
+test('1등 배출점 탭으로 이동하면 주소가 바뀐다', () => {
+  mockFetch()
+  window.history.pushState({}, '', '/')
+  render(<App />)
+  fireEvent.click(screen.getByRole('button', { name: '로또' }))
+  fireEvent.click(screen.getByRole('button', { name: '1등 배출점' }))
+  expect(window.location.pathname).toBe('/lotto-stores')
+  window.history.pushState({}, '', '/')
+})
+
+test('/lotto-stores 로 들어가면 배출점 화면으로 시작한다', () => {
+  mockFetch()
+  window.history.pushState({}, '', '/lotto-stores')
+  render(<App />)
+  const subs = [...document.querySelectorAll('.sub-tab')].map((b) => b.textContent)
+  expect(subs).toContain('1등 배출점')
+  expect(document.querySelector('.sub-tab.active').textContent).toBe('1등 배출점')
   window.history.pushState({}, '', '/')
 })

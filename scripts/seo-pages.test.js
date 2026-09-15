@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest'
 import { PAGE_CONTENT } from '../src/lib/page-content.js'
-import { esc, gameSlug, kstDate, speettoOverview, speettoRoundPages, lottoOverview, staticPages, tagPages, shortName, footerHtml } from './seo-pages.js'
+import { esc, gameSlug, kstDate, speettoOverview, speettoRoundPages, lottoOverview, lottoStoresOverview, staticPages, tagPages, shortName, footerHtml } from './seo-pages.js'
 
 const speetto = {
   updatedAt: '2026-09-10T06:35:28.246Z',
@@ -211,4 +211,36 @@ describe('기능 페이지 설명 공유', () => {
 test('footerHtml에 개인정보처리방침·소개 링크가 있다', () => {
   expect(footerHtml()).toContain('href="/privacy/"')
   expect(footerHtml()).toContain('href="/about/"')
+})
+
+describe('lottoStoresOverview', () => {
+  const data = {
+    updatedAt: '2026-09-15T00:00:00Z', fromDraw: 262, throughDraw: 1241, coveredDraws: 977,
+    missingDraws: [], totalRecords: 9263, storeCount: 4589,
+    online: { count: 125, auto: 58, manual: 64 },
+    top: Array.from({ length: 30 }, (_, i) => ({
+      rank: i + 1, name: `가게${i + 1}`, address: `서울 중구 ${i + 1}`, region: '서울',
+      count: 60 - i, auto: 40, manual: 10, firstDraw: 300, lastDraw: 1200,
+    })),
+  }
+  const page = lottoStoresOverview(data)
+
+  test('제목에 1위 판매점과 횟수가 들어간다', () => {
+    expect(page.title).toContain('가게1')
+    expect(page.title).toContain('60회')
+  })
+  test('표에 상위 20곳만 싣는다', () => {
+    expect(page.html.match(/<tr><td>\d+<\/td>/g)).toHaveLength(20)
+  })
+  test('집계 범위와 온라인 건수를 밝힌다', () => {
+    expect(page.html).toContain('262회부터 1241회까지')
+    expect(page.html).toContain('인터넷 판매에서 1등 125회')
+  })
+  test('공용 설명을 함께 싣는다', () => {
+    expect(page.html).toContain(PAGE_CONTENT.lottostore.heading)
+  })
+  test('데이터가 없으면 null', () => {
+    expect(lottoStoresOverview(null)).toBe(null)
+    expect(lottoStoresOverview({ top: [] })).toBe(null)
+  })
 })

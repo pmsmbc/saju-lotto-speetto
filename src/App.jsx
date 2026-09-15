@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import SpeettoPage from './pages/SpeettoPage.jsx'
 import LottoPage from './pages/LottoPage.jsx'
+import LottoStorePage from './pages/LottoStorePage.jsx'
 import ZodiacPage from './pages/ZodiacPage.jsx'
 import FortunePage from './pages/FortunePage.jsx'
 import GunghapPage from './pages/GunghapPage.jsx'
@@ -18,6 +19,7 @@ const ROUTES = {
   '/zodiac': { menu: 'lotto', tab: 'zodiac' },
   '/saju': { menu: 'lotto', tab: 'sajunum' },
   '/lotto': { menu: 'lotto', tab: 'lottorec' },
+  '/lotto-stores': { menu: 'lotto', tab: 'lottostore' },
   '/speetto': { menu: 'speetto', tab: 'speetto' },
   '/privacy': { menu: 'page', tab: 'privacy' },
   '/about': { menu: 'page', tab: 'about' },
@@ -48,6 +50,7 @@ const MENUS = [
       { id: 'zodiac', label: '띠별 번호' },
       { id: 'sajunum', label: '사주 번호' },
       { id: 'lottorec', label: '로또 추천' },
+      { id: 'lottostore', label: '1등 배출점' },
     ],
   },
   {
@@ -137,6 +140,7 @@ export default function App() {
         {tab === 'zodiac' && <ZodiacPage />}
         {tab === 'sajunum' && <SajuPage />}
         {tab === 'lottorec' && <LottoPage />}
+        {tab === 'lottostore' && <LottoStorePage />}
         {tab === 'speetto' && <SpeettoPage />}
         {tab === 'info' && <InfoPage />}
         {tab === 'privacy' && <StaticPage slug="privacy" />}

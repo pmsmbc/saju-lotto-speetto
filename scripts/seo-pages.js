@@ -36,7 +36,8 @@ export function introHtml(id) {
 export function footerHtml() {
   const links = [
     ['/', '오늘의 운세'], ['/gunghap/', '궁합'], ['/zodiac/', '띠별 번호'], ['/saju/', '사주 번호'],
-    ['/lotto/', '로또 추천'], ['/speetto/', '스피또 당첨 지역'], ['/info/', '꿈해몽·상식'],
+    ['/lotto/', '로또 추천'], ['/lotto-stores/', '로또 1등 배출점'],
+    ['/speetto/', '스피또 당첨 지역'], ['/info/', '꿈해몽·상식'],
   ]
   return `<footer><nav>${links.map(([h, l]) => link(h, l)).join(' · ')}</nav>
 <p>${link('/about/', '사이트 소개')} · ${link('/privacy/', '개인정보처리방침')}</p>
@@ -149,6 +150,29 @@ ${d.firstPrize ? `<p>1등 ${esc(d.firstPrize.winners)}명, 1인당 약 ${esc(won
 ${freq.length ? `<h2>역대 출현 빈도 (1~${esc(stats.totalDraws ?? d?.round ?? '')}회)</h2>
 <p>가장 많이 나온 번호: ${hot.map(esc).join(', ')}<br>가장 적게 나온 번호: ${cold.map(esc).join(', ')}</p>` : ''}
 `,
+  }
+}
+
+// ---------- 로또 1등 배출점 ----------
+export function lottoStoresOverview(data) {
+  if (!data?.top?.length) return null
+  const date = kstDate(data.updatedAt)
+  const top = data.top.slice(0, 20)
+  const rows = top
+    .map((s) => `<tr><td>${s.rank}</td><td>${esc(s.name)}</td><td>${esc(s.address)}</td><td>${s.count}회</td></tr>`)
+    .join('')
+  const names = top.slice(0, 3).map((s) => `${s.name}(${s.count}회)`)
+  return {
+    title: `로또 1등 최다 배출점 순위 ${data.top.length}곳 — ${top[0].name} ${top[0].count}회 | 사또`,
+    description: `로또 1등이 가장 많이 나온 판매점 순위. ${names.join(', ')} 등 ${data.fromDraw}~${data.throughDraw}회 기록 ${data.totalRecords.toLocaleString()}건을 판매점별로 집계했습니다.`,
+    lastmod: date,
+    changefreq: 'weekly',
+    html: `<h1>로또 1등 최다 배출점 순위</h1>
+<p>${esc(`${data.fromDraw}회부터 ${data.throughDraw}회까지 ${data.coveredDraws.toLocaleString()}개 회차의 1등 배출 기록 ${data.totalRecords.toLocaleString()}건을 판매점별로 모았습니다. 집계 대상 판매점은 ${data.storeCount.toLocaleString()}곳입니다.`)}${date ? ` 기준 ${esc(date)}.` : ''}</p>
+<h2>1등 최다 배출 판매점 20곳</h2>
+<table><thead><tr><th>순위</th><th>판매점</th><th>위치</th><th>1등</th></tr></thead><tbody>${rows}</tbody></table>
+<p>${esc(`같은 기간 동행복권 인터넷 판매에서 1등 ${data.online.count}회가 나왔습니다. 위치가 없는 온라인 구매라 위 순위에서는 제외했습니다.`)}</p>
+${introHtml('lottostore')}`,
   }
 }
 

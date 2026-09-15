@@ -2,7 +2,7 @@
 import { mkdirSync, copyFileSync, readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { parseArticle } from '../src/lib/markdown.js'
-import { SITE, esc, staticPages, speettoOverview, speettoRoundPages, lottoOverview, tagPages, footerHtml } from './seo-pages.js'
+import { SITE, esc, staticPages, speettoOverview, speettoRoundPages, lottoOverview, lottoStoresOverview, tagPages, footerHtml } from './seo-pages.js'
 
 const dist = 'dist'
 const base = readFileSync(join(dist, 'index.html'), 'utf-8')
@@ -39,6 +39,7 @@ const articles = ['content/dreams', 'content/guides']
 
 const speetto = readJson('public/data/speetto.json')
 const lotto = readJson('public/data/lotto-stats.json')
+const lottoStores = readJson('public/data/lotto-stores.json')
 
 const sitemap = [] // { loc, lastmod, changefreq }
 const addUrl = (path, lastmod, changefreq) =>
@@ -80,6 +81,16 @@ if (lotto) {
 } else {
   writePage('lotto/', base)
   addUrl('lotto/', today, 'weekly')
+}
+
+// ---------- 로또 1등 배출점 ----------
+const storesPage = lottoStoresOverview(lottoStores)
+if (storesPage) {
+  writePage('lotto-stores/', render({ ...storesPage, canonical: `${SITE}/lotto-stores/` }))
+  addUrl('lotto-stores/', storesPage.lastmod, storesPage.changefreq)
+} else {
+  writePage('lotto-stores/', base)
+  addUrl('lotto-stores/', today, 'weekly')
 }
 
 // ---------- 태그별 글 모음 ----------

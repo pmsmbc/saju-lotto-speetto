@@ -9,6 +9,7 @@ export const SITE_LINKS = [
   { href: '/zodiac/', label: '띠별 번호' },
   { href: '/saju/', label: '사주 번호' },
   { href: '/lotto/', label: '로또 추천' },
+  { href: '/lotto-stores/', label: '로또 1등 배출점' },
   { href: '/speetto/', label: '스피또 당첨 지역' },
   { href: '/info/', label: '꿈해몽·상식' },
 ]
