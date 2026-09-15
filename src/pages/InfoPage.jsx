@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react'
 import { ARTICLES, CATEGORIES, articleBySlug } from '../lib/articles.js'
 import { tagsWithCount } from '../lib/tags.js'
+import { searchArticles } from '../lib/search.js'
 import { hashSeed, mulberry32 } from '../lib/seed.js'
 import { randomSet } from '../lib/lotto.js'
 import { todayKST } from '../lib/dateformat.js'
 import { LottoBall } from '../components/LottoBall.jsx'
 import ShareButton from '../components/ShareButton.jsx'
+
+function queryFromUrl() {
+  return new URLSearchParams(window.location.search).get('q') ?? ''
+}
 
 function slugFromPath() {
   // 슬러그는 소문자 + 하이픈 (taemong-fruit 처럼 두 단어 조합)
@@ -22,6 +27,16 @@ export function InfoPage({ today = todayKST() }) {
   const [slug, setSlug] = useState(slugFromPath)
   const [cat, setCat] = useState('dream')
   const [tag, setTag] = useState(null)
+  const [query, setQuery] = useState(queryFromUrl)
+
+  // 검색어를 주소에 남겨 공유·새로고침에도 결과가 유지되게 한다
+  const changeQuery = (next) => {
+    setQuery(next)
+    const url = new URL(window.location.href)
+    if (next) url.searchParams.set('q', next)
+    else url.searchParams.delete('q')
+    window.history.replaceState({}, '', url)
+  }
 
   // 카테고리를 바꾸면 태그 선택은 초기화한다 (다른 카테고리엔 없는 태그일 수 있음)
   const changeCat = (nextCat) => {
@@ -106,7 +121,8 @@ export function InfoPage({ today = todayKST() }) {
 
   const inCategory = ARTICLES.filter((a) => a.category === cat)
   const tagList = tagsWithCount(inCategory)
-  const visible = tag ? inCategory.filter((a) => a.tags.includes(tag)) : inCategory
+  const byTag = tag ? inCategory.filter((a) => a.tags.includes(tag)) : inCategory
+  const visible = searchArticles(byTag, query)
 
   return (
     <section className="info-page">
@@ -123,6 +139,15 @@ export function InfoPage({ today = todayKST() }) {
             {c.label}
           </button>
         ))}
+      </div>
+      <div className="info-search">
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => changeQuery(e.target.value)}
+          placeholder="어떤 꿈을 꾸셨나요?"
+          aria-label="글 검색"
+        />
       </div>
       {tagList.length > 0 && (
         <div className="tag-chips" role="group" aria-label="주제별 분류">
@@ -146,6 +171,13 @@ export function InfoPage({ today = todayKST() }) {
             </button>
           ))}
         </div>
+      )}
+      {query && (
+        <p className="info-count">
+          {visible.length > 0
+            ? `'${query}' 검색 결과 ${visible.length}편`
+            : `'${query}'에 맞는 글이 없어요. 다른 말로 찾아보세요.`}
+        </p>
       )}
       <ul className="info-list">
         {visible.map((a) => (

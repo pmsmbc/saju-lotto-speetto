@@ -101,3 +101,45 @@ test('카테고리를 바꾸면 태그 선택이 풀린다', () => {
   expect(document.querySelectorAll('.info-list li').length).toBeGreaterThan(0)
   window.history.pushState({}, '', '/')
 })
+
+test('검색창은 항상 보이고 입력하면 목록이 좁혀진다', () => {
+  window.history.pushState({}, '', '/info')
+  render(<InfoPage today="2026-09-03" />)
+  const input = screen.getByLabelText('글 검색')
+  expect(input).toBeInTheDocument()
+  const all = document.querySelectorAll('.info-list li').length
+  fireEvent.change(input, { target: { value: '물고기' } })
+  expect(document.querySelectorAll('.info-list li').length).toBeLessThan(all)
+  expect(screen.getByText(/검색 결과/)).toBeInTheDocument()
+  window.history.pushState({}, '', '/')
+})
+
+test('검색어를 주소에 남기고, 주소의 검색어로 시작한다', () => {
+  window.history.pushState({}, '', '/info')
+  const { unmount } = render(<InfoPage today="2026-09-03" />)
+  fireEvent.change(screen.getByLabelText('글 검색'), { target: { value: '돼지' } })
+  expect(window.location.search).toContain('q=')
+  unmount()
+  render(<InfoPage today="2026-09-03" />)
+  expect(screen.getByLabelText('글 검색')).toHaveValue('돼지')
+  window.history.pushState({}, '', '/')
+})
+
+test('맞는 글이 없으면 안내 문구를 보여준다', () => {
+  window.history.pushState({}, '', '/info')
+  render(<InfoPage today="2026-09-03" />)
+  fireEvent.change(screen.getByLabelText('글 검색'), { target: { value: 'zzzz없는말' } })
+  expect(document.querySelectorAll('.info-list li')).toHaveLength(0)
+  expect(screen.getByText(/맞는 글이 없어요/)).toBeInTheDocument()
+  window.history.pushState({}, '', '/')
+})
+
+test('태그와 검색어는 함께 걸린다', () => {
+  window.history.pushState({}, '', '/info')
+  render(<InfoPage today="2026-09-03" />)
+  fireEvent.click([...document.querySelectorAll('.tag-chip')].find((b) => b.textContent.startsWith('동물')))
+  const animalOnly = document.querySelectorAll('.info-list li').length
+  fireEvent.change(screen.getByLabelText('글 검색'), { target: { value: '꿈' } })
+  expect(document.querySelectorAll('.info-list li').length).toBeLessThanOrEqual(animalOnly)
+  window.history.pushState({}, '', '/')
+})
