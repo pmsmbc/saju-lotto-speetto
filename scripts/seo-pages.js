@@ -3,6 +3,7 @@
 import { GAME_TABS, sellingWithRank1, recentFinished } from '../src/lib/speetto.js'
 import { aggregateByArea } from '../src/lib/aggregate.js'
 import { ZODIACS } from '../src/lib/zodiac.js'
+import { TAGS } from '../src/lib/tags.js'
 
 export const SITE = 'https://satto.kr'
 
@@ -139,6 +140,38 @@ export function articleLinks(articles, category, limit) {
   return list((limit ? items.slice(0, limit) : items).map((a) => link(`/info/${a.slug}/`, a.title)))
 }
 
+// 글 제목에서 소재 이름만 뽑는다. '뱀꿈 해몽 — 길몽일까' → '뱀꿈', '죽는 꿈 해몽 — …' → '죽는 꿈'
+export function shortName(title) {
+  const head = String(title ?? '').split(/\s*[\u2014,-]\s*/)[0]
+  return head.replace(/\s*해몽.*$/, '').trim() || head.trim()
+}
+
+// ---------- 태그별 글 모음 ----------
+export function tagPages(articles) {
+  const dreams = articles.filter((a) => (a.category ?? 'dream') === 'dream')
+  return TAGS.map((t) => {
+    const items = dreams.filter((a) => (a.tags ?? []).includes(t.id))
+    if (items.length === 0) return null
+    const names = [...new Set(items.map((a) => shortName(a.title)))].slice(0, 4)
+    const latest = items.map((a) => a.date).filter(Boolean).sort().at(-1)
+    return {
+      path: `info/tag/${t.id}/`,
+      title: `${t.label} 꿈 해몽 모음 ${items.length}편 — ${names.join(', ')} | 사또`,
+      description: `${t.label} 관련 꿈해몽 ${items.length}편을 모았습니다. ${names.join(', ')} 등 상황별 풀이와 심리학적 해석.`,
+      lastmod: latest,
+      changefreq: 'weekly',
+      html: `<h1>${esc(t.label)} 꿈 해몽 모음</h1>
+<p>${esc(t.desc)}</p>
+<h2>${esc(t.label)} 꿈 ${items.length}편</h2>
+${list(items.map((a) => `${link(`/info/${a.slug}/`, a.title)} — ${esc(a.description)}`))}
+<h2>다른 주제</h2>
+${list(TAGS.filter((o) => o.id !== t.id && dreams.some((a) => (a.tags ?? []).includes(o.id)))
+  .map((o) => link(`/info/tag/${o.id}/`, `${o.label} 꿈 해몽`)))}
+<p>${link('/info/', '전체 글 목록 보기')}</p>`,
+    }
+  }).filter(Boolean)
+}
+
 export function staticPages({ articles, speetto, lotto, today }) {
   const dreams = articles.filter((a) => (a.category ?? 'dream') === 'dream')
   const guides = articles.filter((a) => a.category === 'guide')
@@ -220,6 +253,9 @@ ${list([link('/zodiac/', '오늘의 띠별 행운 번호'), link('/lotto/', '로
       lastmod: latestArticleDate, changefreq: 'weekly',
       html: `<h1>꿈해몽·사주·로또 상식</h1>
 <p>꿈해몽 ${dreams.length}편과 사주·로또·스피또 상식 ${guides.length}편을 모았습니다. 꿈해몽은 상황별 풀이와 심리학적 해석, 꿈을 꾼 날의 행운 번호를 함께 담았습니다.</p>
+<h2>주제별로 보기</h2>
+${list(TAGS.filter((t) => dreams.some((a) => (a.tags ?? []).includes(t.id)))
+  .map((t) => link(`/info/tag/${t.id}/`, `${t.label} 꿈 해몽 ${dreams.filter((a) => (a.tags ?? []).includes(t.id)).length}편`)))}
 <h2>꿈해몽</h2>
 ${list(dreams.map((a) => link(`/info/${a.slug}/`, a.title)))}
 <h2>사주·로또 상식</h2>

@@ -30,7 +30,8 @@ describe('articles', () => {
       // URL 슬러그: 소문자 + 하이픈 (taemong-fruit 처럼 두 단어 조합 허용)
       expect(a.slug).toMatch(/^[a-z]+(-[a-z]+)*$/)
       expect(a.description.length).toBeGreaterThan(10)
-      expect(a.body.length).toBeGreaterThan(300)
+      expect(a.html.length).toBeGreaterThan(300)
+      expect(a.text.length).toBeGreaterThan(300)
       expect(a.icon).toMatch(/^[0-9a-f-]+$/)
     }
   })

@@ -43,6 +43,20 @@ describe('searchArticles', () => {
     // '해몽'은 셋 다 제목에 있다
     expect(searchArticles(articles, '해몽').map((a) => a.slug)).toEqual(['pig', 'fish', 'water'])
   })
+  test('html의 태그·링크 주소는 검색에 걸리지 않는다', () => {
+    const withLink = [{
+      slug: 'x', title: 'ㄱ', description: 'ㄴ', order: 1,
+      html: '<p><a href="/info/snake/">뱀꿈</a>을 보세요</p>',
+    }]
+    expect(searchArticles(withLink, 'info')).toEqual([])
+    expect(searchArticles(withLink, 'href')).toEqual([])
+    expect(searchArticles(withLink, '뱀꿈').map((a) => a.slug)).toEqual(['x'])
+  })
+  test('text가 있으면 그것을 우선 쓴다', () => {
+    const a = { slug: 'x', title: 'ㄱ', description: 'ㄴ', order: 1, text: '고양이', html: '<p>강아지</p>' }
+    expect(searchArticles([a], '고양이')).toHaveLength(1)
+    expect(searchArticles([a], '강아지')).toHaveLength(0)
+  })
   test('body가 없으면 html로 훑는다', () => {
     const only = [{ slug: 'x', title: 'ㄱ', description: 'ㄴ', html: '<p>고양이</p>', order: 1 }]
     expect(searchArticles(only, '고양이').map((a) => a.slug)).toEqual(['x'])

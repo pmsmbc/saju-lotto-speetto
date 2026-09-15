@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import { esc, gameSlug, kstDate, speettoOverview, speettoRoundPages, lottoOverview, staticPages } from './seo-pages.js'
+import { esc, gameSlug, kstDate, speettoOverview, speettoRoundPages, lottoOverview, staticPages, tagPages, shortName } from './seo-pages.js'
 
 const speetto = {
   updatedAt: '2026-09-10T06:35:28.246Z',
@@ -115,5 +115,67 @@ describe('staticPages', () => {
   test('스피또 데이터가 없어도 홈을 만든다', () => {
     const home = staticPages({ articles, speetto: null, lotto: null, today: '2026-09-10' })[0]
     expect(home.html).toContain('<h1>')
+  })
+})
+
+describe('tagPages', () => {
+  const tagged = [
+    { slug: 'pig', title: '돼지꿈 해몽 완전 정리', description: 'd1', order: 1, category: 'dream', tags: ['animal', 'money'], date: '2026-09-01' },
+    { slug: 'snake', title: '뱀꿈 해몽 — 길몽일까', description: 'd2', order: 2, category: 'dream', tags: ['animal'], date: '2026-09-02' },
+    { slug: 'odds', title: '로또 확률', description: 'd3', order: 101, category: 'guide', tags: [] },
+  ]
+  const pages = tagPages(tagged)
+  const byPath = Object.fromEntries(pages.map((p) => [p.path, p]))
+
+  test('글이 있는 태그만 페이지를 만든다', () => {
+    expect(Object.keys(byPath).sort()).toEqual(['info/tag/animal/', 'info/tag/money/'])
+  })
+  test('상식 글은 태그 페이지에 넣지 않는다', () => {
+    expect(byPath['info/tag/animal/'].html).not.toContain('/info/odds/')
+  })
+  test('제목에 편수와 대표 소재가 들어간다', () => {
+    expect(byPath['info/tag/animal/'].title).toContain('2편')
+    expect(byPath['info/tag/animal/'].title).toContain('돼지꿈')
+  })
+  test('shortName은 제목에서 소재 이름만 뽑는다', () => {
+    expect(shortName('뱀꿈 해몽 — 길몽일까 흉몽일까')).toBe('뱀꿈')
+    expect(shortName('죽는 꿈 해몽 — 무섭지만 길몽인 이유')).toBe('죽는 꿈')
+    expect(shortName('옛 애인 꿈 해몽 — 전 애인이 나오는 이유')).toBe('옛 애인 꿈')
+    expect(shortName('돼지꿈 해몽 완전 정리')).toBe('돼지꿈')
+    expect(shortName('임신꿈·태몽 해몽 — 누가 꿔도 되는 꿈')).toBe('임신꿈·태몽')
+  })
+  test("제목 앞머리에 '·'가 있으면 그 앞까지만 쓴다", () => {
+    const mid = [
+      { slug: 'a', title: '임신꿈·태몽 해몽 — 누가 꿔도 되는 꿈', description: 'd', order: 1, category: 'dream', tags: ['taemong'] },
+      { slug: 'b', title: '태몽 해몽 총정리', description: 'd', order: 2, category: 'dream', tags: ['taemong'] },
+    ]
+    const t = tagPages(mid)[0].title
+    expect(t).toContain('임신꿈·태몽')
+    expect(t).not.toContain('임신꿈·태몽·태몽')
+    expect(t).toContain('임신꿈·태몽, 태몽')
+  })
+  test('같은 소재 이름은 제목에 한 번만 넣는다', () => {
+    const dup = [
+      { slug: 'a', title: '태몽 해몽 총정리', description: 'd', order: 1, category: 'dream', tags: ['taemong'] },
+      { slug: 'b', title: '태몽 해몽 — 다른 글', description: 'd', order: 2, category: 'dream', tags: ['taemong'] },
+    ]
+    // 둘 다 shortName이 '태몽' → 이름 목록에 한 번만
+    expect(tagPages(dup)[0].title).toContain('2편 — 태몽 |')
+  })
+  test('쉼표로 이어진 제목도 앞부분만 쓴다', () => {
+    expect(shortName('이빨 빠지는 꿈, 정말 나쁜 꿈일까')).toBe('이빨 빠지는 꿈')
+  })
+  test('해당 글 전부와 다른 태그로 가는 링크가 있다', () => {
+    const html = byPath['info/tag/animal/'].html
+    expect(html).toContain('/info/pig/')
+    expect(html).toContain('/info/snake/')
+    expect(html).toContain('/info/tag/money/')
+    expect(html).toContain('/info/')
+  })
+  test('lastmod는 그 태그에서 가장 최근 글 날짜', () => {
+    expect(byPath['info/tag/animal/'].lastmod).toBe('2026-09-02')
+  })
+  test('태그가 하나도 없으면 빈 배열', () => {
+    expect(tagPages([{ slug: 'x', title: 't', description: 'd', order: 1, category: 'dream', tags: [] }])).toEqual([])
   })
 })

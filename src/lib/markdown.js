@@ -52,6 +52,6 @@ export function parseArticle(raw) {
     const i = line.indexOf(':')
     if (i > 0) meta[line.slice(0, i).trim()] = line.slice(i + 1).trim()
   }
-  const body = m[2].trim()
-  return { ...meta, order: Number(meta.order ?? 999), tags: parseTags(meta.tags), body, html: mdToHtml(body) }
+  // body(마크다운 원문)는 돌려주지 않는다 — html과 내용이 같아 번들에 두 번 실린다.
+  return { ...meta, order: Number(meta.order ?? 999), tags: parseTags(meta.tags), html: mdToHtml(m[2].trim()) }
 }

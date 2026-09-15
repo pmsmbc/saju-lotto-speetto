@@ -143,3 +143,42 @@ test('태그와 검색어는 함께 걸린다', () => {
   expect(document.querySelectorAll('.info-list li').length).toBeLessThanOrEqual(animalOnly)
   window.history.pushState({}, '', '/')
 })
+
+test('/info/tag/animal/ 로 들어가면 해당 태그가 선택된 채로 시작한다', () => {
+  window.history.pushState({}, '', '/info/tag/animal/')
+  render(<InfoPage today="2026-09-03" />)
+  const chip = [...document.querySelectorAll('.tag-chip')].find((b) => b.textContent.startsWith('동물'))
+  expect(chip.className).toContain('active')
+  expect(document.querySelectorAll('.info-list li').length).toBe(Number(chip.textContent.replace('동물 ', '')))
+  window.history.pushState({}, '', '/')
+})
+
+test('모르는 태그 경로는 전체 목록으로 떨어진다', () => {
+  window.history.pushState({}, '', '/info/tag/zzz/')
+  render(<InfoPage today="2026-09-03" />)
+  expect(document.querySelector('.article')).toBeNull()
+  expect([...document.querySelectorAll('.tag-chip')].some((b) => b.className.includes('active') && b.textContent.startsWith('전체'))).toBe(true)
+  window.history.pushState({}, '', '/')
+})
+
+test('태그를 고르면 주소가 태그 페이지로 바뀐다', () => {
+  window.history.pushState({}, '', '/info')
+  render(<InfoPage today="2026-09-03" />)
+  fireEvent.click([...document.querySelectorAll('.tag-chip')].find((b) => b.textContent.startsWith('동물')))
+  expect(window.location.pathname).toBe('/info/tag/animal/')
+  fireEvent.click([...document.querySelectorAll('.tag-chip')].find((b) => b.textContent.startsWith('전체')))
+  expect(window.location.pathname).toBe('/info')
+  window.history.pushState({}, '', '/')
+})
+
+test('태그 안에 결과가 없으면 전체에서 찾기를 안내한다', () => {
+  window.history.pushState({}, '', '/info/tag/life/')
+  render(<InfoPage today="2026-09-03" />)
+  fireEvent.change(screen.getByLabelText('글 검색'), { target: { value: '물고기' } })
+  expect(document.querySelectorAll('.info-list li')).toHaveLength(0)
+  const clear = screen.getByRole('button', { name: '전체에서 찾기' })
+  fireEvent.click(clear)
+  expect(window.location.pathname).toBe('/info')
+  expect(document.querySelectorAll('.info-list li').length).toBeGreaterThan(0)
+  window.history.pushState({}, '', '/')
+})

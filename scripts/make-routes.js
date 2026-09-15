@@ -2,7 +2,7 @@
 import { mkdirSync, copyFileSync, readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { parseArticle } from '../src/lib/markdown.js'
-import { SITE, esc, staticPages, speettoOverview, speettoRoundPages, lottoOverview } from './seo-pages.js'
+import { SITE, esc, staticPages, speettoOverview, speettoRoundPages, lottoOverview, tagPages } from './seo-pages.js'
 
 const dist = 'dist'
 const base = readFileSync(join(dist, 'index.html'), 'utf-8')
@@ -82,6 +82,13 @@ if (lotto) {
   addUrl('lotto/', today, 'weekly')
 }
 
+// ---------- 태그별 글 모음 ----------
+const tags = tagPages(articles)
+for (const p of tags) {
+  writePage(p.path, render({ ...p, canonical: `${SITE}/${p.path}` }))
+  addUrl(p.path, p.lastmod, p.changefreq)
+}
+
 // ---------- 글 상세 ----------
 for (const a of articles) {
   const ld = JSON.stringify({
@@ -135,4 +142,4 @@ writeFileSync(join(dist, 'rss.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<r
 ${byDate.map((a) => `<item><title>${esc(a.title)}</title><link>${SITE}/info/${a.slug}/</link><description>${esc(a.description)}</description><pubDate>${new Date((a.date ?? '2026-09-03') + 'T09:00:00+09:00').toUTCString()}</pubDate><guid>${SITE}/info/${a.slug}/</guid></item>`).join('\n')}
 </channel></rss>\n`)
 
-console.log(`sitemap ${sitemap.length}개 | 글 ${articles.length}편 | 스피또 회차 페이지 ${speetto ? speettoRoundPages(speetto).length : 0}개`)
+console.log(`sitemap ${sitemap.length}개 | 글 ${articles.length}편 | 태그 페이지 ${tags.length}개 | 스피또 회차 페이지 ${speetto ? speettoRoundPages(speetto).length : 0}개`)

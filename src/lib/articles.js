@@ -13,7 +13,12 @@ export const CATEGORIES = [
 export const ARTICLES = Object.values(raw)
   .map((text) => parseArticle(text))
   .filter(Boolean)
-  .map((a) => ({ ...a, category: a.category ?? 'dream' }))
+  // 검색용 평문: html에서 태그를 걷어내 미리 만들어 둔다 (번들에는 html만 실린다)
+  .map((a) => ({
+    ...a,
+    category: a.category ?? 'dream',
+    text: a.html.replace(/<[^>]*>/g, ' '),
+  }))
   .sort((a, b) => a.order - b.order)
 
 export function articleBySlug(slug) {

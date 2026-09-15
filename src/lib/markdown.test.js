@@ -59,6 +59,9 @@ order: 3
   test('tags를 배열로 바꾼다', () => {
     expect(parseArticle('---\ntitle: a\ntags: animal, money\n---\n본문').tags).toEqual(['animal', 'money'])
   })
+  test('body(마크다운 원문)는 돌려주지 않는다', () => {
+    expect(parseArticle('---\ntitle: a\n---\n본문').body).toBeUndefined()
+  })
   test('tags가 없으면 빈 배열', () => {
     expect(parseArticle('---\ntitle: a\n---\n본문').tags).toEqual([])
   })

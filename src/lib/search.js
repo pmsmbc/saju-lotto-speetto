@@ -6,11 +6,19 @@ export function normalize(s) {
   return String(s ?? '').toLowerCase().replace(/\s+/g, '')
 }
 
+// 본문 검색 대상 텍스트. articles.js가 미리 만들어 둔 text를 쓰고,
+// 없으면 마크다운 원문이나 HTML에서 태그를 걷어낸 것을 쓴다.
+export function searchableText(article) {
+  if (article.text != null) return article.text
+  if (article.body != null) return article.body
+  return String(article.html ?? '').replace(/<[^>]*>/g, ' ')
+}
+
 // 제목 > 설명 > 본문 순으로 가중치를 준다. 0이면 해당 없음.
 function scoreOf(article, q) {
   if (normalize(article.title).includes(q)) return 3
   if (normalize(article.description).includes(q)) return 2
-  if (normalize(article.body ?? article.html).includes(q)) return 1
+  if (normalize(searchableText(article)).includes(q)) return 1
   return 0
 }
 
