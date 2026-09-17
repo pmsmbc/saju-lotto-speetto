@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-17T15:52:46.112Z",
+  "updatedAt": "2026-09-17T23:31:49.188Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -8,7 +8,7 @@
       "status": "판매중",
       "rank1Remaining": 5,
       "rank1Total": 12,
-      "stockRate": 63
+      "stockRate": 84
     },
     {
       "game": "스피또1000",
@@ -179,7 +179,7 @@
       "status": "판매중",
       "rank1Remaining": 8,
       "rank1Total": 10,
-      "stockRate": 68
+      "stockRate": 78
     },
     {
       "game": "스피또2000",
@@ -278,7 +278,7 @@
       "status": "판매중",
       "rank1Remaining": 3,
       "rank1Total": 5,
-      "stockRate": 52
+      "stockRate": 53
     },
     {
       "game": "스피또500",
@@ -409,6 +409,14 @@
       "rank": 2,
       "store": "돈나무 복권",
       "address": "전북 군산시 공단대로 612 1호(소룡동)",
+      "region": "전북"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "마이정보",
+      "address": "전북 진안군 진장로 22 1층",
       "region": "전북"
     },
     {
