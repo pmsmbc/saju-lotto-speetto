@@ -47,7 +47,7 @@ export function InfoPage({ today = todayKST() }) {
   // 태그를 고르면 주소도 태그 페이지로 바꾼다 (정적 생성 페이지와 같은 URL)
   const changeTag = (nextTag) => {
     setTag(nextTag)
-    const path = nextTag ? `/info/tag/${nextTag}/` : '/info'
+    const path = nextTag ? `/info/tag/${nextTag}/` : '/info/'
     if (window.location.pathname !== path) {
       window.history.pushState({}, '', path + window.location.search)
     }
@@ -70,7 +70,7 @@ export function InfoPage({ today = todayKST() }) {
 
   const open = (nextSlug) => {
     if (!nextSlug) setTag(null)
-    const path = nextSlug ? `/info/${nextSlug}/` : '/info'
+    const path = nextSlug ? `/info/${nextSlug}/` : '/info/'
     if (window.location.pathname !== path) window.history.pushState({}, '', path)
     setSlug(nextSlug)
     window.scrollTo(0, 0)

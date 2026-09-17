@@ -91,7 +91,7 @@ export function FortunePage({ today = todayKST() }) {
             <ShareButton
               title="사또 - 오늘의 운세"
               text={`${current.zodiac.label} 오늘의 운세: ${current.grade}`}
-              url={`${window.location.origin}/unse?ddi=${current.zodiac.id}`}
+              url={`${window.location.origin}/unse/?ddi=${current.zodiac.id}`}
             />
           </div>
         </div>

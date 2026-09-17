@@ -87,9 +87,9 @@ test('탭 이동 시 주소가 바뀐다', () => {
   window.history.pushState({}, '', '/')
   render(<App />)
   fireEvent.click(screen.getByRole('button', { name: '로또' }))
-  expect(window.location.pathname).toBe('/zodiac')
+  expect(window.location.pathname).toBe('/zodiac/')
   fireEvent.click(screen.getByRole('button', { name: '로또 추천' }))
-  expect(window.location.pathname).toBe('/lotto')
+  expect(window.location.pathname).toBe('/lotto/')
   window.history.pushState({}, '', '/')
 })
 
@@ -98,7 +98,7 @@ test('꿈해몽·상식 메뉴 클릭 시 꿈해몽 글 목록 표시', () => {
   window.history.pushState({}, '', '/')
   render(<App />)
   fireEvent.click(screen.getByRole('button', { name: '꿈해몽·상식' }))
-  expect(window.location.pathname).toBe('/info')
+  expect(window.location.pathname).toBe('/info/')
   expect(screen.getByText('정보 이야기')).toBeInTheDocument()
   window.history.pushState({}, '', '/')
 })
@@ -132,7 +132,7 @@ test('1등 배출점 탭으로 이동하면 주소가 바뀐다', () => {
   render(<App />)
   fireEvent.click(screen.getByRole('button', { name: '로또' }))
   fireEvent.click(screen.getByRole('button', { name: '1등 배출점' }))
-  expect(window.location.pathname).toBe('/lotto-stores')
+  expect(window.location.pathname).toBe('/lotto-stores/')
   window.history.pushState({}, '', '/')
 })
 
@@ -143,5 +143,22 @@ test('/lotto-stores 로 들어가면 배출점 화면으로 시작한다', () =>
   const subs = [...document.querySelectorAll('.sub-tab')].map((b) => b.textContent)
   expect(subs).toContain('1등 배출점')
   expect(document.querySelector('.sub-tab.active').textContent).toBe('1등 배출점')
+  window.history.pushState({}, '', '/')
+})
+
+test('앱이 주소창에 쓰는 경로는 모두 슬래시로 끝난다', () => {
+  // 슬래시가 없으면 GitHub Pages가 301 하고, 구글이 "리디렉션이 포함된 페이지"로 색인에서 뺀다
+  mockFetch()
+  window.history.pushState({}, '', '/')
+  render(<App />)
+  const menus = ['사주', '로또', '스피또', '꿈해몽·상식']
+  for (const menu of menus) {
+    fireEvent.click(screen.getByRole('button', { name: menu }))
+    expect(window.location.pathname, `${menu} 대메뉴 경로`).toMatch(/\/$/)
+    for (const sub of [...document.querySelectorAll('.sub-tab')]) {
+      fireEvent.click(sub)
+      expect(window.location.pathname, `${menu} > ${sub.textContent} 경로`).toMatch(/\/$/)
+    }
+  }
   window.history.pushState({}, '', '/')
 })

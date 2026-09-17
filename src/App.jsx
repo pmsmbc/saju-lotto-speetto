@@ -24,9 +24,12 @@ const ROUTES = {
   '/privacy': { menu: 'page', tab: 'privacy' },
   '/about': { menu: 'page', tab: 'about' },
 }
+// 주소창에 쓸 때는 반드시 슬래시로 끝낸다.
+// GitHub Pages가 /unse → /unse/ 로 301 하므로, 슬래시 없는 주소가 공유되면
+// 구글이 "리디렉션이 포함된 페이지"로 보고 색인에서 제외한다.
 const PATH_OF = {
-  ...Object.fromEntries(Object.entries(ROUTES).map(([path, r]) => [r.tab, path])),
-  info: '/info',
+  ...Object.fromEntries(Object.entries(ROUTES).map(([path, r]) => [r.tab, `${path}/`])),
+  info: '/info/',
 }
 
 function stateFromPath(pathname) {

@@ -187,7 +187,7 @@ export function GunghapPage({ today = todayKST() }) {
             <ShareButton
               title="사또 - 궁합"
               text={`우리 궁합 ${result.score}점 — ${result.grade}`}
-              url={`${window.location.origin}/gunghap?m=${mine.birth}&mh=${mine.hour}&mc=${mine.cal}&p=${partner.birth}&ph=${partner.hour}&pc=${partner.cal}&t=${type}`}
+              url={`${window.location.origin}/gunghap/?m=${mine.birth}&mh=${mine.hour}&mc=${mine.cal}&p=${partner.birth}&ph=${partner.hour}&pc=${partner.cal}&t=${type}`}
             />
           </div>
         </div>
