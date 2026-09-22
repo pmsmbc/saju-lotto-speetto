@@ -24,25 +24,25 @@ test('집계 범위와 상위 20곳을 보여준다', async () => {
   render(<LottoStorePage />)
   await waitFor(() => expect(screen.getByText(/마지막 업데이트/)).toBeInTheDocument())
   expect(screen.getByText(/262회부터 1241회까지/)).toBeInTheDocument()
-  expect(document.querySelectorAll('.store-item')).toHaveLength(20)
+  expect(document.querySelectorAll('.rank-item')).toHaveLength(20)
   expect(screen.getByText('가게1')).toBeInTheDocument()
 })
 
 test('모두 보기를 누르면 나머지가 펼쳐진다', async () => {
   mockFetch()
   render(<LottoStorePage />)
-  await waitFor(() => expect(document.querySelectorAll('.store-item')).toHaveLength(20))
+  await waitFor(() => expect(document.querySelectorAll('.rank-item')).toHaveLength(20))
   fireEvent.click(screen.getByRole('button', { name: /모두 보기/ }))
-  expect(document.querySelectorAll('.store-item')).toHaveLength(30)
+  expect(document.querySelectorAll('.rank-item')).toHaveLength(30)
 })
 
 test('지역 버튼으로 걸러낸다', async () => {
   mockFetch()
   render(<LottoStorePage />)
-  await waitFor(() => expect(document.querySelectorAll('.store-item')).toHaveLength(20))
+  await waitFor(() => expect(document.querySelectorAll('.rank-item')).toHaveLength(20))
   const seoul = [...document.querySelectorAll('.tag-chip')].find((b) => b.textContent.startsWith('서울'))
   fireEvent.click(seoul)
-  const items = [...document.querySelectorAll('.store-addr')].map((e) => e.textContent)
+  const items = [...document.querySelectorAll('.rank-addr')].map((e) => e.textContent)
   expect(items.every((a) => a.startsWith('서울'))).toBe(true)
 })
 

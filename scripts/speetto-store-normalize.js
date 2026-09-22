@@ -32,6 +32,9 @@ const REGION_PREFIX = [
   ['인터넷', '인터넷'],
 ]
 
+// 동행복권 주소는 광주·전남을 "전남광주 광산구 …"처럼 한 접두어로 묶어 보낸다 → 시·군·구로 구분
+const GWANGJU_GU = new Set(['동구', '서구', '남구', '북구', '광산구'])
+
 // "(당첨 당시 상호) 명당복권" 같은 접두 안내문 제거
 const stripLegacyPrefix = (v) => (typeof v === 'string' ? v.replace(/^\([^)]*\)\s*/, '').trim() : '')
 
@@ -41,20 +44,25 @@ export function resolveStoreName(item) {
 }
 
 export function resolveAddress(item) {
-  return item.shpAddr?.trim() || item.shpAddrAsis?.trim() || stripLegacyPrefix(item.befRdnm) || ''
+  const raw = item.shpAddr?.trim() || item.shpAddrAsis?.trim() || stripLegacyPrefix(item.befRdnm) || ''
+  return normalizeAddress(raw)
+}
+
+// 동행복권은 광주·전남을 "전남광주 광양시 …"처럼 한 덩어리로 보낸다.
+// 화면에 그대로 쓰면 읽기 어려우므로 실제 시·도로 바꿔 준다.
+export function normalizeAddress(addr) {
+  const tidy = addr.replace(/\s+/g, ' ').trim() // 원본에 이중 공백이 섞여 온다
+  if (!tidy.startsWith('전남광주')) return tidy
+  const rest = tidy.slice('전남광주'.length).trim()
+  const sub = rest.split(' ')[0] ?? ''
+  return `${GWANGJU_GU.has(sub) ? '광주' : '전남'} ${rest}`.trim()
 }
 
 // 주소로 시·도를 판단하고, 주소에서 알 수 없을 때만 API의 region 값을 쓴다.
 // (API region은 폐점 건에서 '서울'로 잘못 오거나 '전남광주'처럼 두 지역이 합쳐져 온다)
-// 동행복권 주소는 광주·전남을 "전남광주 광산구 …"처럼 한 접두어로 묶어 보낸다 → 시·군·구로 구분
-const GWANGJU_GU = new Set(['동구', '서구', '남구', '북구', '광산구'])
-
 export function resolveRegion(item) {
+  // resolveAddress가 '전남광주'를 이미 광주/전남으로 풀어 주므로 여기서는 접두어만 본다
   const addr = resolveAddress(item)
-  if (addr.startsWith('전남광주')) {
-    const sub = addr.split(/\s+/)[1] ?? ''
-    return GWANGJU_GU.has(sub) ? '광주' : '전남'
-  }
   for (const [prefix, label] of REGION_PREFIX) {
     if (addr.startsWith(prefix)) return label
   }

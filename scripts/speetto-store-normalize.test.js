@@ -7,6 +7,7 @@ import {
   resolveAddress,
   GAME_CODES,
   isCompleteScrape,
+  normalizeAddress,
 } from './speetto-store-normalize.js'
 
 test('GAME_CODES는 세 게임을 가진다', () => {
@@ -167,4 +168,31 @@ describe('isCompleteScrape', () => {
     ]
     expect(isCompleteScrape(stores, EXPECTED)).toBe(false)
   })
+})
+
+describe('normalizeAddress', () => {
+  test('"전남광주 광산구"는 광주로 편다', () => {
+    expect(normalizeAddress('전남광주 광산구 임방울대로 1')).toBe('광주 광산구 임방울대로 1')
+    expect(normalizeAddress('전남광주 북구 용봉로 1')).toBe('광주 북구 용봉로 1')
+  })
+  test('"전남광주 광양시"는 전남으로 편다', () => {
+    expect(normalizeAddress('전남광주 광양시 서북로 68 1층')).toBe('전남 광양시 서북로 68 1층')
+    expect(normalizeAddress('전남광주 여수시 학동 1')).toBe('전남 여수시 학동 1')
+  })
+  test('다른 주소는 그대로 둔다', () => {
+    expect(normalizeAddress('서울 성북구 보국문로 74')).toBe('서울 성북구 보국문로 74')
+    expect(normalizeAddress('')).toBe('')
+  })
+  test('resolveAddress도 정규화된 주소를 돌려준다', () => {
+    expect(resolveAddress({ shpAddr: '전남광주 광양시 서북로 68' })).toBe('전남 광양시 서북로 68')
+  })
+  test('정규화 후에도 지역 분류는 그대로', () => {
+    expect(resolveRegion({ shpAddr: '전남광주 광산구 1', region: '전남광주' })).toBe('광주')
+    expect(resolveRegion({ shpAddr: '전남광주 광양시 1', region: '전남광주' })).toBe('전남')
+  })
+})
+
+test('주소의 이중 공백을 정리한다', () => {
+  expect(normalizeAddress('전남광주 광양시   213-1')).toBe('전남 광양시 213-1')
+  expect(normalizeAddress('서울  중구   퇴계로 1 ')).toBe('서울 중구 퇴계로 1')
 })

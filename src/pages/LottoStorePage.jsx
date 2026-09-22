@@ -28,7 +28,7 @@ export function LottoStorePage() {
   return (
     <section className="store-page">
       <p className="updated-at">마지막 업데이트: {formatDate(data.updatedAt)}</p>
-      <p className="store-summary">
+      <p className="rank-summary">
         {data.fromDraw}회부터 {data.throughDraw}회까지 <strong>{data.coveredDraws.toLocaleString()}개 회차</strong>의
         1등 배출 기록 {data.totalRecords.toLocaleString()}건을 판매점별로 모았습니다.
       </p>
@@ -55,18 +55,18 @@ export function LottoStorePage() {
         ))}
       </div>
 
-      <ol className="store-rank">
+      <ol className="rank-list">
         {visible.map((s) => (
-          <li key={`${s.rank}-${s.name}`} className="store-item surface-card">
-            <span className="store-rank-no">{s.rank}</span>
-            <span className="store-body">
-              <span className="store-name">{s.name}</span>
-              <span className="store-addr">{s.address}</span>
-              <span className="store-meta">
+          <li key={`${s.rank}-${s.name}`} className="rank-item surface-card">
+            <span className="rank-no">{s.rank}</span>
+            <span className="rank-body">
+              <span className="rank-name">{s.name}</span>
+              <span className="rank-addr">{s.address}</span>
+              <span className="rank-meta">
                 자동 {s.auto}회 · 수동 {s.manual}회 · 최근 {s.lastDraw}회
               </span>
             </span>
-            <span className="store-count">
+            <span className="rank-count">
               <strong>{s.count}</strong>회
             </span>
           </li>
