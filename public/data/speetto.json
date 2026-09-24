@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T16:09:33.580Z",
+  "updatedAt": "2026-09-24T23:31:46.190Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -8,7 +8,7 @@
       "status": "판매중",
       "rank1Remaining": 12,
       "rank1Total": 12,
-      "stockRate": 0
+      "stockRate": 8
     },
     {
       "game": "스피또1000",
@@ -17,7 +17,7 @@
       "status": "판매중",
       "rank1Remaining": 4,
       "rank1Total": 12,
-      "stockRate": 84
+      "stockRate": 94
     },
     {
       "game": "스피또1000",
@@ -197,7 +197,7 @@
       "status": "판매중",
       "rank1Remaining": 8,
       "rank1Total": 10,
-      "stockRate": 78
+      "stockRate": 86
     },
     {
       "game": "스피또2000",
@@ -296,7 +296,7 @@
       "status": "판매중",
       "rank1Remaining": 3,
       "rank1Total": 5,
-      "stockRate": 53
+      "stockRate": 54
     },
     {
       "game": "스피또500",
@@ -329,6 +329,14 @@
       "game": "스피또2000",
       "round": 69,
       "rank": 2,
+      "store": "더블로또복권판매점",
+      "address": "경기 광명시 철산로 12 1층",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
       "store": "로또복권편의점",
       "address": "경기 수원시 권선구 세류로 51 1층",
       "region": "경기"
@@ -339,6 +347,14 @@
       "rank": 2,
       "store": "명학대박복권",
       "address": "경기 안양시 만안구 만안로 31-3 1층",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "한일로또나라",
+      "address": "경기 수원시 장안구 경수대로 930 1층",
       "region": "경기"
     },
     {
