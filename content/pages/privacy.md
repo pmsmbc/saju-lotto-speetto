@@ -51,6 +51,6 @@ description: 사또(satto.kr)의 개인정보 처리, 쿠키 사용, 광고, 면
 
 ## 9. 문의
 
-개인정보 및 사이트 관련 문의: **tkdansdusrnth@gmail.com**
+개인정보 및 사이트 관련 문의: **[tkdansdusrnth@gmail.com](mailto:tkdansdusrnth@gmail.com)**
 
 시행일: 2026년 9월 8일

@@ -208,6 +208,11 @@ describe('기능 페이지 설명 공유', () => {
   })
 })
 
+test('footerHtml에 문의 메일 링크가 있다', () => {
+  expect(footerHtml()).toContain('href="mailto:tkdansdusrnth@gmail.com')
+  expect(footerHtml()).toContain('>문의하기</a>')
+})
+
 test('footerHtml에 개인정보처리방침·소개 링크가 있다', () => {
   expect(footerHtml()).toContain('href="/privacy/"')
   expect(footerHtml()).toContain('href="/about/"')

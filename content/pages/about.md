@@ -48,4 +48,6 @@ description: 사또(satto.kr)는 오늘의 운세, 궁합, 행운 번호, 스피
 
 ## 문의
 
-제휴·오류 제보·기타 문의: **tkdansdusrnth@gmail.com**
+제휴·오류 제보·기타 문의: **[tkdansdusrnth@gmail.com](mailto:tkdansdusrnth@gmail.com)**
+
+주소를 누르면 메일 앱이 열립니다. 보내 주신 메일은 확인하는 대로 답장드립니다. 화면 오류를 알려 주실 때는 어느 페이지에서, 어떤 기기로 보셨는지 함께 적어 주시면 빨리 고칠 수 있습니다.

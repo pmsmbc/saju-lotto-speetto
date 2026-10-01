@@ -1,3 +1,6 @@
+import { CONTACT_EMAIL, CONTACT_HREF } from '../lib/contact.js'
+
+export { CONTACT_EMAIL }
 export const COPYRIGHT = '© 2026 사또 (satto.kr). All rights reserved.'
 export const YOUTUBE_URL = 'https://www.youtube.com/@ssangmun-center'
 
@@ -41,6 +44,7 @@ export default function Footer() {
         <span className="footer-pages">
           <a className="footer-privacy" href="/about/">사이트 소개</a>
           <a className="footer-privacy" href="/privacy/">개인정보처리방침</a>
+          <a className="footer-privacy" href={CONTACT_HREF}>문의하기</a>
         </span>
       </div>
       <p className="footer-copy">{COPYRIGHT}</p>

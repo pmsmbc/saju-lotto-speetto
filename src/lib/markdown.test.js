@@ -34,6 +34,13 @@ describe('내부 링크', () => {
     expect(mdToHtml('[a](https://evil.com)')).not.toContain('<a ')
     expect(mdToHtml('[a](javascript:alert(1))')).not.toContain('<a ')
   })
+  test('[주소](mailto:주소) 는 메일 링크가 된다', () => {
+    expect(mdToHtml('[a@b.com](mailto:a@b.com)')).toBe('<p><a href="mailto:a@b.com">a@b.com</a></p>')
+  })
+  test('mailto: 뒤에 메일 주소가 아닌 것은 링크로 만들지 않는다', () => {
+    expect(mdToHtml('[a](mailto:a@b.com?bcc=x@y.com)')).not.toContain('<a ')
+    expect(mdToHtml('[a](mailto:javascript:alert(1))')).not.toContain('<a ')
+  })
   test('굵게와 함께 써도 된다', () => {
     expect(mdToHtml('**[용꿈](/info/dragon/)**')).toBe('<p><strong><a href="/info/dragon/">용꿈</a></strong></p>')
   })

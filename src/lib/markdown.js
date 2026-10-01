@@ -9,11 +9,14 @@ function esc(s) {
 
 // [글자](/info/slug/) 형태의 내부 링크만 허용한다. 외부 URL·javascript: 등은 링크로 만들지 않는다.
 const INTERNAL_LINK = /\[([^\]]+)\]\((\/[A-Za-z0-9\-_/]*)\)/g
+// 문의 메일용. mailto: 뒤에는 메일 주소 하나만 허용한다(?bcc= 같은 추가 인자 불가).
+const MAIL_LINK = /\[([^\]]+)\]\((mailto:[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})\)/g
 
 function inline(s) {
   return esc(s)
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(INTERNAL_LINK, '<a href="$2">$1</a>')
+    .replace(MAIL_LINK, '<a href="$2">$1</a>')
 }
 
 export function mdToHtml(md) {

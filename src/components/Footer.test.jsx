@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import Footer, { YOUTUBE_URL, SITE_LINKS } from './Footer.jsx'
+import Footer, { YOUTUBE_URL, SITE_LINKS, CONTACT_EMAIL } from './Footer.jsx'
 
 test('푸터에 카피라이트를 렌더링', () => {
   render(<Footer />)
@@ -21,6 +21,13 @@ test('푸터에 개인정보처리방침·사이트 소개 페이지 링크가 �
   render(<Footer />)
   expect(screen.getByRole('link', { name: '개인정보처리방침' })).toHaveAttribute('href', '/privacy/')
   expect(screen.getByRole('link', { name: '사이트 소개' })).toHaveAttribute('href', '/about/')
+})
+
+test('푸터에 문의 메일 링크가 있다', () => {
+  render(<Footer />)
+  const link = screen.getByRole('link', { name: '문의하기' })
+  expect(link.getAttribute('href')).toMatch(/^mailto:tkdansdusrnth@gmail\.com\?subject=/)
+  expect(CONTACT_EMAIL).toBe('tkdansdusrnth@gmail.com')
 })
 
 test('푸터에 사이트 메뉴 링크가 모두 있다', () => {

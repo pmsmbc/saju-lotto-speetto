@@ -3,6 +3,7 @@
 import { GAME_TABS, sellingWithRank1, recentFinished } from '../src/lib/speetto.js'
 import { aggregateByArea } from '../src/lib/aggregate.js'
 import { ZODIACS } from '../src/lib/zodiac.js'
+import { CONTACT_HREF } from '../src/lib/contact.js'
 import { TAGS } from '../src/lib/tags.js'
 import { PAGE_CONTENT } from '../src/lib/page-content.js'
 
@@ -40,7 +41,7 @@ export function footerHtml() {
     ['/speetto/', '스피또 당첨 지역'], ['/info/', '꿈해몽·상식'],
   ]
   return `<footer><nav>${links.map(([h, l]) => link(h, l)).join(' · ')}</nav>
-<p>${link('/about/', '사이트 소개')} · ${link('/privacy/', '개인정보처리방침')}</p>
+<p>${link('/about/', '사이트 소개')} · ${link('/privacy/', '개인정보처리방침')} · ${link(CONTACT_HREF, '문의하기')}</p>
 <p>© 2026 사또 (satto.kr). All rights reserved.</p></footer>`
 }
 
