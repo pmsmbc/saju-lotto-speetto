@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-02T05:31:49.759Z",
+  "updatedAt": "2026-10-02T11:33:46.891Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -15,7 +15,7 @@
       "gameCode": "SP1000",
       "round": 109,
       "status": "판매중",
-      "rank1Remaining": 4,
+      "rank1Remaining": 3,
       "rank1Total": 12,
       "stockRate": 100
     },
@@ -195,7 +195,7 @@
       "gameCode": "SP2000",
       "round": 69,
       "status": "판매중",
-      "rank1Remaining": 8,
+      "rank1Remaining": 6,
       "rank1Total": 10,
       "stockRate": 92
     },
@@ -435,6 +435,22 @@
       "rank": 2,
       "store": "가판100호",
       "address": "서울 중구 을지로 113-4 가판",
+      "region": "서울"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 1,
+      "store": "다산행운방",
+      "address": "서울 중구 다산로36길 21 1층",
+      "region": "서울"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 1,
+      "store": "다산행운방",
+      "address": "서울 중구 다산로36길 21 1층",
       "region": "서울"
     },
     {
@@ -5708,6 +5724,14 @@
       "store": "한우로또",
       "address": "강원 횡성군 화성로 41 1층",
       "region": "강원"
+    },
+    {
+      "game": "스피또1000",
+      "round": 109,
+      "rank": 1,
+      "store": "대박로또복권방",
+      "address": "경기 평택시 고덕여염6길 18 1층",
+      "region": "경기"
     },
     {
       "game": "스피또1000",
