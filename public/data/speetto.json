@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-01T18:11:50.564Z",
+  "updatedAt": "2026-10-02T00:06:35.010Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -8,7 +8,7 @@
       "status": "판매중",
       "rank1Remaining": 12,
       "rank1Total": 12,
-      "stockRate": 8
+      "stockRate": 24
     },
     {
       "game": "스피또1000",
@@ -17,7 +17,7 @@
       "status": "판매중",
       "rank1Remaining": 4,
       "rank1Total": 12,
-      "stockRate": 94
+      "stockRate": 100
     },
     {
       "game": "스피또1000",
@@ -188,7 +188,7 @@
       "status": "판매중",
       "rank1Remaining": 8,
       "rank1Total": 8,
-      "stockRate": 0
+      "stockRate": 7
     },
     {
       "game": "스피또2000",
@@ -197,7 +197,7 @@
       "status": "판매중",
       "rank1Remaining": 8,
       "rank1Total": 10,
-      "stockRate": 86
+      "stockRate": 92
     },
     {
       "game": "스피또2000",
@@ -296,7 +296,7 @@
       "status": "판매중",
       "rank1Remaining": 3,
       "rank1Total": 5,
-      "stockRate": 54
+      "stockRate": 55
     },
     {
       "game": "스피또500",
@@ -353,6 +353,14 @@
       "game": "스피또2000",
       "round": 69,
       "rank": 2,
+      "store": "인생여섯컷",
+      "address": "경기 수원시 권선구 정조로384번길 2 1층",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
       "store": "한일로또나라",
       "address": "경기 수원시 장안구 경수대로 930 1층",
       "region": "경기"
@@ -401,6 +409,14 @@
       "game": "스피또2000",
       "round": 69,
       "rank": 2,
+      "store": "전국민로또",
+      "address": "경북 포항시 남구 동문로 31 1층",
+      "region": "경북"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
       "store": "희망복권",
       "address": "대전 유성구 원신흥남로42번길 24 1층(원신흥동)",
       "region": "대전"
@@ -417,6 +433,14 @@
       "game": "스피또2000",
       "round": 69,
       "rank": 2,
+      "store": "가판100호",
+      "address": "서울 중구 을지로 113-4 가판",
+      "region": "서울"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
       "store": "버스충전소",
       "address": "서울 서초구 신반포로 177 가로가판대",
       "region": "서울"
@@ -428,6 +452,14 @@
       "store": "행복로또",
       "address": "서울 영등포구 도신로 39 1층",
       "region": "서울"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "복권전문점",
+      "address": "인천 부평구 원적로 437 1층",
+      "region": "인천"
     },
     {
       "game": "스피또2000",
