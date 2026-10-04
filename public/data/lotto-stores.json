@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-09-26T23:32:35.356Z",
+  "updatedAt": "2026-10-04T00:08:16.609Z",
   "fromDraw": 262,
-  "throughDraw": 1243,
-  "coveredDraws": 979,
+  "throughDraw": 1244,
+  "coveredDraws": 980,
   "missingDraws": [
     1,
     2,
@@ -269,12 +269,12 @@
     295,
     463
   ],
-  "totalRecords": 9284,
-  "storeCount": 4595,
+  "totalRecords": 9302,
+  "storeCount": 4598,
   "online": {
-    "count": 128,
+    "count": 129,
     "auto": 61,
-    "manual": 64
+    "manual": 65
   },
   "top": [
     {
