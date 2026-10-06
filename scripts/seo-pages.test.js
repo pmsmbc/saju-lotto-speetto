@@ -69,6 +69,9 @@ describe('speettoRoundPages', () => {
     expect(p109.title).toContain('스피또1000 109회')
     expect(p109.title).toContain('1등 12장 중 7장 남음')
   })
+  test('회차 페이지는 검색 제외(noindex)로 표시한다', () => {
+    expect(pages.every((p) => p.noindex === true)).toBe(true)
+  })
   test('판매종료 회차는 changefreq monthly', () => {
     expect(pages.find((p) => p.path === 'speetto/1000/108/').changefreq).toBe('monthly')
     expect(p109.changefreq).toBe('daily')

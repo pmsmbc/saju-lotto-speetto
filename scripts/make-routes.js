@@ -10,14 +10,16 @@ const today = new Date().toISOString().slice(0, 10)
 const readJson = (p) => (existsSync(p) ? JSON.parse(readFileSync(p, 'utf-8')) : null)
 
 // 페이지별 head/본문을 주입한 HTML을 만든다.
-function render({ title, description, canonical, html, ld }) {
+function render({ title, description, canonical, html, ld, noindex }) {
   let out = base
     .replace(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>`)
     .replace(/(name="description" content=")[^"]*(")/, `$1${esc(description)}$2`)
     .replace(/(property="og:title" content=")[^"]*(")/, `$1${esc(title)}$2`)
     .replace(/(property="og:description" content=")[^"]*(")/, `$1${esc(description)}$2`)
     .replace(/(property="og:url" content=")[^"]*(")/, `$1${esc(canonical)}$2`)
-  const head = `<link rel="canonical" href="${esc(canonical)}" />` + (ld ? `<script type="application/ld+json">${ld}</script>` : '')
+  const head = `<link rel="canonical" href="${esc(canonical)}" />`
+    + (noindex ? '<meta name="robots" content="noindex, follow" />' : '')
+    + (ld ? `<script type="application/ld+json">${ld}</script>` : '')
   out = out.replace('</head>', `${head}</head>`)
   if (html) out = out.replace('<div id="root"></div>', `<div id="root">${html}${footerHtml()}</div>`)
   return out
@@ -66,7 +68,7 @@ if (speetto) {
 
   for (const p of speettoRoundPages(speetto)) {
     writePage(p.path, render({ ...p, canonical: `${SITE}/${p.path}` }))
-    addUrl(p.path, p.lastmod, p.changefreq)
+    if (!p.noindex) addUrl(p.path, p.lastmod, p.changefreq)
   }
 } else {
   writePage('speetto/', base)

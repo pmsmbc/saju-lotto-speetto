@@ -111,6 +111,9 @@ export function speettoRoundPages(data) {
       .map((s) => `<tr><td>${esc(s.region)}</td><td>${esc(s.store)}</td><td>${esc(s.address)}</td></tr>`)
       .join('')
     return {
+      // 회차 페이지는 같은 틀에 숫자만 바뀌는 짧은 자동 생성 페이지라 애드센스·검색에서
+      // 저품질로 보일 수 있다. 방문자에게는 그대로 보여 주되 색인과 sitemap에서는 뺀다.
+      noindex: true,
       path: `speetto/${gameSlug(r.gameCode)}/${r.round}/`,
       title: `${g.name} ${r.round}회 1등 당첨 지역·판매점 (${remainText}) | 사또`,
       description: `${g.name} ${r.round}회 1등 당첨 판매점 ${stores.length}곳${areas.length ? ` (${areas.join(', ')})` : ''}. ${remainText}${!ended && Number.isFinite(r.stockRate) ? `, 판매점 입고율 ${r.stockRate}%` : ''}. 기준 ${date ?? ''}`.trim(),
