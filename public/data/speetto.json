@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-10-06T03:44:55.191Z",
+  "updatedAt": "2026-10-06T11:50:27.499Z",
   "rounds": [
     {
       "game": "스피또1000",
       "gameCode": "SP1000",
       "round": 110,
       "status": "판매중",
-      "rank1Remaining": 12,
+      "rank1Remaining": 11,
       "rank1Total": 12,
       "stockRate": 24
     },
@@ -195,7 +195,7 @@
       "gameCode": "SP2000",
       "round": 69,
       "status": "판매중",
-      "rank1Remaining": 6,
+      "rank1Remaining": 4,
       "rank1Total": 10,
       "stockRate": 92
     },
@@ -347,6 +347,22 @@
       "rank": 2,
       "store": "명학대박복권",
       "address": "경기 안양시 만안구 만안로 31-3 1층",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 1,
+      "store": "은행복권방",
+      "address": "경기 성남시 중원구 산성대로 512 1층 1호",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 1,
+      "store": "은행복권방",
+      "address": "경기 성남시 중원구 산성대로 512 1층 1호",
       "region": "경기"
     },
     {
@@ -5719,6 +5735,14 @@
     },
     {
       "game": "스피또1000",
+      "round": 110,
+      "rank": 1,
+      "store": "씨스페이스 경주세방매점",
+      "address": "경북 경주시 산업로 4447 (용강동)",
+      "region": "경북"
+    },
+    {
+      "game": "스피또1000",
       "round": 109,
       "rank": 1,
       "store": "한우로또",
@@ -7891,78 +7915,6 @@
       "rank": 1,
       "store": "수레크레이션이벤트기획",
       "address": "충남 천안시 서북구 성정중4길 3 동물병원 옆 복권방",
-      "region": "충남"
-    },
-    {
-      "game": "스피또1000",
-      "round": 80,
-      "rank": 1,
-      "store": "GS25양주가납리점",
-      "address": "경기 양주시 그루고개로221번길 81 1층",
-      "region": "경기"
-    },
-    {
-      "game": "스피또1000",
-      "round": 80,
-      "rank": 1,
-      "store": "오늘또로또",
-      "address": "경기 이천시 중앙로 92 1층 101호",
-      "region": "경기"
-    },
-    {
-      "game": "스피또1000",
-      "round": 80,
-      "rank": 1,
-      "store": "웰컴25시편의점",
-      "address": "경기 파주시 평화로 723 웰컴25시편의점",
-      "region": "경기"
-    },
-    {
-      "game": "스피또1000",
-      "round": 80,
-      "rank": 1,
-      "store": "행운복권방",
-      "address": "경기 고양시 덕양구 꽃마을로 45 1층103호",
-      "region": "경기"
-    },
-    {
-      "game": "스피또1000",
-      "round": 80,
-      "rank": 1,
-      "store": "경아로또 판매점",
-      "address": "서울 동작구 사당로16길 40 1층",
-      "region": "서울"
-    },
-    {
-      "game": "스피또1000",
-      "round": 80,
-      "rank": 1,
-      "store": "우리들북구청점",
-      "address": "울산 북구 무룡로 29 1층",
-      "region": "울산"
-    },
-    {
-      "game": "스피또1000",
-      "round": 80,
-      "rank": 1,
-      "store": "이유복권",
-      "address": "인천 검단구 이음대로 378 1층 114호",
-      "region": "인천"
-    },
-    {
-      "game": "스피또1000",
-      "round": 80,
-      "rank": 1,
-      "store": "해피+24시편의점",
-      "address": "광주 북구 하서로 1층",
-      "region": "광주"
-    },
-    {
-      "game": "스피또1000",
-      "round": 80,
-      "rank": 1,
-      "store": "드림로또",
-      "address": "충남 서산시 성연3로 123 107호(성연에드가오피스텔)",
       "region": "충남"
     },
     {
