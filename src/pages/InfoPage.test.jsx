@@ -2,6 +2,7 @@ import { test, expect } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { InfoPage } from './InfoPage.jsx'
 import { ARTICLES } from '../lib/articles.js'
+import { searchArticles } from '../lib/search.js'
 
 test('카테고리별 글 목록을 보여준다 (기본 꿈해몽, 탭으로 상식 전환)', () => {
   window.history.pushState({}, '', '/info')
@@ -171,10 +172,21 @@ test('태그를 고르면 주소가 태그 페이지로 바뀐다', () => {
   window.history.pushState({}, '', '/')
 })
 
+// 생활 태그 글에는 없고 다른 글에는 있는 검색어. 글 내용이 바뀌어도 깨지지 않게
+// 고정 낱말 대신 실제 글 제목의 첫 낱말 가운데서 고른다.
+function termOutsideTag(tag) {
+  const inTag = ARTICLES.filter((a) => a.tags?.includes(tag))
+  return ARTICLES.filter((a) => !a.tags?.includes(tag))
+    .map((a) => a.title.split(' ')[0])
+    .find((w) => w.length >= 2 && searchArticles(inTag, w).length === 0)
+}
+
 test('태그 안에 결과가 없으면 전체에서 찾기를 안내한다', () => {
+  const term = termOutsideTag('life')
+  expect(term).toBeTruthy()
   window.history.pushState({}, '', '/info/tag/life/')
   render(<InfoPage today="2026-09-03" />)
-  fireEvent.change(screen.getByLabelText('글 검색'), { target: { value: '물고기' } })
+  fireEvent.change(screen.getByLabelText('글 검색'), { target: { value: term } })
   expect(document.querySelectorAll('.info-list li')).toHaveLength(0)
   const clear = screen.getByRole('button', { name: '전체에서 찾기' })
   fireEvent.click(clear)
