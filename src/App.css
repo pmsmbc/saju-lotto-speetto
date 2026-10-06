@@ -190,6 +190,11 @@ a:focus-visible { color: #ffffff; text-decoration-thickness: 2px; }
 .article-body ul { margin: 0 0 10px; padding-left: 18px; display: flex; flex-direction: column; gap: 7px; }
 .article-body li { font-size: var(--fs-body-s); line-height: 1.65; color: var(--text-body); }
 .article-body strong { color: var(--text-strong); }
+.article-body ol { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 7px; }
+/* 표는 좁은 화면에서 가로로만 스크롤되게 블록으로 감싼다 */
+.article-body table { display: block; max-width: 100%; overflow-x: auto; margin: 0 0 12px; border-collapse: collapse; font-size: var(--fs-body-s); }
+.article-body th, .article-body td { padding: 7px 10px; border: 1px solid var(--line); text-align: left; vertical-align: top; line-height: 1.55; color: var(--text-body); }
+.article-body th { background: var(--surface); color: var(--text-strong); font-weight: 700; white-space: nowrap; }
 .dream-lucky { margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--surface-border); text-align: center; }
 .dream-lucky h2 { margin: 0 0 10px; font-size: var(--fs-body-m); font-weight: 800; color: var(--text-strong); }
 .dream-lucky .hint { display: block; margin-top: 10px; }

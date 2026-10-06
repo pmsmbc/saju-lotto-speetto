@@ -18,6 +18,17 @@ describe('mdToHtml 기본', () => {
   test('**굵게**는 strong', () => {
     expect(mdToHtml('이건 **중요**합니다')).toBe('<p>이건 <strong>중요</strong>합니다</p>')
   })
+  test('1. 로 시작하는 블록은 ol', () => {
+    expect(mdToHtml('1. 하나\n2. 둘')).toBe('<ol><li>하나</li><li>둘</li></ol>')
+  })
+  test('| 로 된 블록은 표, 둘째 줄 구분선은 버린다', () => {
+    expect(mdToHtml('| 색 | 뜻 |\n|---|---|\n| 흰 | **길몽** |')).toBe(
+      '<table><thead><tr><th>색</th><th>뜻</th></tr></thead><tbody><tr><td>흰</td><td><strong>길몽</strong></td></tr></tbody></table>',
+    )
+  })
+  test('표 칸 안의 내부 링크도 살린다', () => {
+    expect(mdToHtml('| a | b |\n|---|---|\n| [뱀](/info/snake/) | x |')).toContain('<td><a href="/info/snake/">뱀</a></td>')
+  })
   test('HTML 특수문자는 이스케이프한다', () => {
     expect(mdToHtml('<script>alert(1)</script>')).toBe('<p>&lt;script&gt;alert(1)&lt;/script&gt;</p>')
   })

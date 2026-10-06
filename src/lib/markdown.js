@@ -1,6 +1,6 @@
 import { parseTags } from './tags.js'
 
-// 아주 작은 마크다운 부분집합 변환기 (##, ###, -, **굵게**, 문단)
+// 아주 작은 마크다운 부분집합 변환기 (##, ###, -, 1., | 표 |, **굵게**, 문단)
 // 글은 우리 저장소 파일만 다루지만 안전을 위해 이스케이프한다
 
 function esc(s) {
@@ -19,6 +19,17 @@ function inline(s) {
     .replace(MAIL_LINK, '<a href="$2">$1</a>')
 }
 
+// | 머리 | 머리 |
+// |---|---|        ← 구분선은 버린다
+// | 칸 | 칸 |
+function table(lines) {
+  const cells = (l) => l.replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => inline(c.trim()))
+  const rows = lines.filter((l) => !/^\|[\s:|-]+\|$/.test(l)).map(cells)
+  const [head, ...body] = rows
+  return `<table><thead><tr>${head.map((c) => `<th>${c}</th>`).join('')}</tr></thead>`
+    + `<tbody>${body.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`
+}
+
 export function mdToHtml(md) {
   const out = []
   let list = null
@@ -34,6 +45,10 @@ export function mdToHtml(md) {
     if (lines.every((l) => l.startsWith('- '))) {
       list = lines.map((l) => `<li>${inline(l.slice(2))}</li>`)
       flushList()
+    } else if (lines.every((l) => /^\d+\. /.test(l))) {
+      out.push(`<ol>${lines.map((l) => `<li>${inline(l.replace(/^\d+\. /, ''))}</li>`).join('')}</ol>`)
+    } else if (lines.length >= 2 && lines.every((l) => l.startsWith('|'))) {
+      out.push(table(lines))
     } else if (lines[0].startsWith('### ')) {
       out.push(`<h3>${inline(lines[0].slice(4))}</h3>`)
     } else if (lines[0].startsWith('## ')) {

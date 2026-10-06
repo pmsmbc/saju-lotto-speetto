@@ -106,7 +106,7 @@ for (const a of articles) {
     '@context': 'https://schema.org', '@type': 'Article',
     headline: a.title, description: a.description,
     datePublished: a.date ?? '2026-09-03',
-    dateModified: a.date ?? '2026-09-03',
+    dateModified: a.updated ?? a.date ?? '2026-09-03',
     author: { '@type': 'Organization', name: '사또' },
     publisher: { '@type': 'Organization', name: '사또', url: `${SITE}/` },
     mainEntityOfPage: `${SITE}/info/${a.slug}/`,
@@ -118,7 +118,8 @@ for (const a of articles) {
     html: `<article><h1>${esc(a.title)}</h1>${a.html}</article>`,
     ld,
   }))
-  addUrl(`info/${a.slug}/`, a.date ?? '2026-09-03', 'monthly')
+  // 본문을 크게 고친 글은 frontmatter updated 로 수정일을 알린다
+  addUrl(`info/${a.slug}/`, a.updated ?? a.date ?? '2026-09-03', 'monthly')
 }
 
 // ---------- 정적 페이지(/privacy /about) ----------
