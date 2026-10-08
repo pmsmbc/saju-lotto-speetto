@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-08T12:27:42.501Z",
+  "updatedAt": "2026-10-08T23:31:46.527Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -8,7 +8,7 @@
       "status": "판매중",
       "rank1Remaining": 11,
       "rank1Total": 12,
-      "stockRate": 24
+      "stockRate": 35
     },
     {
       "game": "스피또1000",
@@ -188,7 +188,7 @@
       "status": "판매중",
       "rank1Remaining": 8,
       "rank1Total": 8,
-      "stockRate": 7
+      "stockRate": 11
     },
     {
       "game": "스피또2000",
@@ -197,7 +197,7 @@
       "status": "판매중",
       "rank1Remaining": 4,
       "rank1Total": 10,
-      "stockRate": 92
+      "stockRate": 96
     },
     {
       "game": "스피또2000",
@@ -296,7 +296,7 @@
       "status": "판매중",
       "rank1Remaining": 3,
       "rank1Total": 5,
-      "stockRate": 55
+      "stockRate": 56
     },
     {
       "game": "스피또500",
@@ -309,6 +309,14 @@
     }
   ],
   "stores": [
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 2,
+      "store": "이마트24R창원상남점",
+      "address": "경남 창원시 성산구 마디미로 10 1층",
+      "region": "경남"
+    },
     {
       "game": "스피또2000",
       "round": 69,
@@ -449,6 +457,14 @@
       "game": "스피또2000",
       "round": 69,
       "rank": 2,
+      "store": "1등복권",
+      "address": "서울 도봉구 노해로 144 107호",
+      "region": "서울"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
       "store": "가판100호",
       "address": "서울 중구 을지로 113-4 가판",
       "region": "서울"
@@ -492,6 +508,14 @@
       "store": "복권전문점",
       "address": "인천 부평구 원적로 437 1층",
       "region": "인천"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "이마트24순천산단점",
+      "address": "전남 순천시 산단1길 6 중앙정밀기계",
+      "region": "전남"
     },
     {
       "game": "스피또2000",
@@ -5612,126 +5636,6 @@
       "store": "로또명당인주점",
       "address": "충남 아산시 서해로 529 2호",
       "region": "충남"
-    },
-    {
-      "game": "스피또2000",
-      "round": 40,
-      "rank": 2,
-      "store": "MS용인금어점",
-      "address": "경기 용인시 처인구 금어로 161 1층",
-      "region": "경기"
-    },
-    {
-      "game": "스피또2000",
-      "round": 40,
-      "rank": 2,
-      "store": "로또대박",
-      "address": "경기 부천시 원미구 석천로177번길 11 105호",
-      "region": "경기"
-    },
-    {
-      "game": "스피또2000",
-      "round": 40,
-      "rank": 2,
-      "store": "로또복권합정점",
-      "address": "경기 평택시 중앙로 176 127호",
-      "region": "경기"
-    },
-    {
-      "game": "스피또2000",
-      "round": 40,
-      "rank": 1,
-      "store": "장원급제로또복권방",
-      "address": "경기 이천시 장여로15번길 2 1층",
-      "region": "경기"
-    },
-    {
-      "game": "스피또2000",
-      "round": 40,
-      "rank": 1,
-      "store": "장원급제로또복권방",
-      "address": "경기 이천시 장여로15번길 2 1층",
-      "region": "경기"
-    },
-    {
-      "game": "스피또2000",
-      "round": 40,
-      "rank": 2,
-      "store": "CSPACE어방가야점",
-      "address": "경남 김해시 인제로170번길 15-6",
-      "region": "경남"
-    },
-    {
-      "game": "스피또2000",
-      "round": 40,
-      "rank": 2,
-      "store": "진양호",
-      "address": "경남 진주시 남강로 58 102호 진양호복권방",
-      "region": "경남"
-    },
-    {
-      "game": "스피또2000",
-      "round": 40,
-      "rank": 1,
-      "store": "잠실나루역2번출구",
-      "address": "서울 송파구 오금로 17-2 잠실나루역 2번출구 앞",
-      "region": "서울"
-    },
-    {
-      "game": "스피또2000",
-      "round": 40,
-      "rank": 1,
-      "store": "잠실나루역2번출구",
-      "address": "서울 송파구 오금로 17-2 잠실나루역 2번출구 앞",
-      "region": "서울"
-    },
-    {
-      "game": "스피또2000",
-      "round": 40,
-      "rank": 2,
-      "store": "오케이(ok)로또",
-      "address": "서울 용산구 백범로90길 26 101동 102호",
-      "region": "서울"
-    },
-    {
-      "game": "스피또2000",
-      "round": 40,
-      "rank": 2,
-      "store": "로또복권방",
-      "address": "인천 서해구 장고개로 333 1층 2호",
-      "region": "인천"
-    },
-    {
-      "game": "스피또2000",
-      "round": 40,
-      "rank": 2,
-      "store": "부자복권방",
-      "address": "전북 군산시 구시장로 4",
-      "region": "전북"
-    },
-    {
-      "game": "스피또2000",
-      "round": 40,
-      "rank": 2,
-      "store": "천안역아시아마트",
-      "address": "충남 천안시 동남구 대흥로 237 1층",
-      "region": "충남"
-    },
-    {
-      "game": "스피또2000",
-      "round": 40,
-      "rank": 2,
-      "store": "이마트24서산지곡",
-      "address": "충남 서산시 충의로 1231 1층",
-      "region": "충남"
-    },
-    {
-      "game": "스피또2000",
-      "round": 40,
-      "rank": 2,
-      "store": "행복복권방",
-      "address": "충북 청주시 흥덕구 풍년로 26 1층",
-      "region": "충북"
     },
     {
       "game": "스피또1000",
