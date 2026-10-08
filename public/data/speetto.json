@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-08T05:39:07.016Z",
+  "updatedAt": "2026-10-08T11:31:46.025Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -15,7 +15,7 @@
       "gameCode": "SP1000",
       "round": 109,
       "status": "판매중",
-      "rank1Remaining": 3,
+      "rank1Remaining": 2,
       "rank1Total": 12,
       "stockRate": 100
     },
@@ -5755,6 +5755,14 @@
       "rank": 1,
       "store": "대박로또복권방",
       "address": "경기 평택시 고덕여염6길 18 1층",
+      "region": "경기"
+    },
+    {
+      "game": "스피또1000",
+      "round": 109,
+      "rank": 1,
+      "store": "CU미사힐스테이트점",
+      "address": "경기 하남시 미사강변동로 85 상가내 1층",
       "region": "경기"
     },
     {
