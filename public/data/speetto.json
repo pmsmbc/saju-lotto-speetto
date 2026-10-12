@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-10-12T05:31:49.286Z",
+  "updatedAt": "2026-10-12T11:31:50.700Z",
   "rounds": [
     {
       "game": "스피또1000",
       "gameCode": "SP1000",
       "round": 110,
       "status": "판매중",
-      "rank1Remaining": 11,
+      "rank1Remaining": 10,
       "rank1Total": 12,
       "stockRate": 35
     },
@@ -5636,6 +5636,14 @@
       "store": "로또명당인주점",
       "address": "충남 아산시 서해로 529 2호",
       "region": "충남"
+    },
+    {
+      "game": "스피또1000",
+      "round": 110,
+      "rank": 1,
+      "store": "대동복권방",
+      "address": "경남 김해시 월산로 112-57 1층",
+      "region": "경남"
     },
     {
       "game": "스피또1000",
