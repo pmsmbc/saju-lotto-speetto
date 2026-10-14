@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest'
 import { PAGE_CONTENT } from '../src/lib/page-content.js'
-import { esc, gameSlug, kstDate, speettoOverview, speettoRoundPages, lottoOverview, lottoStoresOverview, staticPages, tagPages, shortName, footerHtml, articleHtml } from './seo-pages.js'
+import { esc, gameSlug, kstDate, speettoOverview, speettoRoundPages, lottoOverview, lottoStoresOverview, staticPages, tagPages, shortName, footerHtml, articleHtml, parseSlugList } from './seo-pages.js'
 
 const speetto = {
   updatedAt: '2026-09-10T06:35:28.246Z',
@@ -299,4 +299,31 @@ describe('articleHtml (글 상세 정적 HTML)', () => {
 
 test('footerHtml에 운영 주체와 유튜브 링크가 있다', () => {
   expect(footerHtml()).toContain('운영 · <a href="https://www.youtube.com/@ssangmun-center">북한산쌍문철학원</a>')
+})
+
+// content/noindex.txt: 검색에서 뺄 글 목록. 한 줄에 슬러그 하나, #은 주석.
+describe('parseSlugList', () => {
+  test('슬러그만 모으고 주석·빈 줄·앞뒤 공백은 무시한다', () => {
+    const set = parseSlugList('# 설명\n\nkiss\n  cow  \n# 끝\ntaemong-fruit # 이유\n')
+    expect([...set].sort()).toEqual(['cow', 'kiss', 'taemong-fruit'])
+  })
+  test('파일이 없으면(null) 빈 집합', () => {
+    expect(parseSlugList(null).size).toBe(0)
+  })
+  test('슬러그 형식이 아닌 줄은 오류로 알린다 (오타로 글이 조용히 색인되는 것을 막는다)', () => {
+    expect(() => parseSlugList('kiss\n/info/cow/\n')).toThrow(/cow/)
+  })
+})
+
+test('홈과 /unse/의 새로 올라온 글에는 검색에서 뺀 글이 없다', () => {
+  const arts = [
+    { slug: 'pig', title: '돼지꿈', description: 'd', order: 1, category: 'dream', date: '2026-09-01' },
+    { slug: 'kiss', title: '키스꿈', description: 'd', order: 2, category: 'dream', date: '2026-10-01', noindex: true },
+  ]
+  const pages = staticPages({ articles: arts, speetto: null, lotto: null, today: '2026-10-14' })
+  for (const p of pages.filter((x) => x.path === '' || x.path === 'unse/')) {
+    const latest = p.html.slice(p.html.indexOf('새로 올라온 글'))
+    expect(latest).toContain('/info/pig/')
+    expect(latest).not.toContain('/info/kiss/')
+  }
 })

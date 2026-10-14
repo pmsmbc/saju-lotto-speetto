@@ -27,3 +27,9 @@ test('글 목록과 전체 보기 링크를 그린다', () => {
   expect(document.querySelector('.latest-list a').getAttribute('href')).toMatch(/^\/info\/[a-z-]+\/$/)
   expect(screen.getByText(/글 전체 보기/)).toBeInTheDocument()
 })
+
+// 홈은 가장 중요한 페이지라, 검색에서 뺀 글(content/noindex.txt)로는 링크하지 않는다.
+test('검색에서 뺀 글은 고르지 않는다', () => {
+  const mixed = [...sample, { slug: 'd', title: 'D', date: '2026-09-30', order: 4, noindex: true }]
+  expect(latestArticles(mixed, 2).map((a) => a.slug)).toEqual(['b', 'c'])
+})

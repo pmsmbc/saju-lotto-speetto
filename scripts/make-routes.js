@@ -3,7 +3,7 @@ import { mkdirSync, copyFileSync, readFileSync, writeFileSync, readdirSync, exis
 import { join } from 'node:path'
 import { parseArticle } from '../src/lib/markdown.js'
 import { OPERATOR_NAME } from '../src/lib/operator.js'
-import { SITE, esc, staticPages, speettoOverview, speettoRoundPages, lottoOverview, lottoStoresOverview, tagPages, footerHtml, articleHtml } from './seo-pages.js'
+import { SITE, esc, staticPages, speettoOverview, speettoRoundPages, lottoOverview, lottoStoresOverview, tagPages, footerHtml, articleHtml, parseSlugList } from './seo-pages.js'
 
 const dist = 'dist'
 const base = readFileSync(join(dist, 'index.html'), 'utf-8')
@@ -39,6 +39,13 @@ const articles = ['content/dreams', 'content/guides']
   .filter(Boolean)
   .map((a) => ({ ...a, category: a.category ?? 'dream' }))
   .sort((a, b) => a.order - b.order)
+
+// 검색에서 뺄 글. 없는 슬러그가 적혀 있으면 오타일 수 있으니 빌드를 멈춘다.
+const noindexSlugs = parseSlugList(existsSync('content/noindex.txt') ? readFileSync('content/noindex.txt', 'utf-8') : null)
+const unknownNoindex = [...noindexSlugs].filter((s) => !articles.some((a) => a.slug === s))
+if (unknownNoindex.length) throw new Error(`content/noindex.txt에 없는 글이 있습니다: ${unknownNoindex.join(', ')}`)
+for (const a of articles) a.noindex = noindexSlugs.has(a.slug)
+const indexed = articles.filter((a) => !a.noindex)
 
 const speetto = readJson('public/data/speetto.json')
 const lotto = readJson('public/data/lotto-stats.json')
@@ -120,7 +127,9 @@ for (const a of articles) {
     canonical: `${SITE}/info/${a.slug}/`,
     html: articleHtml(a),
     ld,
+    noindex: noindexSlugs.has(a.slug),
   }))
+  if (noindexSlugs.has(a.slug)) continue
   // 본문을 크게 고친 글은 frontmatter updated 로 수정일을 알린다
   addUrl(`info/${a.slug}/`, a.updated ?? a.date ?? '2026-09-03', 'monthly')
 }
@@ -149,7 +158,7 @@ writeFileSync(join(dist, 'sitemap.xml'),
     .join('\n')}\n</urlset>\n`)
 
 // ---------- RSS ----------
-const byDate = [...articles].sort((a, b) => (b.date ?? '').localeCompare(a.date ?? '') || b.order - a.order)
+const byDate = [...indexed].sort((a, b) => (b.date ?? '').localeCompare(a.date ?? '') || b.order - a.order)
 writeFileSync(join(dist, 'rss.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel>
 <title>사또 - 꿈해몽·사주·로또 이야기</title>
 <link>${SITE}/info/</link>
@@ -157,4 +166,4 @@ writeFileSync(join(dist, 'rss.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<r
 ${byDate.map((a) => `<item><title>${esc(a.title)}</title><link>${SITE}/info/${a.slug}/</link><description>${esc(a.description)}</description><pubDate>${new Date((a.date ?? '2026-09-03') + 'T09:00:00+09:00').toUTCString()}</pubDate><guid>${SITE}/info/${a.slug}/</guid></item>`).join('\n')}
 </channel></rss>\n`)
 
-console.log(`sitemap ${sitemap.length}개 | 글 ${articles.length}편 | 태그 페이지 ${tags.length}개 | 스피또 회차 페이지 ${speetto ? speettoRoundPages(speetto).length : 0}개`)
+console.log(`sitemap ${sitemap.length}개 | 글 ${articles.length}편 (검색 제외 ${noindexSlugs.size}편) | 태그 페이지 ${tags.length}개 | 스피또 회차 페이지 ${speetto ? speettoRoundPages(speetto).length : 0}개`)

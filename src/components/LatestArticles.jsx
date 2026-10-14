@@ -1,11 +1,10 @@
 import { ARTICLES } from '../lib/articles.js'
+import { latestArticles as pick } from '../lib/latest.js'
 
 // 첫 화면에서 글로 바로 들어갈 수 있게 하는 목록.
-// 정적 HTML(scripts/seo-pages.js)도 같은 기준으로 같은 글을 싣는다.
+// 정적 HTML(scripts/seo-pages.js)도 같은 함수(src/lib/latest.js)로 같은 글을 싣는다.
 export function latestArticles(all = ARTICLES, limit = 8) {
-  return [...all]
-    .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? '') || b.order - a.order)
-    .slice(0, limit)
+  return pick(all, limit)
 }
 
 export function LatestArticles({ limit = 8 }) {

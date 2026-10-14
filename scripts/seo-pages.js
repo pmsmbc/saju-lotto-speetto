@@ -8,6 +8,10 @@ import { TAGS } from '../src/lib/tags.js'
 import { PAGE_CONTENT } from '../src/lib/page-content.js'
 import { AUTHOR_LABEL, AUTHOR_HREF, articleDates } from '../src/lib/article-meta.js'
 import { OPERATOR_NAME, OPERATOR_YOUTUBE } from '../src/lib/operator.js'
+import { parseSlugList } from '../src/lib/slug-list.js'
+import { latestArticles } from '../src/lib/latest.js'
+
+export { parseSlugList }
 
 export const SITE = 'https://satto.kr'
 
@@ -239,7 +243,7 @@ ${list(newest.map((a) => link(`/info/${a.slug}/`, a.title)))}
 export function staticPages({ articles, speetto, lotto, today }) {
   const dreams = articles.filter((a) => (a.category ?? 'dream') === 'dream')
   const guides = articles.filter((a) => a.category === 'guide')
-  const newest = [...articles].sort((a, b) => (b.date ?? '').localeCompare(a.date ?? '') || b.order - a.order).slice(0, 8)
+  const newest = latestArticles(articles, 8)
   const latestArticleDate = articles.map((a) => a.date).filter(Boolean).sort().at(-1) ?? today
   const speettoLines = GAME_TABS.map((g) => {
     const r = sellingWithRank1(speetto?.rounds, g.code)[0]

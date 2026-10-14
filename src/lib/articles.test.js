@@ -47,3 +47,10 @@ describe('articles', () => {
     expect(articleBySlug('nope')).toBeNull()
   })
 })
+
+test('content/noindex.txt에 적힌 글은 noindex로 표시되고, 나머지는 아니다', async () => {
+  const { readFileSync } = await import('node:fs')
+  const listed = new Set(readFileSync('content/noindex.txt', 'utf-8').split('\n').map((l) => l.replace(/#.*$/, '').trim()).filter(Boolean))
+  expect(listed.size).toBeGreaterThan(0)
+  for (const a of ARTICLES) expect(a.noindex, a.slug).toBe(listed.has(a.slug))
+})
