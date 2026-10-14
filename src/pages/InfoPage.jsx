@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react'
 import { ARTICLES, CATEGORIES, articleBySlug } from '../lib/articles.js'
 import { tagsWithCount, tagById } from '../lib/tags.js'
 import { searchArticles } from '../lib/search.js'
-import { hashSeed, mulberry32 } from '../lib/seed.js'
-import { randomSet } from '../lib/lotto.js'
-import { todayKST } from '../lib/dateformat.js'
-import { LottoBall } from '../components/LottoBall.jsx'
+import { spaClick } from '../lib/spa-link.js'
+import { AUTHOR_LABEL, AUTHOR_HREF, articleDates } from '../lib/article-meta.js'
 import ShareButton from '../components/ShareButton.jsx'
 
 function queryFromUrl() {
@@ -24,12 +22,9 @@ function slugFromPath() {
   return m && m[1] !== 'tag' ? m[1] : null
 }
 
-// 꿈 주제 + 오늘 날짜 시드의 결정적 행운 번호
-function dreamNumbers(slug, dateStr) {
-  return randomSet(mulberry32(hashSeed(`dream:${slug}:${dateStr}`)))
-}
-
-export function InfoPage({ today = todayKST() }) {
+// 꿈 글에는 로또 번호를 붙이지 않는다. 본문이 "꿈과 당첨은 무관하다"고 말하는데
+// 그 아래에 번호를 주면 말과 행동이 어긋나고, 꿈해몽이 복권 유도 수단으로 읽힌다.
+export function InfoPage() {
   const [slug, setSlug] = useState(slugFromPath)
   const [cat, setCat] = useState('dream')
   const [tag, setTag] = useState(tagFromPath)
@@ -91,25 +86,18 @@ export function InfoPage({ today = todayKST() }) {
   if (article) {
     return (
       <section className="info-page">
-        <button type="button" className="back-btn" onClick={() => open(null)}>← 글 목록</button>
+        <a href="/info/" className="back-btn" onClick={(e) => spaClick(e, () => open(null))}>← 글 목록</a>
         <article className="article surface-card">
           <h1>
             {article.icon && <img className="article-icon" src={`/twemoji/${article.icon}.svg`} alt="" aria-hidden="true" />}
             {article.title}
           </h1>
+          <p className="article-meta">
+            <a href={AUTHOR_HREF}>{AUTHOR_LABEL}</a>
+            {articleDates(article).map((d) => <span key={d}> · {d}</span>)}
+          </p>
           {/* 본문은 저장소의 마크다운 파일에서 빌드 시 변환됨 */}
           <div className="article-body" dangerouslySetInnerHTML={{ __html: article.html }} />
-          {article.category === 'dream' && (
-            <div className="dream-lucky">
-              <h2>오늘의 {article.title.split(' ')[0]} 행운 번호</h2>
-              <div className="set-balls">
-                {dreamNumbers(article.slug, today).map((n) => (
-                  <LottoBall key={n} number={n} />
-                ))}
-              </div>
-              <p className="hint">이 꿈을 꾼 분들을 위한 오늘의 번호예요. 매일 자정에 바뀝니다.</p>
-            </div>
-          )}
           <div className="share-row">
             <ShareButton
               title={article.title}
@@ -124,10 +112,10 @@ export function InfoPage({ today = todayKST() }) {
             <ul className="related-list">
               {related.map((r) => (
                 <li key={r.slug}>
-                  <button type="button" onClick={() => open(r.slug)}>
+                  <a href={`/info/${r.slug}/`} onClick={(e) => spaClick(e, () => open(r.slug))}>
                     {r.icon && <img className="info-icon" src={`/twemoji/${r.icon}.svg`} alt="" aria-hidden="true" />}
                     {r.title}
-                  </button>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -169,27 +157,27 @@ export function InfoPage({ today = todayKST() }) {
         />
       </div>
       {tagList.length > 0 && (
-        <div className="tag-chips" role="group" aria-label="주제별 분류">
-          <button
-            type="button"
+        <nav className="tag-chips" aria-label="주제별 분류">
+          <a
+            href="/info/"
             className={tag === null ? 'tag-chip active' : 'tag-chip'}
-            aria-pressed={tag === null}
-            onClick={() => changeTag(null)}
+            aria-current={tag === null ? 'page' : undefined}
+            onClick={(e) => spaClick(e, () => changeTag(null))}
           >
             전체 {inCategory.length}
-          </button>
+          </a>
           {tagList.map((t) => (
-            <button
+            <a
               key={t.id}
-              type="button"
+              href={`/info/tag/${t.id}/`}
               className={t.id === tag ? 'tag-chip active' : 'tag-chip'}
-              aria-pressed={t.id === tag}
-              onClick={() => changeTag(t.id === tag ? null : t.id)}
+              aria-current={t.id === tag ? 'page' : undefined}
+              onClick={(e) => spaClick(e, () => changeTag(t.id === tag ? null : t.id))}
             >
               {t.label} {t.count}
-            </button>
+            </a>
           ))}
-        </div>
+        </nav>
       )}
       {query && (
         <p className="info-count">
@@ -210,13 +198,13 @@ export function InfoPage({ today = todayKST() }) {
       <ul className="info-list">
         {visible.map((a) => (
           <li key={a.slug}>
-            <button type="button" className="info-card surface-card" onClick={() => open(a.slug)}>
+            <a href={`/info/${a.slug}/`} className="info-card surface-card" onClick={(e) => spaClick(e, () => open(a.slug))}>
               <span className="info-card-head">
                 {a.icon && <img className="info-icon" src={`/twemoji/${a.icon}.svg`} alt="" aria-hidden="true" />}
                 <span className="info-card-title">{a.title}</span>
               </span>
               <span className="info-card-desc">{a.description}</span>
-            </button>
+            </a>
           </li>
         ))}
       </ul>

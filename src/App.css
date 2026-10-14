@@ -86,6 +86,13 @@ a:focus-visible { color: #ffffff; text-decoration-thickness: 2px; }
 }
 .nav-tab.active { background: var(--active-bg); color: var(--active-text); box-shadow: none; }
 .nav-tab-badge { font-size: var(--fs-caption); font-weight: 700; opacity: 0.75; }
+/* 메뉴·탭·칩·카드는 크롤러가 따라갈 수 있게 <a>로 두되 버튼처럼 보이게 한다.
+   전역 a 규칙(흰색 밑줄)보다 뒤에, 같은 명시도(a.클래스)로 덮어쓴다. */
+a.nav-tab, a.sub-tab, a.tag-chip, a.info-card, a.back-btn { text-decoration: none; color: var(--text-muted); }
+a.nav-tab:hover, a.sub-tab:hover, a.tag-chip:hover, a.back-btn:hover { color: var(--text-strong); text-decoration: none; }
+a.info-card:hover { color: var(--text-muted); text-decoration: none; }
+a.nav-tab.active, a.sub-tab.active, a.tag-chip.active,
+a.nav-tab.active:hover, a.sub-tab.active:hover, a.tag-chip.active:hover { color: var(--active-text); }
 
 .status { padding: 32px 0; text-align: center; color: var(--text-muted); }
 .status.error { color: #ff8a8a; }
@@ -184,6 +191,8 @@ a:focus-visible { color: #ffffff; text-decoration-thickness: 2px; }
 }
 .back-btn:hover { color: var(--text-strong); }
 .article h1 { margin: 0 0 12px; font-size: var(--fs-title-s); font-weight: 800; color: var(--text-strong); line-height: 1.4; }
+.article-meta { margin: -6px 0 12px; font-size: var(--fs-caption); color: var(--text-muted); }
+.article-meta a { color: var(--text-muted); }
 .article-body h2 { margin: 18px 0 8px; font-size: var(--fs-body-m); font-weight: 800; color: var(--text-strong); }
 .article-body h3 { margin: 14px 0 6px; font-size: var(--fs-body-m); font-weight: 700; color: var(--text-strong); }
 .article-body p { margin: 0 0 10px; font-size: var(--fs-body-s); line-height: 1.7; color: var(--text-body); }
@@ -195,20 +204,15 @@ a:focus-visible { color: #ffffff; text-decoration-thickness: 2px; }
 .article-body table { display: block; max-width: 100%; overflow-x: auto; margin: 0 0 12px; border-collapse: collapse; font-size: var(--fs-body-s); }
 .article-body th, .article-body td { padding: 7px 10px; border: 1px solid var(--line); text-align: left; vertical-align: top; line-height: 1.55; color: var(--text-body); }
 .article-body th { background: var(--surface); color: var(--text-strong); font-weight: 700; white-space: nowrap; }
-.dream-lucky { margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--surface-border); text-align: center; }
-.dream-lucky h2 { margin: 0 0 10px; font-size: var(--fs-body-m); font-weight: 800; color: var(--text-strong); }
-.dream-lucky .hint { display: block; margin-top: 10px; }
-
 .related { margin-top: 12px; }
 .related-title { margin: 0 0 8px; font-size: var(--fs-body-m); font-weight: 800; color: var(--text-strong); }
 .related-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.related-list button {
-  border: none; cursor: pointer; font: inherit; background: none; padding: 0;
+.related-list a {
   display: flex; align-items: center; gap: 7px; text-align: left;
   font-size: var(--fs-body-s); font-weight: 600; color: var(--text-body);
   text-decoration: underline; text-underline-offset: 3px;
 }
-.related-list button:hover { color: var(--text-strong); }
+.related-list a:hover { color: var(--text-strong); }
 
 /* --- Floating share --- */
 .floating-share {

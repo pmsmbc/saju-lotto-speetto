@@ -34,26 +34,25 @@ test('본문 안의 내부 링크가 a 태그로 렌더된다', () => {
   window.history.pushState({}, '', '/')
 })
 
-test('상식 글에는 행운 번호가 없고 꿈 글에는 있다', () => {
-  window.history.pushState({}, '', '/info/odds/')
-  const { unmount } = render(<InfoPage today="2026-09-03" />)
-  expect(document.querySelector('.dream-lucky')).toBeNull()
-  unmount()
+// 꿈 글 본문은 "꿈과 당첨은 무관하다"고 말한다. 그 아래에 로또 번호를 붙이면 말과 행동이
+// 어긋나고, 애드센스 심사에서 꿈해몽을 복권 유도 수단으로 보게 된다.
+test('꿈 글에도 로또 행운 번호 위젯을 붙이지 않는다', () => {
   window.history.pushState({}, '', '/info/pig/')
-  render(<InfoPage today="2026-09-03" />)
-  expect(document.querySelectorAll('.dream-lucky .lotto-ball')).toHaveLength(6)
+  render(<InfoPage />)
+  expect(document.querySelector('.dream-lucky')).toBeNull()
+  expect(document.querySelector('.lotto-ball')).toBeNull()
+  expect(document.body.textContent).not.toContain('행운 번호')
   window.history.pushState({}, '', '/')
 })
 
-test('글을 클릭하면 본문·행운 번호 6개·공유 버튼을 보여주고 주소가 바뀐다', () => {
+test('글을 클릭하면 본문·공유 버튼을 보여주고 주소가 바뀐다', () => {
   window.history.pushState({}, '', '/info')
-  render(<InfoPage today="2026-09-03" />)
+  render(<InfoPage />)
   fireEvent.click(screen.getByText('돼지꿈 해몽 — 세 가지 질문으로 가려 보는 길몽과 흉몽'))
   expect(window.location.pathname).toBe('/info/pig/')
   expect(screen.getByText(/살림이 불어나는 상징/)).toBeInTheDocument()
-  expect(document.querySelectorAll('.dream-lucky .lotto-ball')).toHaveLength(6)
   expect(screen.getByRole('button', { name: /공유하기/ })).toBeInTheDocument()
-  fireEvent.click(screen.getByRole('button', { name: '← 글 목록' }))
+  fireEvent.click(screen.getByRole('link', { name: '← 글 목록' }))
   expect(window.location.pathname).toBe('/info/')
   window.history.pushState({}, '', '/')
 })
@@ -71,7 +70,7 @@ test('글 하단에 같은 카테고리 관련 글 3개를 보여준다', () => 
   const items = document.querySelectorAll('.related-list li')
   expect(items).toHaveLength(3)
   expect(items[0].textContent).toContain('뱀꿈')
-  fireEvent.click(items[0].querySelector('button'))
+  fireEvent.click(items[0].querySelector('a'))
   expect(window.location.pathname).toBe('/info/snake/')
   window.history.pushState({}, '', '/')
 })
@@ -192,5 +191,52 @@ test('태그 안에 결과가 없으면 전체에서 찾기를 안내한다', ()
   fireEvent.click(clear)
   expect(window.location.pathname).toBe('/info/')
   expect(document.querySelectorAll('.info-list li').length).toBeGreaterThan(0)
+  window.history.pushState({}, '', '/')
+})
+
+// 글 카드·태그 칩·관련 글·목록으로 가기는 모두 고유 URL이 있으므로 <a href>로 둔다.
+// 버튼이면 React가 그린 DOM에서 크롤러가 글과 태그 페이지로 갈 길이 없다.
+test('글 카드와 태그 칩은 href가 있는 링크다', () => {
+  window.history.pushState({}, '', '/info')
+  render(<InfoPage />)
+  const cards = [...document.querySelectorAll('.info-card')]
+  expect(cards.length).toBeGreaterThan(0)
+  expect(cards.every((el) => el.tagName === 'A' && /^\/info\/[a-z-]+\/$/.test(el.getAttribute('href')))).toBe(true)
+  const chips = [...document.querySelectorAll('.tag-chip')]
+  expect(chips[0].tagName).toBe('A')
+  expect(chips[0].getAttribute('href')).toBe('/info/')
+  expect(chips.slice(1).every((el) => el.tagName === 'A' && /^\/info\/tag\/[a-z]+\/$/.test(el.getAttribute('href')))).toBe(true)
+  window.history.pushState({}, '', '/')
+})
+
+test('글 안의 관련 글과 글 목록으로 가기는 href가 있는 링크다', () => {
+  window.history.pushState({}, '', '/info/pig/')
+  render(<InfoPage />)
+  expect(screen.getByRole('link', { name: '← 글 목록' }).getAttribute('href')).toBe('/info/')
+  const related = [...document.querySelectorAll('.related-list a')]
+  expect(related).toHaveLength(3)
+  expect(related.every((el) => /^\/info\/[a-z-]+\/$/.test(el.getAttribute('href')))).toBe(true)
+  window.history.pushState({}, '', '/')
+})
+
+test('글 카드를 클릭하면 전체 페이지 이동 없이 글을 연다', () => {
+  window.history.pushState({}, '', '/info')
+  render(<InfoPage />)
+  const card = document.querySelector('.info-card')
+  expect(fireEvent.click(card)).toBe(false)
+  expect(window.location.pathname).toBe(card.getAttribute('href'))
+  expect(document.querySelector('.article')).toBeInTheDocument()
+  window.history.pushState({}, '', '/')
+})
+
+// 누가 언제 쓴 글인지 보여야 신뢰 신호가 된다. 작성일·수정일은 frontmatter(date, updated)에서 온다.
+test('글 머리에 작성일·수정일과 운영 주체(소개 페이지 링크)가 보인다', () => {
+  window.history.pushState({}, '', '/info/pig/')
+  render(<InfoPage />)
+  const meta = document.querySelector('.article-meta')
+  expect(meta).toBeInTheDocument()
+  expect(meta.textContent).toContain('2026.09.03 작성')
+  expect(meta.textContent).toContain('2026.10.06 수정')
+  expect(meta.querySelector('a[href="/about/"]').textContent).toBe('북한산쌍문철학원')
   window.history.pushState({}, '', '/')
 })

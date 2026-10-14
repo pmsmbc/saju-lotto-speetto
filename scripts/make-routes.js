@@ -2,7 +2,8 @@
 import { mkdirSync, copyFileSync, readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { parseArticle } from '../src/lib/markdown.js'
-import { SITE, esc, staticPages, speettoOverview, speettoRoundPages, lottoOverview, lottoStoresOverview, tagPages, footerHtml } from './seo-pages.js'
+import { OPERATOR_NAME } from '../src/lib/operator.js'
+import { SITE, esc, staticPages, speettoOverview, speettoRoundPages, lottoOverview, lottoStoresOverview, tagPages, footerHtml, articleHtml } from './seo-pages.js'
 
 const dist = 'dist'
 const base = readFileSync(join(dist, 'index.html'), 'utf-8')
@@ -53,7 +54,7 @@ for (const p of staticPages({ articles, speetto, lotto, today })) {
     ? JSON.stringify({
         '@context': 'https://schema.org', '@type': 'WebSite',
         name: '사또 - 사주 로또 스피또', url: `${SITE}/`,
-        description: '오늘의 운세, 궁합, 띠별·사주 행운 번호, 로또 추천, 스피또 당첨 지역',
+        description: '오늘의 운세, 궁합, 꿈해몽, 띠별·사주 행운 번호, 스피또 당첨 지역',
       })
     : null
   writePage(p.path, render({ ...p, canonical: p.canonical ?? `${SITE}/${p.path}`, ld }))
@@ -109,7 +110,7 @@ for (const a of articles) {
     headline: a.title, description: a.description,
     datePublished: a.date ?? '2026-09-03',
     dateModified: a.updated ?? a.date ?? '2026-09-03',
-    author: { '@type': 'Organization', name: '사또' },
+    author: { '@type': 'Organization', name: OPERATOR_NAME, url: `${SITE}/about/` },
     publisher: { '@type': 'Organization', name: '사또', url: `${SITE}/` },
     mainEntityOfPage: `${SITE}/info/${a.slug}/`,
   })
@@ -117,7 +118,7 @@ for (const a of articles) {
     title: `${a.title} | 사또`,
     description: a.description,
     canonical: `${SITE}/info/${a.slug}/`,
-    html: `<article><h1>${esc(a.title)}</h1>${a.html}</article>`,
+    html: articleHtml(a),
     ld,
   }))
   // 본문을 크게 고친 글은 frontmatter updated 로 수정일을 알린다

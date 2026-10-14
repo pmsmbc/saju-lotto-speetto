@@ -6,6 +6,8 @@ import { ZODIACS } from '../src/lib/zodiac.js'
 import { CONTACT_HREF } from '../src/lib/contact.js'
 import { TAGS } from '../src/lib/tags.js'
 import { PAGE_CONTENT } from '../src/lib/page-content.js'
+import { AUTHOR_LABEL, AUTHOR_HREF, articleDates } from '../src/lib/article-meta.js'
+import { OPERATOR_NAME, OPERATOR_YOUTUBE } from '../src/lib/operator.js'
 
 export const SITE = 'https://satto.kr'
 
@@ -41,6 +43,7 @@ export function footerHtml() {
     ['/speetto/', '스피또 당첨 지역'], ['/info/', '꿈해몽·상식'],
   ]
   return `<footer><nav>${links.map(([h, l]) => link(h, l)).join(' · ')}</nav>
+<p>운영 · ${link(OPERATOR_YOUTUBE, OPERATOR_NAME)}</p>
 <p>${link('/about/', '사이트 소개')} · ${link('/privacy/', '개인정보처리방침')} · ${link(CONTACT_HREF, '문의하기')}</p>
 <p>© 2026 사또 (satto.kr). All rights reserved.</p></footer>`
 }
@@ -220,6 +223,12 @@ ${list(TAGS.filter((o) => o.id !== t.id && dreams.some((a) => (a.tags ?? []).inc
   }).filter(Boolean)
 }
 
+// 글 상세 정적 HTML. React <InfoPage />가 그리는 것과 같은 머리(제목·바이라인)를 쓴다.
+export function articleHtml(a) {
+  const dates = articleDates(a).map((d) => ` · ${esc(d)}`).join('')
+  return `<article><h1>${esc(a.title)}</h1><p class="article-meta">${link(AUTHOR_HREF, AUTHOR_LABEL)}${dates}</p>${a.html}</article>`
+}
+
 // React <LatestArticles />가 화면에 그리는 것과 같은 목록
 function latestHtml(newest) {
   return `<h2>새로 올라온 글</h2>
@@ -243,8 +252,9 @@ export function staticPages({ articles, speetto, lotto, today }) {
   return [
     {
       path: '',
-      title: '사또 - 오늘의 운세, 로또 번호 추천, 스피또 1등 당첨 지역',
-      description: '오늘의 띠별 운세와 궁합, 띠별·사주 행운 번호, 로또 번호 추천, 스피또 1등 남은 현황과 당첨 지역, 꿈해몽까지 한곳에서. 회원가입 없이 무료.',
+      // 첫 메시지는 운세·궁합·꿈해몽. 복권 도구는 뒤에 둔다 (사이트 정체성을 복권으로 읽히지 않게)
+      title: '사또 - 오늘의 운세, 띠별 운세·궁합, 꿈해몽 | 행운 번호와 스피또 정보',
+      description: '오늘의 일진으로 계산하는 12띠 운세와 궁합, 상황별 꿈해몽을 근거와 함께 보여드립니다. 띠별·사주 행운 번호와 스피또 1등 남은 현황은 참고 자료로 함께 제공합니다. 회원가입 없이 무료.',
       lastmod: today, changefreq: 'daily',
       html: `<h1>사또 - 사주 로또 스피또</h1>
 ${introHtml('unse')}
@@ -294,10 +304,10 @@ ${introHtml('saju')}`,
     {
       path: 'info/',
       title: '꿈해몽·사주·로또 상식 글 모음 | 사또',
-      description: `뱀꿈·돼지꿈·똥꿈 등 꿈해몽 ${dreams.length}편과 사주·로또·스피또 상식 ${guides.length}편. 상황별 해몽과 심리학적 풀이, 꿈꾼 날의 행운 번호까지.`,
+      description: `뱀꿈·돼지꿈·똥꿈 등 꿈해몽 ${dreams.length}편과 사주·로또·스피또 상식 ${guides.length}편. 전통 풀이와 심리학적 해석을 상황별로 나눠 정리했습니다.`,
       lastmod: latestArticleDate, changefreq: 'weekly',
       html: `<h1>꿈해몽·사주·로또 상식</h1>
-<p>꿈해몽 ${dreams.length}편과 사주·로또·스피또 상식 ${guides.length}편을 모았습니다. 꿈해몽은 상황별 풀이와 심리학적 해석, 꿈을 꾼 날의 행운 번호를 함께 담았습니다.</p>
+<p>꿈해몽 ${dreams.length}편과 사주·로또·스피또 상식 ${guides.length}편을 모았습니다. 꿈해몽은 전통 풀이와 심리학적 해석을 상황별로 나눠 정리했고, 상식 글은 공개 자료를 바탕으로 확률·세금·제도를 계산해 보여드립니다.</p>
 <h2>주제별로 보기</h2>
 ${list(TAGS.filter((t) => dreams.some((a) => (a.tags ?? []).includes(t.id)))
   .map((t) => link(`/info/tag/${t.id}/`, `${t.label} 꿈 해몽 ${dreams.filter((a) => (a.tags ?? []).includes(t.id)).length}편`)))}

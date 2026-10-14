@@ -1,10 +1,11 @@
 import { CONTACT_EMAIL, CONTACT_HREF } from '../lib/contact.js'
+import { OPERATOR_NAME, OPERATOR_YOUTUBE } from '../lib/operator.js'
 
 export { CONTACT_EMAIL }
 export const COPYRIGHT = '© 2026 사또 (satto.kr). All rights reserved.'
-export const YOUTUBE_URL = 'https://www.youtube.com/@ssangmun-center'
+export const YOUTUBE_URL = OPERATOR_YOUTUBE
 
-// 사이트 전체 메뉴. 상단 탭은 버튼이라 크롤러가 따라갈 수 없어서 푸터에 링크로 둔다.
+// 사이트 전체 메뉴. 상단 탭도 링크지만, 메뉴가 없는 위치에서도 닿도록 푸터에 한 번 더 둔다.
 // scripts/seo-pages.js의 footerHtml()과 같은 목록을 유지해야 한다.
 export const SITE_LINKS = [
   { href: '/', label: '오늘의 운세' },
@@ -39,7 +40,7 @@ export default function Footer() {
             />
             <path fill="#fff" d="M9.55 15.57V8.43L15.82 12l-6.27 3.57Z" />
           </svg>
-          <span>북한산쌍문철학원</span>
+          <span>운영 · {OPERATOR_NAME}</span>
         </a>
         <span className="footer-pages">
           <a className="footer-privacy" href="/about/">사이트 소개</a>

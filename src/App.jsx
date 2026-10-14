@@ -10,6 +10,7 @@ import Footer from './components/Footer.jsx'
 import FloatingShare from './components/FloatingShare.jsx'
 import InfoPage from './pages/InfoPage.jsx'
 import StaticPage from './pages/StaticPage.jsx'
+import { spaClick } from './lib/spa-link.js'
 import './App.css'
 
 // 경로 ↔ 화면 매핑 (scripts/make-routes.js 와 함께 유지)
@@ -111,29 +112,33 @@ export default function App() {
           </h1>
         </div>
       </header>
+      {/* 메뉴는 href가 있는 <a>로 둔다. 구글은 React가 그린 DOM에서 링크를 찾으므로
+          <button>이면 하위 페이지로 가는 길이 크롤러에게 보이지 않는다. 클릭은 SPA 전환으로 가로챈다. */}
       <nav className="app-nav">
         {MENUS.map((m) => (
-          <button
+          <a
             key={m.id}
-            type="button"
+            href={PATH_OF[subByMenu[m.id]]}
             className={m.id === menuId ? 'nav-tab active' : 'nav-tab'}
-            onClick={() => navigate(m.id, subByMenu[m.id])}
+            aria-current={m.id === menuId ? 'page' : undefined}
+            onClick={(e) => spaClick(e, () => navigate(m.id, subByMenu[m.id]))}
           >
             {m.label}
-          </button>
+          </a>
         ))}
       </nav>
       {menu && menu.items.length > 1 && (
         <nav className="sub-nav">
           {menu.items.map((t) => (
-            <button
+            <a
               key={t.id}
-              type="button"
+              href={PATH_OF[t.id]}
               className={t.id === tab ? 'sub-tab active' : 'sub-tab'}
-              onClick={() => navigate(menuId, t.id)}
+              aria-current={t.id === tab ? 'page' : undefined}
+              onClick={(e) => spaClick(e, () => navigate(menuId, t.id))}
             >
               {t.label}
-            </button>
+            </a>
           ))}
         </nav>
       )}

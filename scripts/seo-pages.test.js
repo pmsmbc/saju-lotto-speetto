@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest'
 import { PAGE_CONTENT } from '../src/lib/page-content.js'
-import { esc, gameSlug, kstDate, speettoOverview, speettoRoundPages, lottoOverview, lottoStoresOverview, staticPages, tagPages, shortName, footerHtml } from './seo-pages.js'
+import { esc, gameSlug, kstDate, speettoOverview, speettoRoundPages, lottoOverview, lottoStoresOverview, staticPages, tagPages, shortName, footerHtml, articleHtml } from './seo-pages.js'
 
 const speetto = {
   updatedAt: '2026-09-10T06:35:28.246Z',
@@ -211,6 +211,34 @@ describe('기능 페이지 설명 공유', () => {
   })
 })
 
+// 애드센스 심사 대응: 꿈해몽을 복권 유도 수단으로 보이게 하는 문구와,
+// 사이트 정체성을 복권으로 읽게 하는 첫 메시지를 두지 않는다.
+describe('심사 대응 문구', () => {
+  const pages = staticPages({ articles, speetto: null, lotto: null, today: '2026-10-14' })
+  const byPath = Object.fromEntries(pages.map((p) => [p.path, p]))
+
+  test('/info/ 설명과 본문에 꿈과 행운 번호를 잇는 문구가 없다', () => {
+    expect(byPath['info/'].description).not.toContain('행운 번호')
+    expect(byPath['info/'].html).not.toContain('행운 번호')
+  })
+  test('홈 title은 운세·궁합·꿈해몽을 먼저 말하고 로또 번호 추천을 앞세우지 않는다', () => {
+    const t = byPath[''].title
+    expect(t).toMatch(/^사또 - 오늘의 운세/)
+    expect(t).toContain('꿈해몽')
+    expect(t).not.toContain('로또 번호 추천')
+  })
+  test('홈 description의 첫 문장에는 로또가 없다', () => {
+    expect(byPath[''].description.split('.')[0]).not.toContain('로또')
+  })
+  test('스피또 설명에 남은 1등을 기회로 부추기는 문장이 없다', () => {
+    expect(PAGE_CONTENT.speetto.html).not.toContain('기회가 남아')
+  })
+  test('로또 설명의 세금 문장은 3억 원 초과분에만 33%라고 말한다 (/info/tax/와 일치)', () => {
+    expect(PAGE_CONTENT.lotto.html).toContain('3억 원을 넘는 부분에만 33%')
+    expect(PAGE_CONTENT.lotto.html).not.toContain('3억 원을 넘으면 33퍼센트')
+  })
+})
+
 test('footerHtml에 문의 메일 링크가 있다', () => {
   expect(footerHtml()).toContain('href="mailto:tkdansdusrnth@gmail.com')
   expect(footerHtml()).toContain('>문의하기</a>')
@@ -251,4 +279,24 @@ describe('lottoStoresOverview', () => {
     expect(lottoStoresOverview(null)).toBe(null)
     expect(lottoStoresOverview({ top: [] })).toBe(null)
   })
+})
+
+describe('articleHtml (글 상세 정적 HTML)', () => {
+  test('제목 아래에 운영 주체 링크와 작성일·수정일이 들어간다', () => {
+    const html = articleHtml({ title: '돼지꿈', html: '<p>본문</p>', date: '2026-09-03', updated: '2026-10-06' })
+    expect(html).toContain('<h1>돼지꿈</h1>')
+    expect(html).toContain('<a href="/about/">북한산쌍문철학원</a>')
+    expect(html).toContain('2026.09.03 작성')
+    expect(html).toContain('2026.10.06 수정')
+    expect(html).toContain('<p>본문</p>')
+  })
+  test('수정일이 없으면 작성일만 쓴다', () => {
+    const html = articleHtml({ title: 't', html: '', date: '2026-09-03' })
+    expect(html).toContain('2026.09.03 작성')
+    expect(html).not.toContain('수정')
+  })
+})
+
+test('footerHtml에 운영 주체와 유튜브 링크가 있다', () => {
+  expect(footerHtml()).toContain('운영 · <a href="https://www.youtube.com/@ssangmun-center">북한산쌍문철학원</a>')
 })
