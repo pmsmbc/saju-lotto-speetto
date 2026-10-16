@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-15T15:57:58.136Z",
+  "updatedAt": "2026-10-16T02:07:33.656Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -8,7 +8,7 @@
       "status": "판매중",
       "rank1Remaining": 9,
       "rank1Total": 12,
-      "stockRate": 35
+      "stockRate": 55
     },
     {
       "game": "스피또1000",
@@ -188,7 +188,7 @@
       "status": "판매중",
       "rank1Remaining": 8,
       "rank1Total": 8,
-      "stockRate": 11
+      "stockRate": 20
     },
     {
       "game": "스피또2000",
@@ -197,7 +197,7 @@
       "status": "판매중",
       "rank1Remaining": 3,
       "rank1Total": 10,
-      "stockRate": 96
+      "stockRate": 98
     },
     {
       "game": "스피또2000",
@@ -296,7 +296,7 @@
       "status": "판매중",
       "rank1Remaining": 3,
       "rank1Total": 5,
-      "stockRate": 56
+      "stockRate": 57
     },
     {
       "game": "스피또500",
