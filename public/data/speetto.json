@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-10-22T05:31:48.534Z",
+  "updatedAt": "2026-10-22T10:53:41.828Z",
   "rounds": [
     {
       "game": "스피또1000",
       "gameCode": "SP1000",
       "round": 110,
       "status": "판매중",
-      "rank1Remaining": 9,
+      "rank1Remaining": 8,
       "rank1Total": 12,
       "stockRate": 55
     },
@@ -5684,6 +5684,14 @@
       "store": "씨스페이스 경주세방매점",
       "address": "경북 경주시 산업로 4447 (용강동)",
       "region": "경북"
+    },
+    {
+      "game": "스피또1000",
+      "round": 110,
+      "rank": 1,
+      "store": "행운복권방",
+      "address": "서울 서대문구 신촌로 235-1 1층",
+      "region": "서울"
     },
     {
       "game": "스피또1000",
