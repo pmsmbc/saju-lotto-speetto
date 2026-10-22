@@ -1,6 +1,7 @@
 import { describe, test, expect } from 'vitest'
 import { PAGE_CONTENT } from '../src/lib/page-content.js'
-import { esc, gameSlug, kstDate, speettoOverview, speettoRoundPages, lottoOverview, lottoStoresOverview, staticPages, tagPages, shortName, footerHtml, articleHtml, parseSlugList } from './seo-pages.js'
+import { esc, gameSlug, kstDate, speettoOverview, speettoRoundPages, lottoOverview, lottoStoresOverview, staticPages, tagPages, shortName, footerHtml, articleHtml, parseSlugList, siteJsonLd, articleJsonLd } from './seo-pages.js'
+import { OPERATOR_NAME, OPERATOR_YOUTUBE } from '../src/lib/operator.js'
 
 const speetto = {
   updatedAt: '2026-09-10T06:35:28.246Z',
@@ -93,7 +94,7 @@ describe('staticPages', () => {
   const pages = staticPages({ articles, speetto, lotto, today: '2026-09-10' })
   const byPath = Object.fromEntries(pages.map((p) => [p.path, p]))
   test('홈·운세·궁합·띠별·사주·글목록을 만든다', () => {
-    expect(Object.keys(byPath).sort()).toEqual(['', 'gunghap/', 'info/', 'saju/', 'unse/', 'zodiac/'].sort())
+    expect(Object.keys(byPath).sort()).toEqual(['', 'gunghap/', 'info/', 'info/all/', 'saju/', 'unse/', 'zodiac/'].sort())
   })
   test('모든 페이지가 고유한 제목과 설명을 가진다', () => {
     const titles = pages.map((p) => p.title)
@@ -326,4 +327,108 @@ test('홈과 /unse/의 새로 올라온 글에는 검색에서 뺀 글이 없다
     expect(latest).toContain('/info/pig/')
     expect(latest).not.toContain('/info/kiss/')
   }
+})
+
+// 구글이 크롤을 거의 하지 않는 동안, 몇 안 되는 크롤 요청이 검색에서 뺀 글(noindex)로 새지 않게
+// 허브·태그·홈에는 색인할 글만 잇고, 뺀 글은 noindex인 /info/all/ 한 곳에서만 잇는다.
+describe('검색 제외 글 분리', () => {
+  const mixed = [
+    { slug: 'pig', title: '돼지꿈 해몽 — 길몽', description: 'd1', order: 1, category: 'dream', tags: ['animal', 'money'], date: '2026-09-01' },
+    { slug: 'affair', title: '바람피우는 꿈 해몽', description: 'd2', order: 2, category: 'dream', tags: ['people', 'animal'], date: '2026-09-02', noindex: true },
+    { slug: 'odds', title: '로또 확률 — 계산', description: 'd3', order: 101, category: 'guide', tags: [], date: '2026-09-02' },
+    { slug: 'tax', title: '로또 세금 — 33%', description: 'd4', order: 102, category: 'guide', tags: [], date: '2026-09-03', noindex: true },
+  ]
+  const pages = staticPages({ articles: mixed, speetto: null, lotto: null, today: '2026-10-22' })
+  const byPath = Object.fromEntries(pages.map((p) => [p.path, p]))
+
+  test('/info/ 허브는 색인할 글만 싣는다', () => {
+    expect(byPath['info/'].html).toContain('/info/pig/')
+    expect(byPath['info/'].html).toContain('/info/odds/')
+    expect(byPath['info/'].html).not.toContain('/info/affair/')
+    expect(byPath['info/'].html).not.toContain('/info/tax/')
+  })
+  test('/info/ 설명·주제 편수도 색인할 글 기준이다', () => {
+    expect(byPath['info/'].description).toContain('꿈해몽 1편')
+    expect(byPath['info/'].html).toContain('동물 꿈 해몽 1편')
+    expect(byPath['info/'].html).not.toContain('사람·관계')
+  })
+  test('/info/ 에서 전체 글 페이지로 가는 링크는 nofollow 다', () => {
+    expect(byPath['info/'].html).toContain('<a href="/info/all/" rel="nofollow">')
+    expect(byPath['info/'].html).toContain('전체 4편')
+  })
+  test('/info/all/ 은 noindex·sitemap 제외이고 뺀 글까지 전부 싣는다', () => {
+    const all = byPath['info/all/']
+    expect(all.noindex).toBe(true)
+    expect(all.noSitemap).toBe(true)
+    for (const slug of ['pig', 'affair', 'odds', 'tax']) expect(all.html).toContain(`/info/${slug}/`)
+    expect(all.html).toContain('<h1>')
+    expect(all.html).toContain('href="/info/"')
+  })
+  test('뺀 글이 없으면 /info/ 에 전체 글 링크를 두지 않는다', () => {
+    const clean = staticPages({ articles: mixed.filter((a) => !a.noindex), speetto: null, lotto: null, today: '2026-10-22' })
+    expect(clean.find((p) => p.path === 'info/').html).not.toContain('/info/all/')
+  })
+  test('태그 페이지도 색인할 글만 세고 싣는다', () => {
+    const tags = tagPages(mixed)
+    const paths = tags.map((p) => p.path)
+    expect(paths).toContain('info/tag/animal/')
+    expect(paths).not.toContain('info/tag/people/')
+    const animal = tags.find((p) => p.path === 'info/tag/animal/')
+    expect(animal.title).toContain('1편')
+    expect(animal.html).not.toContain('/info/affair/')
+    expect(animal.html).not.toContain('/info/tag/people/')
+  })
+  test('홈·운세 페이지는 색인할 글 전부를 주제별 짧은 이름으로 잇는다', () => {
+    for (const path of ['', 'unse/']) {
+      const html = byPath[path].html
+      expect(html).toContain('글 모아보기')
+      expect(html).toContain('<h3>동물 1편</h3>')
+      expect(html).toContain('<a href="/info/pig/">돼지꿈</a>')
+      expect(html).toContain('<h3>사주·로또 상식 1편</h3>')
+      expect(html).toContain('<a href="/info/odds/">로또 확률</a>')
+      expect(html).not.toContain('/info/affair/')
+      expect(html).not.toContain('/info/tax/')
+    }
+  })
+})
+
+// 누가 운영하는 사이트인지 구조화 데이터로도 읽히게 한다. Organization 한 노드를 WebSite.publisher와
+// Article.author/publisher가 @id로 함께 가리킨다.
+describe('JSON-LD', () => {
+  const site = JSON.parse(siteJsonLd())
+  const org = site['@graph'].find((n) => n['@type'] === 'Organization')
+  const web = site['@graph'].find((n) => n['@type'] === 'WebSite')
+
+  test('Organization은 운영 주체 이름·소개 페이지·유튜브를 담는다', () => {
+    expect(org.name).toBe(OPERATOR_NAME)
+    expect(org.url).toBe('https://satto.kr/about/')
+    expect(org.sameAs).toContain(OPERATOR_YOUTUBE)
+    expect(org.logo).toBe('https://satto.kr/logo.png')
+    expect(org['@id']).toBe('https://satto.kr/#organization')
+  })
+  test('WebSite는 사또이고 publisher가 Organization을 가리킨다', () => {
+    expect(web.name).toBe('사또')
+    expect(web.url).toBe('https://satto.kr/')
+    expect(web.publisher).toEqual({ '@id': org['@id'] })
+    expect(web.inLanguage).toBe('ko')
+  })
+  test('글 JSON-LD는 같은 Organization을 author·publisher로 쓰고 노드를 함께 싣는다', () => {
+    const a = { slug: 'pig', title: '돼지꿈 해몽', description: 'd', date: '2026-09-03', updated: '2026-10-06' }
+    const graph = JSON.parse(articleJsonLd(a))['@graph']
+    const article = graph.find((n) => n['@type'] === 'Article')
+    expect(graph.some((n) => n['@type'] === 'Organization' && n.name === OPERATOR_NAME)).toBe(true)
+    expect(graph.some((n) => n['@type'] === 'WebSite')).toBe(true)
+    expect(article.author).toEqual({ '@id': 'https://satto.kr/#organization' })
+    expect(article.publisher).toEqual({ '@id': 'https://satto.kr/#organization' })
+    expect(article.isPartOf).toEqual({ '@id': 'https://satto.kr/#website' })
+    expect(article.headline).toBe('돼지꿈 해몽')
+    expect(article.datePublished).toBe('2026-09-03')
+    expect(article.dateModified).toBe('2026-10-06')
+    expect(article.mainEntityOfPage).toBe('https://satto.kr/info/pig/')
+    expect(article.inLanguage).toBe('ko')
+  })
+  test('수정일이 없으면 작성일을 수정일로 쓴다', () => {
+    const graph = JSON.parse(articleJsonLd({ slug: 'x', title: 't', description: 'd', date: '2026-09-03' }))['@graph']
+    expect(graph.find((n) => n['@type'] === 'Article').dateModified).toBe('2026-09-03')
+  })
 })

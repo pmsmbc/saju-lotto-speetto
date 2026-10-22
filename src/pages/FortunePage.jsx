@@ -18,6 +18,7 @@ import dogIcon from '../assets/twemoji/1f436.svg'
 import pigIcon from '../assets/twemoji/1f437.svg'
 import PageIntro from '../components/PageIntro.jsx'
 import LatestArticles from '../components/LatestArticles.jsx'
+import ArticleDirectory from '../components/ArticleDirectory.jsx'
 
 const ZODIAC_ICONS = {
   rat: ratIcon, ox: oxIcon, tiger: tigerIcon, rabbit: rabbitIcon,
@@ -101,6 +102,7 @@ export function FortunePage({ today = todayKST() }) {
       <p className="hint zodiac-hint">일진과 띠의 관계(합·충)로 보는 운세입니다.</p>
       <PageIntro id="unse" />
       <LatestArticles />
+      <ArticleDirectory />
     </section>
   )
 }

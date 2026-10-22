@@ -2,16 +2,15 @@
 import { mkdirSync, copyFileSync, readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { parseArticle } from '../src/lib/markdown.js'
-import { OPERATOR_NAME } from '../src/lib/operator.js'
-import { SITE, esc, staticPages, speettoOverview, speettoRoundPages, lottoOverview, lottoStoresOverview, tagPages, footerHtml, articleHtml, parseSlugList } from './seo-pages.js'
+import { SITE, esc, staticPages, speettoOverview, speettoRoundPages, lottoOverview, lottoStoresOverview, tagPages, footerHtml, articleHtml, parseSlugList, siteJsonLd, articleJsonLd } from './seo-pages.js'
 
 const dist = 'dist'
 const base = readFileSync(join(dist, 'index.html'), 'utf-8')
 const today = new Date().toISOString().slice(0, 10)
 const readJson = (p) => (existsSync(p) ? JSON.parse(readFileSync(p, 'utf-8')) : null)
 
-// 페이지별 head/본문을 주입한 HTML을 만든다.
-function render({ title, description, canonical, html, ld, noindex }) {
+// 페이지별 head/본문을 주입한 HTML을 만든다. 구조화 데이터는 따로 주지 않으면 운영 주체(Organization)+WebSite를 넣는다.
+function render({ title, description, canonical, html, ld = siteJsonLd(), noindex }) {
   let out = base
     .replace(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>`)
     .replace(/(name="description" content=")[^"]*(")/, `$1${esc(description)}$2`)
@@ -57,14 +56,7 @@ const addUrl = (path, lastmod, changefreq) =>
 
 // ---------- 기능 페이지(홈·운세·궁합·띠별·사주·글목록) ----------
 for (const p of staticPages({ articles, speetto, lotto, today })) {
-  const ld = p.path === ''
-    ? JSON.stringify({
-        '@context': 'https://schema.org', '@type': 'WebSite',
-        name: '사또 - 사주 로또 스피또', url: `${SITE}/`,
-        description: '오늘의 운세, 궁합, 꿈해몽, 띠별·사주 행운 번호, 스피또 당첨 지역',
-      })
-    : null
-  writePage(p.path, render({ ...p, canonical: p.canonical ?? `${SITE}/${p.path}`, ld }))
+  writePage(p.path, render({ ...p, canonical: p.canonical ?? `${SITE}/${p.path}` }))
   if (!p.noSitemap) addUrl(p.path, p.lastmod, p.changefreq ?? 'weekly')
 }
 
@@ -112,15 +104,7 @@ for (const p of tags) {
 
 // ---------- 글 상세 ----------
 for (const a of articles) {
-  const ld = JSON.stringify({
-    '@context': 'https://schema.org', '@type': 'Article',
-    headline: a.title, description: a.description,
-    datePublished: a.date ?? '2026-09-03',
-    dateModified: a.updated ?? a.date ?? '2026-09-03',
-    author: { '@type': 'Organization', name: OPERATOR_NAME, url: `${SITE}/about/` },
-    publisher: { '@type': 'Organization', name: '사또', url: `${SITE}/` },
-    mainEntityOfPage: `${SITE}/info/${a.slug}/`,
-  })
+  const ld = articleJsonLd(a)
   writePage(`info/${a.slug}/`, render({
     title: `${a.title} | 사또`,
     description: a.description,

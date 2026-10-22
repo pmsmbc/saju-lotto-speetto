@@ -152,6 +152,13 @@ a.nav-tab.active:hover, a.sub-tab.active:hover, a.tag-chip.active:hover { color:
 .latest-list { list-style: none; margin: 0 0 10px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .latest-list a { display: flex; align-items: center; gap: 8px; font-size: var(--fs-body-s); line-height: 1.5; }
 
+/* 홈 글 모아보기: 주제별 짧은 이름 링크 (검색에 남긴 글 전부) */
+.article-directory { margin-top: 16px; padding: 16px; }
+.directory-group h3 { margin: 10px 0 6px; font-size: var(--fs-body-s); font-weight: 700; color: var(--text-muted); }
+.directory-count { font-weight: 500; }
+.directory-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 12px; }
+.directory-list a { color: #ffffff; text-decoration: underline; font-size: var(--fs-body-s); line-height: 1.6; }
+
 .info-search { margin: 0 0 10px; }
 .info-search input {
   width: 100%; box-sizing: border-box; color-scheme: dark;
@@ -162,6 +169,8 @@ a.nav-tab.active:hover, a.sub-tab.active:hover, a.tag-chip.active:hover { color:
 .info-search input::placeholder { color: var(--text-muted); opacity: 0.8; }
 .info-count { margin: 0 0 10px; font-size: var(--fs-body-s); color: var(--text-muted); text-align: center; }
 .info-count b { color: var(--text-strong); font-weight: 700; }
+.info-archive { margin: 14px 0 0; text-align: center; font-size: var(--fs-caption); color: var(--text-muted); }
+.info-archive a { color: var(--text-muted); text-decoration: underline; }
 .link-btn {
   border: none; background: none; padding: 0; font: inherit; cursor: pointer;
   color: #ffffff; text-decoration: underline;

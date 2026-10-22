@@ -16,10 +16,15 @@ function tagFromPath() {
   return m && tagById(m[1]) ? m[1] : null
 }
 
+// /info/all/ → 검색에서 뺀 글(noindex)까지 모두 보는 전체 목록. 정적 페이지도 같은 주소로 만든다.
+function archiveFromPath() {
+  return /^\/info\/all\/?$/.test(window.location.pathname)
+}
+
 function slugFromPath() {
-  // 슬러그는 소문자 + 하이픈 (taemong-fruit 처럼 두 단어 조합). /info/tag/... 는 글이 아니다.
+  // 슬러그는 소문자 + 하이픈 (taemong-fruit 처럼 두 단어 조합). /info/tag/... 와 /info/all/ 은 글이 아니다.
   const m = window.location.pathname.match(/^\/info\/([a-z]+(?:-[a-z]+)*)\/?$/)
-  return m && m[1] !== 'tag' ? m[1] : null
+  return m && m[1] !== 'tag' && m[1] !== 'all' ? m[1] : null
 }
 
 // 꿈 글에는 로또 번호를 붙이지 않는다. 본문이 "꿈과 당첨은 무관하다"고 말하는데
@@ -28,6 +33,7 @@ export function InfoPage() {
   const [slug, setSlug] = useState(slugFromPath)
   const [cat, setCat] = useState('dream')
   const [tag, setTag] = useState(tagFromPath)
+  const [archive, setArchive] = useState(archiveFromPath)
   const [query, setQuery] = useState(queryFromUrl)
 
   // 검색어를 주소에 남겨 공유·새로고침에도 결과가 유지되게 한다
@@ -39,10 +45,21 @@ export function InfoPage() {
     window.history.replaceState({}, '', url)
   }
 
-  // 태그를 고르면 주소도 태그 페이지로 바꾼다 (정적 생성 페이지와 같은 URL)
+  // 태그를 고르면 주소도 태그 페이지로 바꾼다 (정적 생성 페이지와 같은 URL). 태그 페이지는 전체 목록이 아니다.
   const changeTag = (nextTag) => {
     setTag(nextTag)
-    const path = nextTag ? `/info/tag/${nextTag}/` : '/info/'
+    if (nextTag) setArchive(false)
+    const path = nextTag ? `/info/tag/${nextTag}/` : archive ? '/info/all/' : '/info/'
+    if (window.location.pathname !== path) {
+      window.history.pushState({}, '', path + window.location.search)
+    }
+  }
+
+  // 전체 목록(/info/all/) ↔ 검색에 남긴 글 목록(/info/)
+  const changeArchive = (next) => {
+    setArchive(next)
+    setTag(null)
+    const path = next ? '/info/all/' : '/info/'
     if (window.location.pathname !== path) {
       window.history.pushState({}, '', path + window.location.search)
     }
@@ -58,13 +75,17 @@ export function InfoPage() {
     const onPop = () => {
       setSlug(slugFromPath())
       setTag(tagFromPath())
+      setArchive(archiveFromPath())
     }
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
   }, [])
 
   const open = (nextSlug) => {
-    if (!nextSlug) setTag(null)
+    if (!nextSlug) {
+      setTag(null)
+      setArchive(false)
+    }
     const path = nextSlug ? `/info/${nextSlug}/` : '/info/'
     if (window.location.pathname !== path) window.history.pushState({}, '', path)
     setSlug(nextSlug)
@@ -73,10 +94,10 @@ export function InfoPage() {
 
   const article = slug ? articleBySlug(slug) : null
 
-  // 같은 카테고리에서 다음 순서 3개 (끝이면 앞으로 순환)
+  // 같은 카테고리에서 다음 순서 3개 (끝이면 앞으로 순환). 검색에서 뺀 글로는 잇지 않는다.
   const related = article
     ? (() => {
-        const pool = ARTICLES.filter((a) => a.category === article.category && a.slug !== article.slug)
+        const pool = ARTICLES.filter((a) => a.category === article.category && a.slug !== article.slug && !a.noindex)
         const idx = pool.findIndex((a) => a.order > article.order)
         const start = idx === -1 ? 0 : idx
         return [...pool.slice(start), ...pool.slice(0, start)].slice(0, 3)
@@ -127,9 +148,13 @@ export function InfoPage() {
   }
 
   const inCategory = ARTICLES.filter((a) => a.category === cat)
-  const tagList = tagsWithCount(inCategory)
-  const byTag = tag ? inCategory.filter((a) => a.tags.includes(tag)) : inCategory
-  const visible = searchArticles(byTag, query)
+  // 목록·태그 칩은 검색에 남긴 글만 센다. 크롤 요청이 검색에서 뺀 글로 새지 않게 하기 위함이다.
+  // 뺀 글은 /info/all/ 에서 모두 보이고, 검색창은 언제나 전체 글을 뒤진다.
+  const browsable = archive ? inCategory : inCategory.filter((a) => !a.noindex)
+  const tagList = tagsWithCount(browsable)
+  const withTag = (items) => (tag ? items.filter((a) => a.tags.includes(tag)) : items)
+  const visible = query ? searchArticles(withTag(inCategory), query) : withTag(browsable)
+  const hasHidden = ARTICLES.some((a) => a.noindex)
 
   return (
     <section className="info-page">
@@ -159,12 +184,12 @@ export function InfoPage() {
       {tagList.length > 0 && (
         <nav className="tag-chips" aria-label="주제별 분류">
           <a
-            href="/info/"
+            href={archive ? '/info/all/' : '/info/'}
             className={tag === null ? 'tag-chip active' : 'tag-chip'}
             aria-current={tag === null ? 'page' : undefined}
             onClick={(e) => spaClick(e, () => changeTag(null))}
           >
-            전체 {inCategory.length}
+            전체 {browsable.length}
           </a>
           {tagList.map((t) => (
             <a
@@ -208,6 +233,20 @@ export function InfoPage() {
           </li>
         ))}
       </ul>
+      {/* 전체 목록으로 가는 링크는 nofollow: 검색에서 뺀 글 171편으로 크롤이 번지지 않게 한다 */}
+      {hasHidden && !query && !archive && (
+        <p className="info-archive">
+          <a href="/info/all/" rel="nofollow" onClick={(e) => spaClick(e, () => changeArchive(true))}>
+            검색에서 뺀 글까지 전체 {ARTICLES.length}편 보기
+          </a>
+        </p>
+      )}
+      {archive && (
+        <p className="info-archive">
+          검색에서 뺀 글까지 모두 보는 전체 목록입니다.{' '}
+          <a href="/info/" onClick={(e) => spaClick(e, () => changeArchive(false))}>검색에 남긴 글만 보기</a>
+        </p>
+      )}
     </section>
   )
 }

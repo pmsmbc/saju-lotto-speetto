@@ -10,8 +10,9 @@ import { AUTHOR_LABEL, AUTHOR_HREF, articleDates } from '../src/lib/article-meta
 import { OPERATOR_NAME, OPERATOR_YOUTUBE } from '../src/lib/operator.js'
 import { parseSlugList } from '../src/lib/slug-list.js'
 import { latestArticles } from '../src/lib/latest.js'
+import { directoryGroups, shortName } from '../src/lib/directory.js'
 
-export { parseSlugList }
+export { parseSlugList, shortName }
 
 export const SITE = 'https://satto.kr'
 
@@ -187,6 +188,40 @@ ${introHtml('lottostore')}`,
   }
 }
 
+// ---------- 구조화 데이터 ----------
+// 누가 운영하는 사이트인지 구조화 데이터로도 읽히게 한다. Organization 한 노드를 WebSite.publisher와
+// Article.author/publisher가 @id로 함께 가리킨다. make-routes.js가 모든 페이지 head에 넣는다.
+const ORG_ID = `${SITE}/#organization`
+const WEBSITE_ID = `${SITE}/#website`
+const organizationNode = () => ({
+  '@type': 'Organization', '@id': ORG_ID,
+  name: OPERATOR_NAME, url: `${SITE}/about/`, logo: `${SITE}/logo.png`, sameAs: [OPERATOR_YOUTUBE],
+})
+const websiteNode = () => ({
+  '@type': 'WebSite', '@id': WEBSITE_ID,
+  name: '사또', alternateName: '사주로또 사또', url: `${SITE}/`, inLanguage: 'ko',
+  description: '오늘의 운세, 궁합, 꿈해몽, 띠별·사주 행운 번호, 스피또 당첨 지역',
+  publisher: { '@id': ORG_ID },
+})
+// <script> 안에 들어가므로 '<'는 이스케이프한다 (제목에 '</script>'가 섞여도 깨지지 않게)
+const graph = (...nodes) => JSON.stringify({ '@context': 'https://schema.org', '@graph': nodes }).replace(/</g, '\\u003c')
+
+export function siteJsonLd() {
+  return graph(organizationNode(), websiteNode())
+}
+
+export function articleJsonLd(a) {
+  const url = `${SITE}/info/${a.slug}/`
+  return graph(organizationNode(), websiteNode(), {
+    '@type': 'Article', '@id': `${url}#article`,
+    headline: a.title, description: a.description, inLanguage: 'ko',
+    datePublished: a.date ?? '2026-09-03',
+    dateModified: a.updated ?? a.date ?? '2026-09-03',
+    author: { '@id': ORG_ID }, publisher: { '@id': ORG_ID }, isPartOf: { '@id': WEBSITE_ID },
+    mainEntityOfPage: url,
+  })
+}
+
 // ---------- 공통 정적 페이지 ----------
 const zodiacLinks = () => list(ZODIACS.map((z) => link(`/unse/?ddi=${z.id}`, `${z.label} 오늘의 운세`)))
 
@@ -195,15 +230,10 @@ export function articleLinks(articles, category, limit) {
   return list((limit ? items.slice(0, limit) : items).map((a) => link(`/info/${a.slug}/`, a.title)))
 }
 
-// 글 제목에서 소재 이름만 뽑는다. '뱀꿈 해몽 — 길몽일까' → '뱀꿈', '죽는 꿈 해몽 — …' → '죽는 꿈'
-export function shortName(title) {
-  const head = String(title ?? '').split(/\s*[\u2014,-]\s*/)[0]
-  return head.replace(/\s*해몽.*$/, '').trim() || head.trim()
-}
-
 // ---------- 태그별 글 모음 ----------
+// 검색에서 뺀 글(noindex)은 태그 페이지에도 싣지 않는다. 크롤 요청이 색인할 글에 모이게 하기 위함.
 export function tagPages(articles) {
-  const dreams = articles.filter((a) => (a.category ?? 'dream') === 'dream')
+  const dreams = articles.filter((a) => (a.category ?? 'dream') === 'dream' && !a.noindex)
   return TAGS.map((t) => {
     const items = dreams.filter((a) => (a.tags ?? []).includes(t.id))
     if (items.length === 0) return null
@@ -240,11 +270,24 @@ ${list(newest.map((a) => link(`/info/${a.slug}/`, a.title)))}
 <p>${link('/info/', '꿈해몽·상식 글 전체 보기')}</p>`
 }
 
+// React <ArticleDirectory />가 홈에 그리는 것과 같은 묶음. 홈 한 번 크롤로 색인할 글 전부가 발견되게 한다.
+function directoryHtml(articles) {
+  const groups = directoryGroups(articles)
+  if (groups.length === 0) return ''
+  return `<h2>꿈해몽·상식 글 모아보기</h2>
+${groups.map((g) => `<h3>${esc(g.label)} ${g.items.length}편</h3>${list(g.items.map((a) => link(`/info/${a.slug}/`, shortName(a.title))))}`).join('\n')}`
+}
+
 export function staticPages({ articles, speetto, lotto, today }) {
-  const dreams = articles.filter((a) => (a.category ?? 'dream') === 'dream')
-  const guides = articles.filter((a) => a.category === 'guide')
+  // 허브·태그·홈에는 검색에 남긴 글만 잇는다. 뺀 글은 noindex인 /info/all/ 한 곳에서만 잇는다.
+  const kept = articles.filter((a) => !a.noindex)
+  const dreams = kept.filter((a) => (a.category ?? 'dream') === 'dream')
+  const guides = kept.filter((a) => a.category === 'guide')
+  const allDreams = articles.filter((a) => (a.category ?? 'dream') === 'dream')
+  const allGuides = articles.filter((a) => a.category === 'guide')
+  const hidden = articles.length - kept.length
   const newest = latestArticles(articles, 8)
-  const latestArticleDate = articles.map((a) => a.date).filter(Boolean).sort().at(-1) ?? today
+  const latestArticleDate = kept.map((a) => a.date).filter(Boolean).sort().at(-1) ?? today
   const speettoLines = GAME_TABS.map((g) => {
     const r = sellingWithRank1(speetto?.rounds, g.code)[0]
     if (!r) return null
@@ -264,7 +307,8 @@ export function staticPages({ articles, speetto, lotto, today }) {
 ${introHtml('unse')}
 <h2>띠별로 바로 보기</h2>
 ${zodiacLinks()}
-${latestHtml(newest)}`,
+${latestHtml(newest)}
+${directoryHtml(articles)}`,
     },
     {
       path: 'unse/',
@@ -279,7 +323,8 @@ ${latestHtml(newest)}`,
 ${introHtml('unse')}
 <h2>띠별로 바로 보기</h2>
 ${zodiacLinks()}
-${latestHtml(newest)}`,
+${latestHtml(newest)}
+${directoryHtml(articles)}`,
     },
     {
       path: 'gunghap/',
@@ -318,7 +363,22 @@ ${list(TAGS.filter((t) => dreams.some((a) => (a.tags ?? []).includes(t.id)))
 <h2>꿈해몽</h2>
 ${list(dreams.map((a) => link(`/info/${a.slug}/`, a.title)))}
 <h2>사주·로또 상식</h2>
-${list(guides.map((a) => link(`/info/${a.slug}/`, a.title)))}`,
+${list(guides.map((a) => link(`/info/${a.slug}/`, a.title)))}
+${hidden ? `<p><a href="/info/all/" rel="nofollow">검색에서 뺀 글까지 전체 ${articles.length}편 보기</a></p>` : ''}`,
+    },
+    {
+      // 검색에서 뺀 글까지 전부 잇는 유일한 목록. 색인하지 않고 sitemap에도 넣지 않는다.
+      path: 'info/all/',
+      noindex: true, noSitemap: true,
+      title: `전체 글 목록 ${articles.length}편 (검색에서 뺀 글 포함) | 사또`,
+      description: `사또에 올라온 꿈해몽 ${allDreams.length}편과 사주·로또 상식 ${allGuides.length}편의 전체 목록입니다.`,
+      lastmod: latestArticleDate, changefreq: 'weekly',
+      html: `<h1>전체 글 목록</h1>
+<p>사또에 올라온 꿈해몽과 사주·로또 상식 글 ${articles.length}편의 전체 목록입니다. 검색에 남긴 글은 ${link('/info/', '꿈해몽·상식 글 모음')}에서 주제별로 볼 수 있고, 이 페이지에는 검색에서 뺀 글까지 모두 실려 있습니다. 글 모음의 검색창으로도 전체 글을 찾을 수 있습니다.</p>
+<h2>꿈해몽 ${allDreams.length}편</h2>
+${list(allDreams.map((a) => link(`/info/${a.slug}/`, a.title)))}
+<h2>사주·로또 상식 ${allGuides.length}편</h2>
+${list(allGuides.map((a) => link(`/info/${a.slug}/`, a.title)))}`,
     },
   ]
 }

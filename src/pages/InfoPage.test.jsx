@@ -7,11 +7,11 @@ import { searchArticles } from '../lib/search.js'
 test('카테고리별 글 목록을 보여준다 (기본 꿈해몽, 탭으로 상식 전환)', () => {
   window.history.pushState({}, '', '/info')
   render(<InfoPage />)
-  for (const a of ARTICLES.filter((x) => x.category === 'dream')) {
+  for (const a of ARTICLES.filter((x) => x.category === 'dream' && !x.noindex)) {
     expect(screen.getByText(a.title)).toBeInTheDocument()
   }
   fireEvent.click(screen.getByRole('button', { name: '사주·로또 상식' }))
-  for (const a of ARTICLES.filter((x) => x.category === 'guide')) {
+  for (const a of ARTICLES.filter((x) => x.category === 'guide' && !x.noindex)) {
     expect(screen.getByText(a.title)).toBeInTheDocument()
   }
   expect(screen.queryByText('돼지꿈 해몽 — 세 가지 질문으로 가려 보는 길몽과 흉몽')).toBeNull()
@@ -138,9 +138,11 @@ test('태그와 검색어는 함께 걸린다', () => {
   window.history.pushState({}, '', '/info')
   render(<InfoPage today="2026-09-03" />)
   fireEvent.click([...document.querySelectorAll('.tag-chip')].find((b) => b.textContent.startsWith('동물')))
-  const animalOnly = document.querySelectorAll('.info-list li').length
   fireEvent.change(screen.getByLabelText('글 검색'), { target: { value: '꿈' } })
-  expect(document.querySelectorAll('.info-list li').length).toBeLessThanOrEqual(animalOnly)
+  // 검색은 검색에서 뺀 글까지 뒤지므로 보이는 수는 늘 수 있지만, 결과는 모두 동물 태그 글이어야 한다
+  const shown = [...document.querySelectorAll('.info-card')].map((a) => a.getAttribute('href').split('/')[2])
+  expect(shown.length).toBeGreaterThan(0)
+  for (const slug of shown) expect(ARTICLES.find((a) => a.slug === slug).tags, slug).toContain('animal')
   window.history.pushState({}, '', '/')
 })
 
@@ -238,5 +240,68 @@ test('글 머리에 작성일·수정일과 운영 주체(소개 페이지 링�
   expect(meta.textContent).toContain('2026.09.03 작성')
   expect(meta.textContent).toContain('2026.10.06 수정')
   expect(meta.querySelector('a[href="/about/"]').textContent).toBe('북한산쌍문철학원')
+  window.history.pushState({}, '', '/')
+})
+
+// 구글이 크롤을 거의 하지 않는 동안 크롤 요청이 검색에서 뺀 글로 새지 않게, 목록·태그·관련 글은
+// 색인할 글로만 잇는다. 뺀 글은 사이트에 그대로 있고 검색창과 /info/all/ 로 찾아갈 수 있다.
+const NOINDEXED = ARTICLES.filter((a) => a.noindex)
+const KEPT_DREAMS = ARTICLES.filter((a) => a.category === 'dream' && !a.noindex)
+
+test('목록에는 검색에서 뺀 글이 보이지 않고, 전체 칩도 남긴 글만 센다', () => {
+  expect(NOINDEXED.length).toBeGreaterThan(0)
+  window.history.pushState({}, '', '/info')
+  render(<InfoPage />)
+  const hrefs = [...document.querySelectorAll('.info-card')].map((a) => a.getAttribute('href'))
+  expect(hrefs).toHaveLength(KEPT_DREAMS.length)
+  for (const a of NOINDEXED) expect(hrefs).not.toContain(`/info/${a.slug}/`)
+  const all = [...document.querySelectorAll('.tag-chip')].find((c) => c.textContent.startsWith('전체'))
+  expect(all.textContent).toBe(`전체 ${KEPT_DREAMS.length}`)
+  window.history.pushState({}, '', '/')
+})
+
+test('목록 아래 전체 글 링크는 /info/all/ 로 가는 nofollow 링크다', () => {
+  window.history.pushState({}, '', '/info')
+  render(<InfoPage />)
+  const link = screen.getByRole('link', { name: /전체 .*편 보기/ })
+  expect(link.getAttribute('href')).toBe('/info/all/')
+  expect(link.getAttribute('rel')).toBe('nofollow')
+  expect(fireEvent.click(link)).toBe(false)
+  expect(window.location.pathname).toBe('/info/all/')
+  expect(document.querySelectorAll('.info-card')).toHaveLength(ARTICLES.filter((a) => a.category === 'dream').length)
+  window.history.pushState({}, '', '/')
+})
+
+test('/info/all/ 로 들어가면 검색에서 뺀 글까지 전부 보인다', () => {
+  window.history.pushState({}, '', '/info/all/')
+  render(<InfoPage />)
+  expect(document.querySelector('.article')).toBeNull()
+  const hrefs = [...document.querySelectorAll('.info-card')].map((a) => a.getAttribute('href'))
+  for (const a of ARTICLES.filter((x) => x.category === 'dream')) expect(hrefs).toContain(`/info/${a.slug}/`)
+  expect(screen.getByRole('link', { name: /남긴 글만 보기/ }).getAttribute('href')).toBe('/info/')
+  window.history.pushState({}, '', '/')
+})
+
+test('검색은 검색에서 뺀 글도 찾는다', () => {
+  const target = NOINDEXED.find((a) => a.category === 'dream')
+  const word = target.title.split(' ')[0]
+  window.history.pushState({}, '', '/info')
+  render(<InfoPage />)
+  fireEvent.change(screen.getByLabelText('글 검색'), { target: { value: word } })
+  const hrefs = [...document.querySelectorAll('.info-card')].map((a) => a.getAttribute('href'))
+  expect(hrefs).toContain(`/info/${target.slug}/`)
+  window.history.pushState({}, '', '/')
+})
+
+test('관련 글은 검색에 남긴 글로만 잇는다', () => {
+  // 순서상 바로 다음 글이 검색에서 뺀 글인 경우를 고른다
+  const dreams = ARTICLES.filter((a) => a.category === 'dream')
+  const before = dreams.find((a, i) => !a.noindex && dreams[i + 1]?.noindex)
+  expect(before).toBeTruthy()
+  window.history.pushState({}, '', `/info/${before.slug}/`)
+  render(<InfoPage />)
+  const hrefs = [...document.querySelectorAll('.related-list a')].map((a) => a.getAttribute('href'))
+  expect(hrefs).toHaveLength(3)
+  for (const a of NOINDEXED) expect(hrefs).not.toContain(`/info/${a.slug}/`)
   window.history.pushState({}, '', '/')
 })
