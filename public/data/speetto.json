@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-22T16:17:18.036Z",
+  "updatedAt": "2026-10-22T23:31:53.912Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -8,7 +8,7 @@
       "status": "판매중",
       "rank1Remaining": 8,
       "rank1Total": 12,
-      "stockRate": 55
+      "stockRate": 70
     },
     {
       "game": "스피또1000",
@@ -188,7 +188,7 @@
       "status": "판매중",
       "rank1Remaining": 8,
       "rank1Total": 8,
-      "stockRate": 20
+      "stockRate": 28
     },
     {
       "game": "스피또2000",
@@ -197,7 +197,7 @@
       "status": "판매중",
       "rank1Remaining": 3,
       "rank1Total": 10,
-      "stockRate": 98
+      "stockRate": 99
     },
     {
       "game": "스피또2000",
@@ -296,7 +296,7 @@
       "status": "판매중",
       "rank1Remaining": 3,
       "rank1Total": 5,
-      "stockRate": 57
+      "stockRate": 58
     },
     {
       "game": "스피또500",
@@ -316,6 +316,22 @@
       "store": "이마트24R창원상남점",
       "address": "경남 창원시 성산구 마디미로 10 1층",
       "region": "경남"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 2,
+      "store": "미니슈퍼",
+      "address": "대전 중구 유천로 47 1층 왼쪽(미니슈퍼)",
+      "region": "대전"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 2,
+      "store": "도깨비복권방",
+      "address": "인천 계양구 봉오대로 677 1층",
+      "region": "인천"
     },
     {
       "game": "스피또2000",
@@ -467,6 +483,14 @@
       "rank": 2,
       "store": "1등복권",
       "address": "서울 도봉구 노해로 144 107호",
+      "region": "서울"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "가로판매점",
+      "address": "서울 송파구 석촌호수로 54-2 신천역3번 출구앞",
       "region": "서울"
     },
     {
