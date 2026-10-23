@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-23T05:31:49.042Z",
+  "updatedAt": "2026-10-23T10:44:28.720Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -204,7 +204,7 @@
       "gameCode": "SP2000",
       "round": 69,
       "status": "판매중",
-      "rank1Remaining": 3,
+      "rank1Remaining": 1,
       "rank1Total": 10,
       "stockRate": 99
     },
@@ -372,6 +372,22 @@
       "rank": 2,
       "store": "로또복권편의점",
       "address": "경기 수원시 권선구 세류로 51 1층",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 1,
+      "store": "로또편의점",
+      "address": "경기 김포시 김포한강11로 288 골든스퀘어101호",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 1,
+      "store": "로또편의점",
+      "address": "경기 김포시 김포한강11로 288 골든스퀘어101호",
       "region": "경기"
     },
     {
