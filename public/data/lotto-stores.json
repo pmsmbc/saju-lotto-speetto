@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-17T23:32:27.928Z",
+  "updatedAt": "2026-10-24T23:32:34.284Z",
   "fromDraw": 262,
-  "throughDraw": 1246,
-  "coveredDraws": 982,
+  "throughDraw": 1247,
+  "coveredDraws": 983,
   "missingDraws": [
     1,
     2,
@@ -269,8 +269,8 @@
     295,
     463
   ],
-  "totalRecords": 9328,
-  "storeCount": 4606,
+  "totalRecords": 9336,
+  "storeCount": 4609,
   "online": {
     "count": 132,
     "auto": 63,
@@ -455,6 +455,17 @@
     },
     {
       "rank": 17,
+      "name": "올인 (all in)",
+      "address": "경기 화성시 만세구 3.1만세로 1147",
+      "region": "경기",
+      "count": 14,
+      "auto": 7,
+      "manual": 7,
+      "firstDraw": 327,
+      "lastDraw": 1247
+    },
+    {
+      "rank": 18,
       "name": "묵동식품",
       "address": "서울 중랑구 동일로 919",
       "region": "서울",
@@ -465,7 +476,7 @@
       "lastDraw": 1213
     },
     {
-      "rank": 18,
+      "rank": 19,
       "name": "영화유통(1등복권방)",
       "address": "울산 남구 신정로 19 삼성아파트 상가 204-101",
       "region": "울산",
@@ -476,7 +487,7 @@
       "lastDraw": 1189
     },
     {
-      "rank": 19,
+      "rank": 20,
       "name": "GS25(양산혜인점)",
       "address": "경남 양산시 웅상대로 955",
       "region": "경남",
@@ -487,7 +498,7 @@
       "lastDraw": 994
     },
     {
-      "rank": 20,
+      "rank": 21,
       "name": "대박천하마트",
       "address": "인천 부평구 굴포로 48",
       "region": "인천",
@@ -498,7 +509,7 @@
       "lastDraw": 1243
     },
     {
-      "rank": 21,
+      "rank": 22,
       "name": "행운복권방 보생당건강원",
       "address": "전북 익산시 무왕로 1268",
       "region": "전북",
@@ -509,7 +520,7 @@
       "lastDraw": 1240
     },
     {
-      "rank": 22,
+      "rank": 23,
       "name": "천하명당복권방",
       "address": "경기 수원시 팔달구 매산로 2",
       "region": "경기",
@@ -520,7 +531,7 @@
       "lastDraw": 1239
     },
     {
-      "rank": 23,
+      "rank": 24,
       "name": "복권명당(서부점)",
       "address": "대구 달서구 월배로 452",
       "region": "대구",
@@ -531,7 +542,7 @@
       "lastDraw": 1227
     },
     {
-      "rank": 24,
+      "rank": 25,
       "name": "썬마트",
       "address": "충북 청주시 흥덕구 진재로23번길 25",
       "region": "충북",
@@ -542,7 +553,7 @@
       "lastDraw": 1204
     },
     {
-      "rank": 25,
+      "rank": 26,
       "name": "행운복권방",
       "address": "경기 포천시 솔모루로 86-1",
       "region": "경기",
@@ -553,7 +564,7 @@
       "lastDraw": 1184
     },
     {
-      "rank": 26,
+      "rank": 27,
       "name": "알리바이(나주점)",
       "address": "전남광주 나주시 나주로 142 알리바이",
       "region": "전남",
@@ -564,7 +575,7 @@
       "lastDraw": 1139
     },
     {
-      "rank": 27,
+      "rank": 28,
       "name": "오케이상사",
       "address": "서울 서초구 신반포로 176 센트럴시티내100호매점",
       "region": "서울",
@@ -575,7 +586,7 @@
       "lastDraw": 1136
     },
     {
-      "rank": 28,
+      "rank": 29,
       "name": "대박마트복권방",
       "address": "충남 아산시 음봉로 844 태화상가1층103호",
       "region": "충남",
@@ -586,7 +597,7 @@
       "lastDraw": 1241
     },
     {
-      "rank": 29,
+      "rank": 30,
       "name": "메트로센터점",
       "address": "대구 중구 달구벌대로 지하 2100 메트로센터C412호",
       "region": "대구",
@@ -597,7 +608,7 @@
       "lastDraw": 1240
     },
     {
-      "rank": 30,
+      "rank": 31,
       "name": "종합복권슈퍼",
       "address": "경기 시흥시 마유로 336 정일빌딩104",
       "region": "경기",
@@ -608,7 +619,7 @@
       "lastDraw": 1234
     },
     {
-      "rank": 31,
+      "rank": 32,
       "name": "한꿈복권방",
       "address": "울산 중구 번영로 586",
       "region": "울산",
@@ -619,7 +630,7 @@
       "lastDraw": 1223
     },
     {
-      "rank": 32,
+      "rank": 33,
       "name": "행복충전소",
       "address": "경기 평택시 탄현로 332-2",
       "region": "경기",
@@ -630,7 +641,7 @@
       "lastDraw": 1240
     },
     {
-      "rank": 33,
+      "rank": 34,
       "name": "종합가판점",
       "address": "서울 동대문구 왕산로40길 6 건물 앞쪽 가판점 청량리역 5번출구 앞쪽",
       "region": "서울",
@@ -641,7 +652,7 @@
       "lastDraw": 1234
     },
     {
-      "rank": 34,
+      "rank": 35,
       "name": "월드24시",
       "address": "서울 은평구 통일로 855-15 1층",
       "region": "서울",
@@ -650,17 +661,6 @@
       "manual": 2,
       "firstDraw": 313,
       "lastDraw": 1222
-    },
-    {
-      "rank": 35,
-      "name": "올인 (all in)",
-      "address": "경기 화성시 만세구 3.1만세로 1147",
-      "region": "경기",
-      "count": 11,
-      "auto": 7,
-      "manual": 4,
-      "firstDraw": 327,
-      "lastDraw": 1209
     },
     {
       "rank": 36,
