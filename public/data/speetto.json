@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-26T05:31:49.407Z",
+  "updatedAt": "2026-10-26T11:33:08.347Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -15,7 +15,7 @@
       "gameCode": "SP1000",
       "round": 110,
       "status": "판매중",
-      "rank1Remaining": 8,
+      "rank1Remaining": 6,
       "rank1Total": 12,
       "stockRate": 70
     },
@@ -24,7 +24,7 @@
       "gameCode": "SP1000",
       "round": 109,
       "status": "판매중",
-      "rank1Remaining": 2,
+      "rank1Remaining": 1,
       "rank1Total": 12,
       "stockRate": 100
     },
@@ -5738,6 +5738,22 @@
       "game": "스피또1000",
       "round": 110,
       "rank": 1,
+      "store": "대성당",
+      "address": "부산 사상구 백양대로 438 대성아파트상가1층",
+      "region": "부산"
+    },
+    {
+      "game": "스피또1000",
+      "round": 110,
+      "rank": 1,
+      "store": "예스로또",
+      "address": "서울 중랑구 면목로31길 43 1층",
+      "region": "서울"
+    },
+    {
+      "game": "스피또1000",
+      "round": 110,
+      "rank": 1,
       "store": "행운복권방",
       "address": "서울 서대문구 신촌로 235-1 1층",
       "region": "서울"
@@ -5821,6 +5837,14 @@
       "store": "현대장미슈퍼",
       "address": "전북 익산시 동서로61길 41 1층",
       "region": "전북"
+    },
+    {
+      "game": "스피또1000",
+      "round": 109,
+      "rank": 1,
+      "store": "통정로또명당마트",
+      "address": "충남 천안시 동남구 통정4로 49 101호",
+      "region": "충남"
     },
     {
       "game": "스피또1000",
