@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T05:31:47.190Z",
+  "updatedAt": "2026-10-28T11:31:46.796Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -15,7 +15,7 @@
       "gameCode": "SP1000",
       "round": 110,
       "status": "판매중",
-      "rank1Remaining": 5,
+      "rank1Remaining": 4,
       "rank1Total": 12,
       "stockRate": 70
     },
@@ -5765,6 +5765,14 @@
       "store": "행운복권방",
       "address": "서울 서대문구 신촌로 235-1 1층",
       "region": "서울"
+    },
+    {
+      "game": "스피또1000",
+      "round": 110,
+      "rank": 1,
+      "store": "삼다복권",
+      "address": "제주 제주시 일주서로 7479 1층",
+      "region": "제주"
     },
     {
       "game": "스피또1000",
