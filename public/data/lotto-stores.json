@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-24T23:32:34.284Z",
+  "updatedAt": "2026-10-31T23:32:30.846Z",
   "fromDraw": 262,
-  "throughDraw": 1247,
-  "coveredDraws": 983,
+  "throughDraw": 1248,
+  "coveredDraws": 984,
   "missingDraws": [
     1,
     2,
@@ -269,11 +269,11 @@
     295,
     463
   ],
-  "totalRecords": 9336,
-  "storeCount": 4609,
+  "totalRecords": 9351,
+  "storeCount": 4615,
   "online": {
-    "count": 132,
-    "auto": 63,
+    "count": 134,
+    "auto": 65,
     "manual": 66
   },
   "top": [
@@ -348,11 +348,11 @@
       "name": "로또킹",
       "address": "서울 영등포구 영중로 2 1층(영등포동3가)",
       "region": "서울",
-      "count": 23,
-      "auto": 19,
+      "count": 24,
+      "auto": 20,
       "manual": 4,
       "firstDraw": 292,
-      "lastDraw": 1229
+      "lastDraw": 1248
     },
     {
       "rank": 8,
