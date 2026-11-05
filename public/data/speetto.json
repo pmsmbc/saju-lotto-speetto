@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T13:43:20.112Z",
+  "updatedAt": "2026-11-05T23:31:47.922Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -8,7 +8,7 @@
       "status": "판매중",
       "rank1Remaining": 11,
       "rank1Total": 11,
-      "stockRate": 8
+      "stockRate": 19
     },
     {
       "game": "스피또1000",
@@ -17,7 +17,7 @@
       "status": "판매중",
       "rank1Remaining": 2,
       "rank1Total": 12,
-      "stockRate": 84
+      "stockRate": 89
     },
     {
       "game": "스피또1000",
@@ -197,7 +197,7 @@
       "status": "판매중",
       "rank1Remaining": 8,
       "rank1Total": 8,
-      "stockRate": 39
+      "stockRate": 46
     },
     {
       "game": "스피또2000",
@@ -305,7 +305,7 @@
       "status": "판매중",
       "rank1Remaining": 3,
       "rank1Total": 5,
-      "stockRate": 59
+      "stockRate": 60
     },
     {
       "game": "스피또500",
@@ -322,6 +322,14 @@
       "game": "스피또2000",
       "round": 70,
       "rank": 2,
+      "store": "교통카드충전소",
+      "address": "경기 고양시 덕양구 화정로 58 화정역2번출구",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 2,
       "store": "이마트24R창원상남점",
       "address": "경남 창원시 성산구 마디미로 10 1층",
       "region": "경남"
@@ -333,6 +341,30 @@
       "store": "미니슈퍼",
       "address": "대전 중구 유천로 47 1층 왼쪽(미니슈퍼)",
       "region": "대전"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 2,
+      "store": "복권방",
+      "address": "서울 금천구 시흥대로 90 1층",
+      "region": "서울"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 2,
+      "store": "스파",
+      "address": "서울 노원구 노원로 564 111호",
+      "region": "서울"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 2,
+      "store": "천하명당로또복권",
+      "address": "서울 서대문구 세무서길 12 1층",
+      "region": "서울"
     },
     {
       "game": "스피또2000",
