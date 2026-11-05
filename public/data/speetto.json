@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T05:31:50.041Z",
+  "updatedAt": "2026-11-05T11:31:54.814Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -15,7 +15,7 @@
       "gameCode": "SP1000",
       "round": 110,
       "status": "판매중",
-      "rank1Remaining": 3,
+      "rank1Remaining": 2,
       "rank1Total": 12,
       "stockRate": 84
     },
@@ -5764,6 +5764,14 @@
       "rank": 1,
       "store": "예스로또",
       "address": "서울 중랑구 면목로31길 43 1층",
+      "region": "서울"
+    },
+    {
+      "game": "스피또1000",
+      "round": 110,
+      "rank": 1,
+      "store": "웨이스탑면목점 다올복권방",
+      "address": "서울 중랑구 면목로 423 1층",
       "region": "서울"
     },
     {
