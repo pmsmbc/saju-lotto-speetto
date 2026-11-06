@@ -62,7 +62,7 @@ export function mdToHtml(md) {
 }
 
 // --- frontmatter (--- 로 감싼 key: value) ---
-export function parseArticle(raw) {
+function splitFrontmatter(raw) {
   const m = raw.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/)
   if (!m) return null
   const meta = {}
@@ -70,6 +70,25 @@ export function parseArticle(raw) {
     const i = line.indexOf(':')
     if (i > 0) meta[line.slice(0, i).trim()] = line.slice(i + 1).trim()
   }
+  return { meta, body: m[2].trim() }
+}
+
+// 목록·카드·메타용. 본문 html 없이 frontmatter만 돌려준다 (JS 번들에 본문을 싣지 않기 위함).
+export function parseArticleMeta(raw) {
+  const parts = splitFrontmatter(raw)
+  if (!parts) return null
+  const { meta } = parts
+  return { ...meta, order: Number(meta.order ?? 999), tags: parseTags(meta.tags) }
+}
+
+export function parseArticle(raw) {
+  const parts = splitFrontmatter(raw)
+  if (!parts) return null
   // body(마크다운 원문)는 돌려주지 않는다 — html과 내용이 같아 번들에 두 번 실린다.
-  return { ...meta, order: Number(meta.order ?? 999), tags: parseTags(meta.tags), html: mdToHtml(m[2].trim()) }
+  return { ...parseArticleMeta(raw), html: mdToHtml(parts.body) }
+}
+
+// 검색용 평문 (html 태그 제거)
+export function htmlToText(html) {
+  return String(html ?? '').replace(/<[^>]*>/g, ' ')
 }

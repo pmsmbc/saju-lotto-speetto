@@ -6,6 +6,7 @@ import { ZODIACS } from '../src/lib/zodiac.js'
 import { CONTACT_HREF } from '../src/lib/contact.js'
 import { TAGS } from '../src/lib/tags.js'
 import { PAGE_CONTENT } from '../src/lib/page-content.js'
+import { PAGE_H1 } from '../src/lib/page-h1.js'
 import { AUTHOR_LABEL, AUTHOR_HREF, articleDates } from '../src/lib/article-meta.js'
 import { OPERATOR_NAME, OPERATOR_YOUTUBE } from '../src/lib/operator.js'
 import { parseSlugList } from '../src/lib/slug-list.js'
@@ -95,7 +96,7 @@ export function speettoOverview(data) {
     title: '스피또 1등 당첨 지역·남은 1등 현황 (스피또2000·1000·500) | 사또',
     description: `스피또 회차별 1등 남은 매수와 1등 당첨 판매점 지역을 하루 3번 갱신합니다. ${headline.join(', ')}. 기준 ${date ?? ''}`.trim(),
     lastmod: date,
-    html: `<h1>스피또 1등 당첨 지역·남은 1등 현황</h1>
+    html: `<h1>${PAGE_H1.speetto}</h1>
 <p>스피또2000·스피또1000·스피또500의 판매중 회차마다 1등이 몇 장 남았는지, 1등이 이미 나온 지역과 판매점은 어디인지 정리했습니다. 동행복권 자료를 하루 3번 자동 갱신합니다.${date ? ` 마지막 업데이트: ${esc(date)}` : ''}</p>
 ${sections.join('\n')}
 ${introHtml('speetto')}`,
@@ -154,7 +155,7 @@ export function lottoOverview(stats) {
       ? `로또 ${d.round}회(${d.date}) 당첨번호 ${d.numbers.join(' ')} + 보너스 ${d.bonus}. 1~${d.round}회 출현 빈도로 뽑는 통계 기반 추천과 무작위 추천, 띠별·사주 행운 번호.`
       : '역대 로또 당첨번호 통계로 뽑는 추천 번호와 무작위 추천, 띠별·사주 행운 번호.',
     lastmod: date,
-    html: `<h1>로또 번호 추천</h1>
+    html: `<h1>${PAGE_H1.lottorec}</h1>
 ${introHtml('lotto')}
 ${d ? `<h2>로또 ${d.round}회 당첨번호 (${esc(d.date)})</h2>
 <p><strong>${d.numbers.map(esc).join(' · ')}</strong> + 보너스 <strong>${esc(d.bonus)}</strong></p>
@@ -179,7 +180,7 @@ export function lottoStoresOverview(data) {
     description: `로또 1등이 가장 많이 나온 판매점 순위. ${names.join(', ')} 등 ${data.fromDraw}~${data.throughDraw}회 기록 ${data.totalRecords.toLocaleString()}건을 판매점별로 집계했습니다.`,
     lastmod: date,
     changefreq: 'weekly',
-    html: `<h1>로또 1등 최다 배출점 순위</h1>
+    html: `<h1>${PAGE_H1.lottostore}</h1>
 <p>${esc(`${data.fromDraw}회부터 ${data.throughDraw}회까지 ${data.coveredDraws.toLocaleString()}개 회차의 1등 배출 기록 ${data.totalRecords.toLocaleString()}건을 판매점별로 모았습니다. 집계 대상 판매점은 ${data.storeCount.toLocaleString()}곳입니다.`)}${date ? ` 기준 ${esc(date)}.` : ''}</p>
 <h2>1등 최다 배출 판매점 20곳</h2>
 <table><thead><tr><th>순위</th><th>판매점</th><th>위치</th><th>1등</th></tr></thead><tbody>${rows}</tbody></table>
@@ -303,7 +304,7 @@ export function staticPages({ articles, speetto, lotto, today }) {
       title: '사또 - 오늘의 운세, 띠별 운세·궁합, 꿈해몽 | 행운 번호와 스피또 정보',
       description: '오늘의 일진으로 계산하는 12띠 운세와 궁합, 상황별 꿈해몽을 근거와 함께 보여드립니다. 띠별·사주 행운 번호와 스피또 1등 남은 현황은 참고 자료로 함께 제공합니다. 회원가입 없이 무료.',
       lastmod: today, changefreq: 'daily',
-      html: `<h1>사또 - 사주 로또 스피또</h1>
+      html: `<h1>${PAGE_H1.fortune}</h1>
 ${introHtml('unse')}
 <h2>띠별로 바로 보기</h2>
 ${zodiacLinks()}
@@ -319,7 +320,7 @@ ${directoryHtml(articles)}`,
       title: '오늘의 운세 - 12띠 오늘 운세 (대길·길·보통·주의) | 사또',
       description: '오늘의 일진과 띠의 합충 관계로 보는 12띠 오늘의 운세. 총운·금전운과 재물·건강·사랑 키워드, 길방, 년생별 한 줄 운세를 매일 갱신합니다.',
       lastmod: today, changefreq: 'daily',
-      html: `<h1>오늘의 운세</h1>
+      html: `<h1>${PAGE_H1.fortune}</h1>
 ${introHtml('unse')}
 <h2>띠별로 바로 보기</h2>
 ${zodiacLinks()}
@@ -331,7 +332,7 @@ ${directoryHtml(articles)}`,
       title: '궁합 보기 - 생년월일로 보는 띠 궁합·사주 궁합 | 사또',
       description: '두 사람의 생년월일로 겉궁합(띠)과 속궁합(일주), 오행 상생상극을 계산해 연인·부부·동료·친구 관계별 궁합 점수와 근거를 보여드립니다.',
       lastmod: '2026-09-15', changefreq: 'monthly',
-      html: `<h1>궁합 보기</h1>
+      html: `<h1>${PAGE_H1.gunghap}</h1>
 ${introHtml('gunghap')}`,
     },
     {
@@ -339,7 +340,7 @@ ${introHtml('gunghap')}`,
       title: '오늘의 띠별 행운 번호 - 12띠 로또 번호 | 사또',
       description: '쥐띠부터 돼지띠까지 12띠별 오늘의 행운 번호 2개. 날짜와 띠로 매일 새로 정해지며 로또 번호 고를 때 참고할 수 있습니다.',
       lastmod: today, changefreq: 'daily',
-      html: `<h1>오늘의 띠별 행운 번호</h1>
+      html: `<h1>${PAGE_H1.zodiac}</h1>
 ${introHtml('zodiac')}`,
     },
     {
@@ -347,7 +348,7 @@ ${introHtml('zodiac')}`,
       title: '사주 행운 번호 - 생년월일시로 뽑는 오늘의 로또 번호 | 사또',
       description: '생년월일과 태어난 시로 사주팔자 네 기둥을 세우고, 사주와 오늘 날짜로 정해지는 행운 번호 6개를 뽑아드립니다. 음력 생일도 지원합니다.',
       lastmod: today, changefreq: 'daily',
-      html: `<h1>사주 행운 번호</h1>
+      html: `<h1>${PAGE_H1.sajunum}</h1>
 ${introHtml('saju')}`,
     },
     {

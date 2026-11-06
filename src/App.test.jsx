@@ -198,3 +198,13 @@ test('새 탭으로 열기(⌘·Ctrl 클릭)는 브라우저에 맡긴다', () =
   expect(fireEvent.click(navTab('로또'), { metaKey: true })).toBe(true)
   expect(window.location.pathname).toBe('/')
 })
+
+// 헤더의 사이트 이름은 h1이 아니다. 화면마다 본문 제목 h1이 정확히 하나여야 한다.
+test.each(['/', '/gunghap/', '/zodiac/', '/saju/', '/lotto/', '/speetto/', '/info/', '/info/pig/', '/about/'])('%s 화면의 h1은 하나', (path) => {
+  mockFetch()
+  window.history.pushState({}, '', path)
+  render(<App />)
+  expect(document.querySelectorAll('h1')).toHaveLength(1)
+  expect(document.querySelector('.app-title').tagName).toBe('A')
+  window.history.pushState({}, '', '/')
+})

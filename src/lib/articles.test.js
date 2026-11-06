@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import { ARTICLES, articleBySlug } from './articles.js'
+import { ARTICLES, articleBySlug, loadArticleHtml, loadSearchText, cachedArticleHtml, hasArticleFile } from './articles.js'
 import { mdToHtml, parseArticle } from './markdown.js'
 
 describe('markdown', () => {
@@ -23,15 +23,19 @@ describe('markdown', () => {
 })
 
 describe('articles', () => {
-  test('글이 10개 이상 로드되고 필수 필드가 있다', () => {
+  test('글이 10개 이상 로드되고 필수 필드가 있다', async () => {
     expect(ARTICLES.length).toBeGreaterThanOrEqual(31)
+    const texts = await loadSearchText()
     for (const a of ARTICLES) {
       expect(a.title.length).toBeGreaterThan(3)
       // URL 슬러그: 소문자 + 하이픈 (taemong-fruit 처럼 두 단어 조합 허용)
       expect(a.slug).toMatch(/^[a-z]+(-[a-z]+)*$/)
       expect(a.description.length).toBeGreaterThan(10)
-      expect(a.html.length).toBeGreaterThan(300)
-      expect(a.text.length).toBeGreaterThan(300)
+      // 본문은 목록 데이터(메인 번들)에 싣지 않고 따로 받는다
+      expect(a.html).toBeUndefined()
+      expect(hasArticleFile(a.slug), a.slug).toBe(true)
+      expect((await loadArticleHtml(a.slug)).length).toBeGreaterThan(300)
+      expect(texts[a.slug].length).toBeGreaterThan(300)
       expect(a.icon).toMatch(/^[0-9a-f-]+$/)
     }
   })
@@ -40,6 +44,12 @@ describe('articles', () => {
     const slugs = ARTICLES.map((a) => a.slug)
     expect(new Set(slugs).size).toBe(slugs.length)
     expect(ARTICLES[0].slug).toBe('pig')
+  })
+
+  test('본문은 한 번 받으면 캐시한다', async () => {
+    const html = await loadArticleHtml('pig')
+    expect(cachedArticleHtml('pig')).toBe(html)
+    expect(await loadArticleHtml('nope')).toBeNull()
   })
 
   test('articleBySlug', () => {

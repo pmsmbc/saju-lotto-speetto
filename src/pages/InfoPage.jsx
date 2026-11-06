@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ARTICLES, CATEGORIES, articleBySlug } from '../lib/articles.js'
+import { ARTICLES, CATEGORIES, articleBySlug, cachedArticleHtml, loadArticleHtml, loadSearchText } from '../lib/articles.js'
 import { tagsWithCount, tagById } from '../lib/tags.js'
 import { searchArticles } from '../lib/search.js'
 import { spaClick } from '../lib/spa-link.js'
@@ -35,6 +35,10 @@ export function InfoPage() {
   const [tag, setTag] = useState(tagFromPath)
   const [archive, setArchive] = useState(archiveFromPath)
   const [query, setQuery] = useState(queryFromUrl)
+  // 본문은 글마다 지연 로드한다. main.jsx가 첫 진입 글은 렌더 전에 미리 받아 두므로 보통 바로 있다.
+  const [htmlBySlug, setHtmlBySlug] = useState({})
+  // 검색용 본문 평문. 검색어가 생길 때 한 번만 받는다. 받기 전에는 제목·설명으로만 찾는다.
+  const [searchText, setSearchText] = useState(null)
 
   // 검색어를 주소에 남겨 공유·새로고침에도 결과가 유지되게 한다
   const changeQuery = (next) => {
@@ -93,6 +97,23 @@ export function InfoPage() {
   }
 
   const article = slug ? articleBySlug(slug) : null
+  const articleHtml = article ? (htmlBySlug[article.slug] ?? cachedArticleHtml(article.slug)) : null
+
+  useEffect(() => {
+    if (!article || articleHtml != null) return
+    let alive = true
+    loadArticleHtml(article.slug).then((html) => {
+      if (alive) setHtmlBySlug((m) => ({ ...m, [article.slug]: html ?? '' }))
+    })
+    return () => { alive = false }
+  }, [article, articleHtml])
+
+  useEffect(() => {
+    if (!query || searchText) return
+    let alive = true
+    loadSearchText().then((t) => { if (alive) setSearchText(t) })
+    return () => { alive = false }
+  }, [query, searchText])
 
   // 같은 카테고리에서 다음 순서 3개 (끝이면 앞으로 순환). 검색에서 뺀 글로는 잇지 않는다.
   const related = article
@@ -118,7 +139,9 @@ export function InfoPage() {
             {articleDates(article).map((d) => <span key={d}> · {d}</span>)}
           </p>
           {/* 본문은 저장소의 마크다운 파일에서 빌드 시 변환됨 */}
-          <div className="article-body" dangerouslySetInnerHTML={{ __html: article.html }} />
+          {articleHtml != null
+            ? <div className="article-body" dangerouslySetInnerHTML={{ __html: articleHtml }} />
+            : <div className="article-body article-loading" aria-busy="true">본문을 불러오는 중입니다…</div>}
           <div className="share-row">
             <ShareButton
               title={article.title}
@@ -153,7 +176,8 @@ export function InfoPage() {
   const browsable = archive ? inCategory : inCategory.filter((a) => !a.noindex)
   const tagList = tagsWithCount(browsable)
   const withTag = (items) => (tag ? items.filter((a) => a.tags.includes(tag)) : items)
-  const visible = query ? searchArticles(withTag(inCategory), query) : withTag(browsable)
+  const withText = (items) => (searchText ? items.map((a) => ({ ...a, text: searchText[a.slug] ?? '' })) : items)
+  const visible = query ? searchArticles(withText(withTag(inCategory)), query) : withTag(browsable)
   const hasHidden = ARTICLES.some((a) => a.noindex)
 
   return (

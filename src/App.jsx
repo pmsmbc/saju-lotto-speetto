@@ -11,6 +11,7 @@ import FloatingShare from './components/FloatingShare.jsx'
 import InfoPage from './pages/InfoPage.jsx'
 import StaticPage from './pages/StaticPage.jsx'
 import { spaClick } from './lib/spa-link.js'
+import { PAGE_H1 } from './lib/page-h1.js'
 import './App.css'
 
 // 경로 ↔ 화면 매핑 (scripts/make-routes.js 와 함께 유지)
@@ -104,12 +105,13 @@ export default function App() {
     <div className="app">
       <header className="app-header">
         <div className="app-brand">
-          <img src="/logo.png" alt="" className="app-logo" />
-          <h1 className="app-title">
+          <img src="/logo-96.png" alt="" className="app-logo" width="48" height="48" />
+          {/* 사이트 이름은 h1이 아니다. h1은 페이지마다 본문 제목 하나만 둔다(글 제목·도구 이름). */}
+          <a href="/" className="app-title" aria-label="사또 홈">
             <span className="title-big">사</span>
             <span className="title-small">주 로또 스피</span>
             <span className="title-big">또</span>
-          </h1>
+          </a>
         </div>
       </header>
       {/* 메뉴는 href가 있는 <a>로 둔다. 구글은 React가 그린 DOM에서 링크를 찾으므로
@@ -143,6 +145,7 @@ export default function App() {
         </nav>
       )}
       <main className="app-main">
+        {PAGE_H1[tab] && <h1 className="page-h1">{PAGE_H1[tab]}</h1>}
         {tab === 'fortune' && <FortunePage />}
         {tab === 'gunghap' && <GunghapPage />}
         {tab === 'zodiac' && <ZodiacPage />}

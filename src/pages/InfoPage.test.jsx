@@ -1,7 +1,10 @@
 import { test, expect } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { InfoPage } from './InfoPage.jsx'
-import { ARTICLES } from '../lib/articles.js'
+import { ARTICLES, loadSearchText } from '../lib/articles.js'
+
+const TEXTS = await loadSearchText()
+const withText = (items) => items.map((a) => ({ ...a, text: TEXTS[a.slug] }))
 import { searchArticles } from '../lib/search.js'
 
 test('카테고리별 글 목록을 보여준다 (기본 꿈해몽, 탭으로 상식 전환)', () => {
@@ -25,9 +28,10 @@ test('하이픈이 들어간 슬러그도 주소로 바로 열린다', () => {
   window.history.pushState({}, '', '/')
 })
 
-test('본문 안의 내부 링크가 a 태그로 렌더된다', () => {
+test('본문 안의 내부 링크가 a 태그로 렌더된다', async () => {
   window.history.pushState({}, '', '/info/taemong/')
   render(<InfoPage today="2026-09-03" />)
+  await waitFor(() => expect(document.querySelector('.article-body a')).not.toBeNull())
   const links = [...document.querySelectorAll('.article-body a')].map((a) => a.getAttribute('href'))
   expect(links).toContain('/info/taemong-fruit/')
   expect(links).toContain('/info/taemong-animal/')
@@ -36,21 +40,22 @@ test('본문 안의 내부 링크가 a 태그로 렌더된다', () => {
 
 // 꿈 글 본문은 "꿈과 당첨은 무관하다"고 말한다. 그 아래에 로또 번호를 붙이면 말과 행동이
 // 어긋나고, 애드센스 심사에서 꿈해몽을 복권 유도 수단으로 보게 된다.
-test('꿈 글에도 로또 행운 번호 위젯을 붙이지 않는다', () => {
+test('꿈 글에도 로또 행운 번호 위젯을 붙이지 않는다', async () => {
   window.history.pushState({}, '', '/info/pig/')
   render(<InfoPage />)
+  await screen.findByText(/살림이 불어나는 상징/)
   expect(document.querySelector('.dream-lucky')).toBeNull()
   expect(document.querySelector('.lotto-ball')).toBeNull()
   expect(document.body.textContent).not.toContain('행운 번호')
   window.history.pushState({}, '', '/')
 })
 
-test('글을 클릭하면 본문·공유 버튼을 보여주고 주소가 바뀐다', () => {
+test('글을 클릭하면 본문·공유 버튼을 보여주고 주소가 바뀐다', async () => {
   window.history.pushState({}, '', '/info')
   render(<InfoPage />)
   fireEvent.click(screen.getByText('돼지꿈 해몽 — 세 가지 질문으로 가려 보는 길몽과 흉몽'))
   expect(window.location.pathname).toBe('/info/pig/')
-  expect(screen.getByText(/살림이 불어나는 상징/)).toBeInTheDocument()
+  expect(await screen.findByText(/살림이 불어나는 상징/)).toBeInTheDocument()
   expect(screen.getByRole('button', { name: /공유하기/ })).toBeInTheDocument()
   fireEvent.click(screen.getByRole('link', { name: '← 글 목록' }))
   expect(window.location.pathname).toBe('/info/')
@@ -176,7 +181,7 @@ test('태그를 고르면 주소가 태그 페이지로 바뀐다', () => {
 // 생활 태그 글에는 없고 다른 글에는 있는 검색어. 글 내용이 바뀌어도 깨지지 않게
 // 고정 낱말 대신 실제 글 제목의 첫 낱말 가운데서 고른다.
 function termOutsideTag(tag) {
-  const inTag = ARTICLES.filter((a) => a.tags?.includes(tag))
+  const inTag = withText(ARTICLES.filter((a) => a.tags?.includes(tag)))
   return ARTICLES.filter((a) => !a.tags?.includes(tag))
     .map((a) => a.title.split(' ')[0])
     .find((w) => w.length >= 2 && searchArticles(inTag, w).length === 0)
@@ -290,6 +295,22 @@ test('검색은 검색에서 뺀 글도 찾는다', () => {
   fireEvent.change(screen.getByLabelText('글 검색'), { target: { value: word } })
   const hrefs = [...document.querySelectorAll('.info-card')].map((a) => a.getAttribute('href'))
   expect(hrefs).toContain(`/info/${target.slug}/`)
+  window.history.pushState({}, '', '/')
+})
+
+// 본문은 검색창을 쓸 때 따로 받는다. 받은 뒤에는 제목·설명에 없는 본문 낱말로도 찾아야 한다.
+test('검색은 제목·설명에 없는 본문 낱말도 찾는다', async () => {
+  const norm = (x) => String(x ?? '').replace(/\s+/g, '')
+  const target = ARTICLES.find((a) => a.slug === 'pig')
+  const word = TEXTS.pig.split(' ').find((w) => w.length >= 4 && !norm(target.title).includes(w) && !norm(target.description).includes(w))
+  expect(word).toBeTruthy()
+  window.history.pushState({}, '', '/info')
+  render(<InfoPage />)
+  fireEvent.change(screen.getByLabelText('글 검색'), { target: { value: word } })
+  await waitFor(() => {
+    const hrefs = [...document.querySelectorAll('.info-card')].map((a) => a.getAttribute('href'))
+    expect(hrefs).toContain('/info/pig/')
+  })
   window.history.pushState({}, '', '/')
 })
 
