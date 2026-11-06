@@ -1,21 +1,30 @@
 {
-  "updatedAt": "2026-10-22T05:31:48.534Z",
+  "updatedAt": "2026-11-06T05:31:49.737Z",
   "rounds": [
+    {
+      "game": "스피또1000",
+      "gameCode": "SP1000",
+      "round": 111,
+      "status": "판매중",
+      "rank1Remaining": 11,
+      "rank1Total": 11,
+      "stockRate": 19
+    },
     {
       "game": "스피또1000",
       "gameCode": "SP1000",
       "round": 110,
       "status": "판매중",
-      "rank1Remaining": 9,
+      "rank1Remaining": 2,
       "rank1Total": 12,
-      "stockRate": 55
+      "stockRate": 89
     },
     {
       "game": "스피또1000",
       "gameCode": "SP1000",
       "round": 109,
-      "status": "판매중",
-      "rank1Remaining": 2,
+      "status": "판매종료",
+      "rank1Remaining": 1,
       "rank1Total": 12,
       "stockRate": 100
     },
@@ -188,16 +197,16 @@
       "status": "판매중",
       "rank1Remaining": 8,
       "rank1Total": 8,
-      "stockRate": 20
+      "stockRate": 46
     },
     {
       "game": "스피또2000",
       "gameCode": "SP2000",
       "round": 69,
       "status": "판매중",
-      "rank1Remaining": 3,
+      "rank1Remaining": 1,
       "rank1Total": 10,
-      "stockRate": 98
+      "stockRate": 99
     },
     {
       "game": "스피또2000",
@@ -296,7 +305,7 @@
       "status": "판매중",
       "rank1Remaining": 3,
       "rank1Total": 5,
-      "stockRate": 57
+      "stockRate": 60
     },
     {
       "game": "스피또500",
@@ -313,9 +322,57 @@
       "game": "스피또2000",
       "round": 70,
       "rank": 2,
+      "store": "교통카드충전소",
+      "address": "경기 고양시 덕양구 화정로 58 화정역2번출구",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 2,
       "store": "이마트24R창원상남점",
       "address": "경남 창원시 성산구 마디미로 10 1층",
       "region": "경남"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 2,
+      "store": "미니슈퍼",
+      "address": "대전 중구 유천로 47 1층 왼쪽(미니슈퍼)",
+      "region": "대전"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 2,
+      "store": "복권방",
+      "address": "서울 금천구 시흥대로 90 1층",
+      "region": "서울"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 2,
+      "store": "스파",
+      "address": "서울 노원구 노원로 564 111호",
+      "region": "서울"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 2,
+      "store": "천하명당로또복권",
+      "address": "서울 서대문구 세무서길 12 1층",
+      "region": "서울"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 2,
+      "store": "도깨비복권방",
+      "address": "인천 계양구 봉오대로 677 1층",
+      "region": "인천"
     },
     {
       "game": "스피또2000",
@@ -347,6 +404,22 @@
       "rank": 2,
       "store": "로또복권편의점",
       "address": "경기 수원시 권선구 세류로 51 1층",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 1,
+      "store": "로또편의점",
+      "address": "경기 김포시 김포한강11로 288 골든스퀘어101호",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 1,
+      "store": "로또편의점",
+      "address": "경기 김포시 김포한강11로 288 골든스퀘어101호",
       "region": "경기"
     },
     {
@@ -467,6 +540,14 @@
       "rank": 2,
       "store": "1등복권",
       "address": "서울 도봉구 노해로 144 107호",
+      "region": "서울"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "가로판매점",
+      "address": "서울 송파구 석촌호수로 54-2 신천역3번 출구앞",
       "region": "서울"
     },
     {
@@ -3457,7 +3538,7 @@
       "game": "스피또2000",
       "round": 53,
       "rank": 2,
-      "store": "호매실복권방",
+      "store": "당수드림복권",
       "address": "경기 수원시 권선구 금곡로196번길 15 1층 106호",
       "region": "경기"
     },
@@ -5665,6 +5746,14 @@
       "game": "스피또1000",
       "round": 110,
       "rank": 1,
+      "store": "대길복권방",
+      "address": "경기 안산시 상록구 용담마을길 5-5 1층",
+      "region": "경기"
+    },
+    {
+      "game": "스피또1000",
+      "round": 110,
+      "rank": 1,
       "store": "명당일세",
       "address": "경기 평택시 평택로 80 1층",
       "region": "경기"
@@ -5684,6 +5773,54 @@
       "store": "씨스페이스 경주세방매점",
       "address": "경북 경주시 산업로 4447 (용강동)",
       "region": "경북"
+    },
+    {
+      "game": "스피또1000",
+      "round": 110,
+      "rank": 1,
+      "store": "대성당",
+      "address": "부산 사상구 백양대로 438 대성아파트상가1층",
+      "region": "부산"
+    },
+    {
+      "game": "스피또1000",
+      "round": 110,
+      "rank": 1,
+      "store": "승리복권판매점",
+      "address": "부산 수영구 좌수영로101번길 52 1층",
+      "region": "부산"
+    },
+    {
+      "game": "스피또1000",
+      "round": 110,
+      "rank": 1,
+      "store": "예스로또",
+      "address": "서울 중랑구 면목로31길 43 1층",
+      "region": "서울"
+    },
+    {
+      "game": "스피또1000",
+      "round": 110,
+      "rank": 1,
+      "store": "웨이스탑면목점 다올복권방",
+      "address": "서울 중랑구 면목로 423 1층",
+      "region": "서울"
+    },
+    {
+      "game": "스피또1000",
+      "round": 110,
+      "rank": 1,
+      "store": "행운복권방",
+      "address": "서울 서대문구 신촌로 235-1 1층",
+      "region": "서울"
+    },
+    {
+      "game": "스피또1000",
+      "round": 110,
+      "rank": 1,
+      "store": "삼다복권",
+      "address": "제주 제주시 일주서로 7479 1층",
+      "region": "제주"
     },
     {
       "game": "스피또1000",
@@ -5764,6 +5901,14 @@
       "store": "현대장미슈퍼",
       "address": "전북 익산시 동서로61길 41 1층",
       "region": "전북"
+    },
+    {
+      "game": "스피또1000",
+      "round": 109,
+      "rank": 1,
+      "store": "통정로또명당마트",
+      "address": "충남 천안시 동남구 통정4로 49 101호",
+      "region": "충남"
     },
     {
       "game": "스피또1000",
