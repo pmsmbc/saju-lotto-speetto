@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T05:31:49.737Z",
+  "updatedAt": "2026-11-06T11:37:08.953Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -195,7 +195,7 @@
       "gameCode": "SP2000",
       "round": 70,
       "status": "판매중",
-      "rank1Remaining": 8,
+      "rank1Remaining": 6,
       "rank1Total": 8,
       "stockRate": 46
     },
@@ -324,6 +324,22 @@
       "rank": 2,
       "store": "교통카드충전소",
       "address": "경기 고양시 덕양구 화정로 58 화정역2번출구",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 1,
+      "store": "일등로또",
+      "address": "경기 수원시 장안구 대평로 86 1층 116호",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 1,
+      "store": "일등로또",
+      "address": "경기 수원시 장안구 대평로 86 1층 116호",
       "region": "경기"
     },
     {
