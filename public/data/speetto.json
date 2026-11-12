@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-12T14:14:04.730Z",
+  "updatedAt": "2026-11-12T23:43:32.798Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -8,7 +8,7 @@
       "status": "판매중",
       "rank1Remaining": 9,
       "rank1Total": 11,
-      "stockRate": 19
+      "stockRate": 37
     },
     {
       "game": "스피또1000",
@@ -17,7 +17,7 @@
       "status": "판매중",
       "rank1Remaining": 2,
       "rank1Total": 12,
-      "stockRate": 89
+      "stockRate": 91
     },
     {
       "game": "스피또1000",
@@ -197,7 +197,7 @@
       "status": "판매중",
       "rank1Remaining": 6,
       "rank1Total": 8,
-      "stockRate": 46
+      "stockRate": 56
     },
     {
       "game": "스피또2000",
@@ -305,7 +305,7 @@
       "status": "판매중",
       "rank1Remaining": 3,
       "rank1Total": 5,
-      "stockRate": 60
+      "stockRate": 61
     },
     {
       "game": "스피또500",
@@ -354,9 +354,25 @@
       "game": "스피또2000",
       "round": 70,
       "rank": 2,
+      "store": "로또미림샵",
+      "address": "대전 동구 동서대로 1689 대전복합터미널(서관)",
+      "region": "대전"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 2,
       "store": "미니슈퍼",
       "address": "대전 중구 유천로 47 1층 왼쪽(미니슈퍼)",
       "region": "대전"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 2,
+      "store": "대림슈퍼복권방",
+      "address": "서울 강서구 가로공원로76길 47 1층",
+      "region": "서울"
     },
     {
       "game": "스피또2000",
@@ -372,6 +388,14 @@
       "rank": 2,
       "store": "스파",
       "address": "서울 노원구 노원로 564 111호",
+      "region": "서울"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 2,
+      "store": "신사 로또 명당",
+      "address": "서울 서초구 강남대로95길 43 1층 101호",
       "region": "서울"
     },
     {
