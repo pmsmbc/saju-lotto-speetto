@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-31T23:32:30.846Z",
+  "updatedAt": "2026-11-15T01:10:54.255Z",
   "fromDraw": 262,
-  "throughDraw": 1248,
-  "coveredDraws": 984,
+  "throughDraw": 1250,
+  "coveredDraws": 986,
   "missingDraws": [
     1,
     2,
@@ -269,8 +269,8 @@
     295,
     463
   ],
-  "totalRecords": 9351,
-  "storeCount": 4615,
+  "totalRecords": 9374,
+  "storeCount": 4622,
   "online": {
     "count": 134,
     "auto": 65,
@@ -282,11 +282,11 @@
       "name": "스파",
       "address": "서울 노원구 동일로 1493 주공10단지종합상가111",
       "region": "서울",
-      "count": 52,
-      "auto": 40,
+      "count": 53,
+      "auto": 41,
       "manual": 10,
       "firstDraw": 269,
-      "lastDraw": 1237
+      "lastDraw": 1249
     },
     {
       "rank": 2,
@@ -356,6 +356,17 @@
     },
     {
       "rank": 8,
+      "name": "잠실매점",
+      "address": "서울 송파구 올림픽로 269 잠실역 8번출구 앞 가판",
+      "region": "서울",
+      "count": 22,
+      "auto": 19,
+      "manual": 3,
+      "firstDraw": 304,
+      "lastDraw": 1250
+    },
+    {
+      "rank": 9,
       "name": "목화휴게소",
       "address": "경남 사천시 사천대로 912",
       "region": "경남",
@@ -366,7 +377,7 @@
       "lastDraw": 1238
     },
     {
-      "rank": 9,
+      "rank": 10,
       "name": "세진전자통신",
       "address": "대구 서구 서대구로 156",
       "region": "대구",
@@ -375,17 +386,6 @@
       "manual": 2,
       "firstDraw": 393,
       "lastDraw": 1173
-    },
-    {
-      "rank": 10,
-      "name": "잠실매점",
-      "address": "서울 송파구 올림픽로 269 잠실역 8번출구 앞 가판",
-      "region": "서울",
-      "count": 21,
-      "auto": 18,
-      "manual": 3,
-      "firstDraw": 304,
-      "lastDraw": 1240
     },
     {
       "rank": 11,
@@ -587,6 +587,17 @@
     },
     {
       "rank": 29,
+      "name": "행복한사람들 (흥부네)",
+      "address": "경기 광주시 경충대로 1014",
+      "region": "경기",
+      "count": 12,
+      "auto": 10,
+      "manual": 1,
+      "firstDraw": 282,
+      "lastDraw": 1249
+    },
+    {
+      "rank": 30,
       "name": "대박마트복권방",
       "address": "충남 아산시 음봉로 844 태화상가1층103호",
       "region": "충남",
@@ -597,7 +608,7 @@
       "lastDraw": 1241
     },
     {
-      "rank": 30,
+      "rank": 31,
       "name": "메트로센터점",
       "address": "대구 중구 달구벌대로 지하 2100 메트로센터C412호",
       "region": "대구",
@@ -608,7 +619,7 @@
       "lastDraw": 1240
     },
     {
-      "rank": 31,
+      "rank": 32,
       "name": "종합복권슈퍼",
       "address": "경기 시흥시 마유로 336 정일빌딩104",
       "region": "경기",
@@ -619,7 +630,7 @@
       "lastDraw": 1234
     },
     {
-      "rank": 32,
+      "rank": 33,
       "name": "한꿈복권방",
       "address": "울산 중구 번영로 586",
       "region": "울산",
@@ -630,7 +641,7 @@
       "lastDraw": 1223
     },
     {
-      "rank": 33,
+      "rank": 34,
       "name": "행복충전소",
       "address": "경기 평택시 탄현로 332-2",
       "region": "경기",
@@ -641,7 +652,7 @@
       "lastDraw": 1240
     },
     {
-      "rank": 34,
+      "rank": 35,
       "name": "종합가판점",
       "address": "서울 동대문구 왕산로40길 6 건물 앞쪽 가판점 청량리역 5번출구 앞쪽",
       "region": "서울",
@@ -652,7 +663,7 @@
       "lastDraw": 1234
     },
     {
-      "rank": 35,
+      "rank": 36,
       "name": "월드24시",
       "address": "서울 은평구 통일로 855-15 1층",
       "region": "서울",
@@ -663,7 +674,7 @@
       "lastDraw": 1222
     },
     {
-      "rank": 36,
+      "rank": 37,
       "name": "CU노서점",
       "address": "경북 경주시 금성로259번길 38 CU경주노서점 내",
       "region": "경북",
@@ -674,7 +685,7 @@
       "lastDraw": 1174
     },
     {
-      "rank": 37,
+      "rank": 38,
       "name": "천하명당복권방",
       "address": "경남 거제시 옥포성안로 60",
       "region": "경남",
@@ -685,7 +696,7 @@
       "lastDraw": 1172
     },
     {
-      "rank": 38,
+      "rank": 39,
       "name": "복권나라",
       "address": "서울 관악구 남부순환로 1739-9 1층",
       "region": "서울",
@@ -694,17 +705,6 @@
       "manual": 2,
       "firstDraw": 378,
       "lastDraw": 1167
-    },
-    {
-      "rank": 39,
-      "name": "행복한사람들 (흥부네)",
-      "address": "경기 광주시 경충대로 1014",
-      "region": "경기",
-      "count": 11,
-      "auto": 9,
-      "manual": 1,
-      "firstDraw": 282,
-      "lastDraw": 1164
     },
     {
       "rank": 40,
