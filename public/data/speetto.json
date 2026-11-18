@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-11-18T05:33:32.153Z",
+  "updatedAt": "2026-11-18T13:06:59.383Z",
   "rounds": [
     {
       "game": "스피또1000",
       "gameCode": "SP1000",
       "round": 111,
       "status": "판매중",
-      "rank1Remaining": 9,
+      "rank1Remaining": 8,
       "rank1Total": 11,
       "stockRate": 37
     },
@@ -5797,6 +5797,14 @@
       "store": "고현시장만남의광장복권방",
       "address": "경남 거제시 거제중앙로19길 1층",
       "region": "경남"
+    },
+    {
+      "game": "스피또1000",
+      "round": 111,
+      "rank": 1,
+      "store": "선비일층슈퍼",
+      "address": "대전 대덕구 계족산로 135 상가동 110ZZ111호",
+      "region": "대전"
     },
     {
       "game": "스피또1000",
