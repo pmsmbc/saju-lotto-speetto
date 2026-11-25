@@ -16,7 +16,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: node scripts/scrape-speetto.js
+      # 동행복권이 GitHub 러너 IP를 간헐 차단함 → 실패해도 경고만 남기고 성공 처리 (주력은 로컬 launchd)
+      - run: node scripts/scrape-speetto.js || echo "::warning::동행복권 접속 실패(러너 IP 차단 추정) — 이번 회차 건너뜀"
       - name: Commit updated data
         run: |
           git config user.name "github-actions[bot]"
