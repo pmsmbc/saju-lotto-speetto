@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T15:59:45.086Z",
+  "updatedAt": "2026-11-27T05:31:51.648Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -8,7 +8,7 @@
       "status": "판매중",
       "rank1Remaining": 12,
       "rank1Total": 12,
-      "stockRate": 0
+      "stockRate": 6
     },
     {
       "game": "스피또1000",
@@ -17,7 +17,7 @@
       "status": "판매중",
       "rank1Remaining": 7,
       "rank1Total": 11,
-      "stockRate": 51
+      "stockRate": 65
     },
     {
       "game": "스피또1000",
@@ -206,7 +206,7 @@
       "status": "판매중",
       "rank1Remaining": 2,
       "rank1Total": 8,
-      "stockRate": 64
+      "stockRate": 73
     },
     {
       "game": "스피또2000",
@@ -314,7 +314,7 @@
       "status": "판매중",
       "rank1Remaining": 3,
       "rank1Total": 5,
-      "stockRate": 62
+      "stockRate": 63
     },
     {
       "game": "스피또500",
@@ -509,6 +509,14 @@
       "rank": 2,
       "store": "명학대박복권",
       "address": "경기 안양시 만안구 만안로 31-3 1층",
+      "region": "경기"
+    },
+    {
+      "game": "스피또2000",
+      "round": 69,
+      "rank": 2,
+      "store": "여주신륵로또",
+      "address": "경기 여주시 신륵로 37 103호",
       "region": "경기"
     },
     {
