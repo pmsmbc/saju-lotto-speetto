@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-27T05:46:53.557Z",
+  "updatedAt": "2026-11-27T15:52:13.403Z",
   "rounds": [
     {
       "game": "스피또1000",
@@ -204,7 +204,7 @@
       "gameCode": "SP2000",
       "round": 70,
       "status": "판매중",
-      "rank1Remaining": 2,
+      "rank1Remaining": 0,
       "rank1Total": 8,
       "stockRate": 73
     },
@@ -446,6 +446,22 @@
       "store": "천하명당로또복권",
       "address": "서울 서대문구 세무서길 12 1층",
       "region": "서울"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 1,
+      "store": "GS25간석이화점",
+      "address": "인천 남동구 남동대로916번길 40 1층",
+      "region": "인천"
+    },
+    {
+      "game": "스피또2000",
+      "round": 70,
+      "rank": 1,
+      "store": "GS25간석이화점",
+      "address": "인천 남동구 남동대로916번길 40 1층",
+      "region": "인천"
     },
     {
       "game": "스피또2000",
